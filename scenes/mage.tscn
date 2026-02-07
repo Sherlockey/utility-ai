@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://y73gjhbhogfx"]
+
+[ext_resource type="Texture2D" uid="uid://bpxxrwnhbht1p" path="res://assets/mage.png" id="2_ip8om"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_r5lxc"]
+[ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_t2cfv"]
+
+[node name="Mage" type="Node2D" unique_id=890104998]
+script = ExtResource("3_t2cfv")
+_speed = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858591547]
+texture = ExtResource("2_ip8om")
+
+[node name="Movement" type="Node" parent="." unique_id=463285190 node_paths=PackedStringArray("_node2D", "_combatant")]
+script = ExtResource("3_r5lxc")
+_node2D = NodePath("..")
+_combatant = NodePath("..")

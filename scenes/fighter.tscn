@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://claadvfxus2xj"]
+
+[ext_resource type="Texture2D" uid="uid://cdbvakxjo8yot" path="res://assets/fighter.png" id="2_umvcx"]
+[ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_38ety"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_rsphg"]
+
+[node name="Fighter" type="Node2D" unique_id=1710756764]
+script = ExtResource("3_38ety")
+_speed = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
+texture = ExtResource("2_umvcx")
+
+[node name="Movement" type="Node" parent="." unique_id=70597544 node_paths=PackedStringArray("_node2D", "_combatant")]
+script = ExtResource("3_rsphg")
+_node2D = NodePath("..")
+_combatant = NodePath("..")

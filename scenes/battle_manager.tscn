@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://d3ed2p0p74yy4"]
+
+[ext_resource type="Script" uid="uid://bf36aga04uopq" path="res://scripts/BattleManager.cs" id="1_3jpuh"]
+
+[node name="BattleManager" type="Node" unique_id=1050662039 node_paths=PackedStringArray("_combatants")]
+script = ExtResource("1_3jpuh")
+_combatants = []

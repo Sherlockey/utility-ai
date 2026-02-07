@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://do6rh0up4tkws"]
+
+[ext_resource type="Texture2D" uid="uid://ccwkf45vey05x" path="res://assets/tank.png" id="1_6lwfj"]
+[ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_01nm4"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_k4vtj"]
+
+[node name="Tank" type="Node2D" unique_id=621380499]
+script = ExtResource("3_01nm4")
+_speed = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=193553153]
+texture = ExtResource("1_6lwfj")
+
+[node name="Movement" type="Node" parent="." unique_id=1053975029 node_paths=PackedStringArray("_node2D", "_combatant")]
+script = ExtResource("3_k4vtj")
+_node2D = NodePath("..")
+_combatant = NodePath("..")
