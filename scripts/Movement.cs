@@ -18,63 +18,25 @@ public partial class Movement : Node
 
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
 		{
-			if (keyEvent.Keycode == Key.W)
-			{
-				int x = 0;
-				int y = -24;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
-			}
+			// Movement
 			if (keyEvent.Keycode == Key.A)
 			{
-				int x = -16;
-				int y = 0;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
+				TryMoveLeft();
 			}
 			if (keyEvent.Keycode == Key.S)
 			{
-				int x = 0;
-				int y = 24;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
+				TryMoveDown();
 			}
 			if (keyEvent.Keycode == Key.D)
 			{
-				int x = 16;
-				int y = 0;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
+				TryMoveRight();
 			}
-			if (keyEvent.Keycode == Key.Q)
+			if (keyEvent.Keycode == Key.W)
 			{
-				int x = -16;
-				int y = -24;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
-			}
-			if (keyEvent.Keycode == Key.E)
-			{
-				int x = 16;
-				int y = -24;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
-			}
-			if (keyEvent.Keycode == Key.Z)
-			{
-				int x = -16;
-				int y = 24;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
-			}
-			if (keyEvent.Keycode == Key.C)
-			{
-				int x = 16;
-				int y = 24;
-				Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
-				_node2D.GlobalPosition = newPosition;
+				TryMoveUp();
 			}
 
+			// Turn Management
 			if (keyEvent.Keycode == Key.Space)
 			{
 				// TODO: change this
@@ -82,5 +44,69 @@ public partial class Movement : Node
 				_combatant.EndTurn();
 			}
 		}
+	}
+
+	private bool TryMoveLeft()
+	{
+		if (_combatant.GetCurrentMovement() > 0)
+		{
+			int x = -16;
+			int y = 0;
+			Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
+			_node2D.GlobalPosition = newPosition;
+
+			_combatant.SetCurrentMovement(_combatant.GetCurrentMovement() - 1);
+			return true;
+		}
+
+		return false;
+	}
+
+	private bool TryMoveRight()
+	{
+		if (_combatant.GetCurrentMovement() > 0)
+		{
+			int x = 16;
+			int y = 0;
+			Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
+			_node2D.GlobalPosition = newPosition;
+
+			_combatant.SetCurrentMovement(_combatant.GetCurrentMovement() - 1);
+			return true;
+		}
+
+		return false;
+	}
+
+	private bool TryMoveDown()
+	{
+		if (_combatant.GetCurrentMovement() > 0)
+		{
+			int x = 0;
+			int y = 24;
+			Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
+			_node2D.GlobalPosition = newPosition;
+
+			_combatant.SetCurrentMovement(_combatant.GetCurrentMovement() - 1);
+			return true;
+		}
+
+		return false;
+	}
+
+	private bool TryMoveUp()
+	{
+		if (_combatant.GetCurrentMovement() > 0)
+		{
+			int x = 0;
+			int y = -24;
+			Vector2 newPosition = new Vector2(_node2D.GlobalPosition.X + x, _node2D.GlobalPosition.Y + y);
+			_node2D.GlobalPosition = newPosition;
+
+			_combatant.SetCurrentMovement(_combatant.GetCurrentMovement() - 1);
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -20,6 +20,7 @@ public partial class BattleManager : Node
 
 		AdvanceTurnOrder();
 		Combatant firstCombatant = _combatants.First();
+		firstCombatant.SetCurrentMovement(firstCombatant.GetMovement());
 		firstCombatant.SetTurnState(Combatant.TurnState.Active);
 	}
 
@@ -27,16 +28,6 @@ public partial class BattleManager : Node
 	{
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
 		{
-			// if (keyEvent.Keycode == Key.Enter)
-			// {
-			// 	if (CheckIfACombatantHasTurn() == false)
-			// 	{
-			// 		AdvanceTurnOrder();
-			// 	}
-			// 	Combatant combatant = _combatants.First();
-			// 	combatant.SetTurnState(Combatant.TurnState.Active);
-			// }
-
 			if (keyEvent.Keycode == Key.I)
 			{
 				DisplayTurnOrder();
@@ -82,6 +73,7 @@ public partial class BattleManager : Node
 			AdvanceTurnOrder();
 		}
 		Combatant combatant = _combatants.First();
+		combatant.SetCurrentMovement(combatant.GetMovement());
 		combatant.SetTurnState(Combatant.TurnState.Active);
 	}
 
