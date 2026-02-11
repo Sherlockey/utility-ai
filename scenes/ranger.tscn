@@ -2,16 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://dcmnv8gh6nhl8" path="res://assets/ranger.png" id="2_uxtlj"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_8k012"]
-[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_ib0o5"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/MovementComponent.cs" id="3_ib0o5"]
 
-[node name="Ranger" type="Node2D" unique_id=323418471]
+[node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("MovementComponent")]
 script = ExtResource("3_8k012")
-_speed = 4
+MovementComponent = NodePath("MovementComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2042220450]
 texture = ExtResource("2_uxtlj")
 
-[node name="Movement" type="Node" parent="." unique_id=651411434 node_paths=PackedStringArray("_node2D", "_combatant")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1519863230 node_paths=PackedStringArray("_combatant")]
 script = ExtResource("3_ib0o5")
-_node2D = NodePath("..")
 _combatant = NodePath("..")

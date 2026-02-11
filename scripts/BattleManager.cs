@@ -1,27 +1,33 @@
 using Godot;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 public partial class BattleManager : Node
 {
-	public const int TURN_THRESHOLD = 100;
+	public const int TurnThreshold = 100;
 
 	[Export]
 	private Combatant[] _combatants;
 
 	public override void _Ready()
 	{
-		foreach (Combatant combatant in _combatants)
+		// Subscribe to turn ended for each combatant and set their battle indices
+		for (int i = 0; i < _combatants.Length; i++)
 		{
-			combatant.TurnEnded += OnCombatantTurnEnded;
+			Combatant combatant = _combatants[i];
+			if (combatant != null)
+			{
+				combatant.TurnEnded += OnCombatantTurnEnded;
+				combatant.BattleIndex = i;
+			}
 		}
 
 		AdvanceTurnOrder();
 		Combatant firstCombatant = _combatants.First();
-		firstCombatant.SetCurrentMovement(firstCombatant.GetMovement());
-		firstCombatant.SetTurnState(Combatant.TurnState.Active);
+		MovementComponent movementComponent = firstCombatant.MovementComponent;
+		movementComponent.CurrentMovement = movementComponent.Movement;
+		firstCombatant.CurrentTurnState = Combatant.TurnState.Active;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -35,9 +41,17 @@ public partial class BattleManager : Node
 		}
 	}
 
+	public void InitializeCombatantsTileSize(Vector2I tileSize)
+	{
+		foreach (Combatant combatant in _combatants)
+		{
+			combatant.MovementComponent.TileSize = tileSize;
+		}
+	}
+
 	private bool CheckIfACombatantHasTurn()
 	{
-		return _combatants.First().GetAccumulatedSpeed() >= TURN_THRESHOLD;
+		return _combatants.First().AccumulatedSpeed >= TurnThreshold;
 	}
 
 	private void AdvanceTurnOrder()
@@ -47,43 +61,34 @@ public partial class BattleManager : Node
 		{
 			foreach (Combatant combatant in _combatants)
 			{
-				combatant.IncrementAccumulatedSpeed();
-				if (combatant.GetAccumulatedSpeed() >= TURN_THRESHOLD)
+				combatant.AccumulatedSpeed += combatant.Speed;
+				if (combatant.AccumulatedSpeed >= TurnThreshold)
 				{
 					anyCombatantHasTurn = true;
 				}
 			}
 		}
-		Array.Sort(_combatants, new SortByDescendingAccumulatedSpeed());
+		Array.Sort(_combatants, new Combatant.SortDescendingAccumulatedSpeed());
 	}
 
 	private void DisplayTurnOrder()
 	{
 		foreach (Combatant combatant in _combatants)
 		{
-			GD.Print(combatant.Name + ": " + combatant.GetAccumulatedSpeed());
+			GD.Print(combatant.Name + ": " + combatant.AccumulatedSpeed);
 		}
 	}
 
 	private void OnCombatantTurnEnded(object sender, EventArgs e)
 	{
-		Array.Sort(_combatants, new SortByDescendingAccumulatedSpeed());
+		Array.Sort(_combatants, new Combatant.SortDescendingAccumulatedSpeed());
 		if (CheckIfACombatantHasTurn() == false)
 		{
 			AdvanceTurnOrder();
 		}
 		Combatant combatant = _combatants.First();
-		combatant.SetCurrentMovement(combatant.GetMovement());
-		combatant.SetTurnState(Combatant.TurnState.Active);
-	}
-
-	// Sorts by descending order of accumlated speed. Ties go to whichever combatant was 
-	// added to the array first.
-	public class SortByDescendingAccumulatedSpeed : IComparer<Combatant>
-	{
-		public int Compare(Combatant x, Combatant y)
-		{
-			return y.GetAccumulatedSpeed().CompareTo(x.GetAccumulatedSpeed());
-		}
+		MovementComponent movementComponent = combatant.MovementComponent;
+		movementComponent.CurrentMovement = movementComponent.Movement;
+		combatant.CurrentTurnState = Combatant.TurnState.Active;
 	}
 }

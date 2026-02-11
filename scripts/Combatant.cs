@@ -1,78 +1,68 @@
 using Godot;
 
 using System;
+using System.Collections.Generic;
 
 public partial class Combatant : Node2D
 {
-	public event EventHandler TurnEnded;
-
 	public enum TurnState
 	{
 		Active,
 		Waiting,
 	}
 
-	[Export]
-	private int _speed = 6;
-	[Export]
-	private int _movement = 4;
+	public event EventHandler TurnEnded;
 
-	private TurnState _turnState = TurnState.Waiting;
-	private int _accumulated_speed = 0;
-	private int _current_movement = 0;
+	[Export]
+	public int Speed { get; private set; } = 6;
+	[Export]
+	public MovementComponent MovementComponent;
+
+	public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
+	public int AccumulatedSpeed { get; set; } = 0;
+	public int BattleIndex { get; set; }
+
+	public override void _Input(InputEvent @event)
+	{
+		if (CurrentTurnState == TurnState.Waiting)
+		{
+			return;
+		}
+
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+		{
+			// Turn Management
+			if (keyEvent.Keycode == Key.Space)
+			{
+				// TODO: is there another way to handle this?
+				GetViewport().SetInputAsHandled();
+				EndTurn();
+			}
+		}
+	}
 
 	public void EndTurn()
 	{
-		if (_turnState == TurnState.Active)
+		if (CurrentTurnState == TurnState.Active)
 		{
-			_accumulated_speed %= BattleManager.TURN_THRESHOLD;
-			_turnState = TurnState.Waiting;
+			AccumulatedSpeed %= BattleManager.TurnThreshold;
+			CurrentTurnState = TurnState.Waiting;
 			TurnEnded?.Invoke(this, EventArgs.Empty);
 		}
 	}
 
-	public void IncrementAccumulatedSpeed()
+	// Sorts by descending order of accumlated speed. Ties go to whichever combatant was 
+	// added to the array first.
+	public class SortDescendingAccumulatedSpeed : IComparer<Combatant>
 	{
-		_accumulated_speed += _speed;
-	}
-
-	public int GetSpeed()
-	{
-		return _speed;
-	}
-
-	public int GetAccumulatedSpeed()
-	{
-		return _accumulated_speed;
-	}
-
-	public void SetAccumulatedSpeed(int value)
-	{
-		_accumulated_speed = value;
-	}
-
-	public TurnState GetTurnState()
-	{
-		return _turnState;
-	}
-
-	public void SetTurnState(TurnState turnState)
-	{
-		_turnState = turnState;
-	}
-
-	public int GetCurrentMovement()
-	{
-		return _current_movement;
-	}
-
-	public void SetCurrentMovement(int value)
-	{
-		_current_movement = value;
-	}
-
-	public int GetMovement()
-	{
-		return _movement;
+		public int Compare(Combatant x, Combatant y)
+		{
+			int result = y.AccumulatedSpeed.CompareTo(x.AccumulatedSpeed);
+			if (result == 0)
+			{
+				result = x.BattleIndex.CompareTo(y.BattleIndex);
+			}
+			return result;
+		}
 	}
 }
