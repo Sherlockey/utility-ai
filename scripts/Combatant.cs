@@ -14,13 +14,30 @@ public partial class Combatant : Node2D
 	public event EventHandler TurnEnded;
 
 	[Export]
-	public int Speed { get; private set; } = 6;
+	public Node AbilitiesNode;
 	[Export]
-	public MovementComponent MovementComponent;
+	public Stats Stats { get; private set; }
+	[Export]
+	public Status Status { get; private set; }
+	[Export]
+	public Movement Movement;
 
+	public List<IAbility> Abilities = [];
 	public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
 	public int AccumulatedSpeed { get; set; } = 0;
 	public int BattleIndex { get; set; }
+
+	public override void _Ready()
+	{
+		foreach (Node node in AbilitiesNode.GetChildren())
+		{
+			IAbility ability = node as IAbility;
+			if (ability != null)
+			{
+				Abilities.Add(ability);
+			}
+		}
+	}
 
 	public override void _Input(InputEvent @event)
 	{
@@ -37,6 +54,18 @@ public partial class Combatant : Node2D
 				// TODO: is there another way to handle this?
 				GetViewport().SetInputAsHandled();
 				EndTurn();
+			}
+
+			if (keyEvent.Keycode == Key.T)
+			{
+				// TODO: this is temporary for testing
+				Attack attack = Abilities[0] as Attack;
+				if (attack != null)
+				{
+					attack._accuracy = 100;
+					attack._damage = Stats.Attack * Stats.Attack;
+					attack.Apply();
+				}
 			}
 		}
 	}

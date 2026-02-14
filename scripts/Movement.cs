@@ -2,16 +2,15 @@ using Godot;
 
 using System;
 
-public partial class MovementComponent : Node
+public partial class Movement : Node
 {
 	public Vector2I TileSize { get; set; } = new Vector2I(16, 24);
+	public int CurrentMovement { get; set; }
 
 	[Export]
 	private Combatant _combatant;
 	[Export]
-	public int Movement { get; private set; } = 4;
-
-	public int CurrentMovement { get; set; }
+	private Stats _stats;
 
 	public override void _Input(InputEvent @event)
 	{

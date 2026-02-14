@@ -19,14 +19,14 @@ public partial class BattleManager : Node
 			if (combatant != null)
 			{
 				combatant.TurnEnded += OnCombatantTurnEnded;
+				combatant.Status.Died += OnStatusDied;
 				combatant.BattleIndex = i;
 			}
 		}
 
 		AdvanceTurnOrder();
 		Combatant firstCombatant = _combatants.First();
-		MovementComponent movementComponent = firstCombatant.MovementComponent;
-		movementComponent.CurrentMovement = movementComponent.Movement;
+		firstCombatant.Movement.CurrentMovement = firstCombatant.Stats.Movement;
 		firstCombatant.CurrentTurnState = Combatant.TurnState.Active;
 	}
 
@@ -45,7 +45,7 @@ public partial class BattleManager : Node
 	{
 		foreach (Combatant combatant in _combatants)
 		{
-			combatant.MovementComponent.TileSize = tileSize;
+			combatant.Movement.TileSize = tileSize;
 		}
 	}
 
@@ -61,7 +61,7 @@ public partial class BattleManager : Node
 		{
 			foreach (Combatant combatant in _combatants)
 			{
-				combatant.AccumulatedSpeed += combatant.Speed;
+				combatant.AccumulatedSpeed += combatant.Stats.Speed;
 				if (combatant.AccumulatedSpeed >= TurnThreshold)
 				{
 					anyCombatantHasTurn = true;
@@ -87,8 +87,12 @@ public partial class BattleManager : Node
 			AdvanceTurnOrder();
 		}
 		Combatant combatant = _combatants.First();
-		MovementComponent movementComponent = combatant.MovementComponent;
-		movementComponent.CurrentMovement = movementComponent.Movement;
+		combatant.Movement.CurrentMovement = combatant.Stats.Movement;
 		combatant.CurrentTurnState = Combatant.TurnState.Active;
+	}
+
+	private void OnStatusDied(object sender, EventArgs e)
+	{
+		throw new NotImplementedException();
 	}
 }

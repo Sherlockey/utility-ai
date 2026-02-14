@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dpr25f23d8n2w" path="res://scenes/ranger.tscn" id="5_y646j"]
 [ext_resource type="PackedScene" uid="uid://y73gjhbhogfx" path="res://scenes/mage.tscn" id="6_lnbra"]
 [ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="7_88ety"]
+[ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="8_ahbqi"]
+[ext_resource type="PackedScene" uid="uid://dj76lrbomat1o" path="res://scenes/scavbat.tscn" id="9_7gix3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0hol4"]
 texture = ExtResource("3_epypp")
@@ -40,3 +42,9 @@ position = Vector2(40, 12)
 
 [node name="Mage" parent="." unique_id=1594643650 instance=ExtResource("6_lnbra")]
 position = Vector2(56, 12)
+
+[node name="Coyena" parent="." unique_id=12279118 instance=ExtResource("8_ahbqi")]
+position = Vector2(168, 156)
+
+[node name="Scavbat" parent="." unique_id=55174397 instance=ExtResource("9_7gix3")]
+position = Vector2(184, 156)

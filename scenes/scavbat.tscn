@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dj76lrbomat1o"]
+
+[ext_resource type="Texture2D" uid="uid://dqgtu2c44wigh" path="res://assets/scavbat.png" id="1_qh7of"]
+[ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_x1fjo"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_82ri0"]
+[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_bhfd8"]
+[ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_82ri0"]
+[ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_febxk"]
+
+[node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("AbilitiesNode", "Stats", "Status", "Movement")]
+script = ExtResource("1_x1fjo")
+AbilitiesNode = NodePath("Abilities")
+Stats = NodePath("Stats")
+Status = NodePath("Status")
+Movement = NodePath("Movement")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
+texture = ExtResource("1_qh7of")
+
+[node name="Abilities" type="Node" parent="." unique_id=712162907]
+
+[node name="Attack" type="Node" parent="Abilities" unique_id=123415716]
+script = ExtResource("3_bhfd8")
+
+[node name="Stats" type="Node" parent="." unique_id=1771981559]
+script = ExtResource("4_82ri0")
+Health = 10
+
+[node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
+script = ExtResource("5_febxk")
+Stats = NodePath("../Stats")
+
+[node name="Movement" type="Node" parent="." unique_id=1251461647 node_paths=PackedStringArray("_combatant", "_stats")]
+script = ExtResource("3_82ri0")
+_combatant = NodePath("..")
+_stats = NodePath("../Stats")

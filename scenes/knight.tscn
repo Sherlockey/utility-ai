@@ -2,16 +2,38 @@
 
 [ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="2_qxgmm"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_01nm4"]
-[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/MovementComponent.cs" id="3_qxgmm"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_qxgmm"]
+[ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_0dyjn"]
+[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_5fsgc"]
+[ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_swm0g"]
 
-[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("MovementComponent")]
+[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("AbilitiesNode", "Stats", "Status", "Movement")]
 script = ExtResource("3_01nm4")
-Speed = 5
-MovementComponent = NodePath("MovementComponent")
+AbilitiesNode = NodePath("Abilities")
+Stats = NodePath("Stats")
+Status = NodePath("Status")
+Movement = NodePath("Movement")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
 texture = ExtResource("2_qxgmm")
 
-[node name="MovementComponent" type="Node" parent="." unique_id=994254787 node_paths=PackedStringArray("_combatant")]
+[node name="Abilities" type="Node" parent="." unique_id=1014024241]
+
+[node name="Attack" type="Node" parent="Abilities" unique_id=1213089474]
+script = ExtResource("5_5fsgc")
+
+[node name="Stats" type="Node" parent="." unique_id=1034357615]
+script = ExtResource("4_0dyjn")
+Health = 55
+Attack = 3
+Speed = 7
+Evasion = 20
+
+[node name="Status" type="Node" parent="." unique_id=1594083040 node_paths=PackedStringArray("Stats")]
+script = ExtResource("5_swm0g")
+Stats = NodePath("../Stats")
+
+[node name="Movement" type="Node" parent="." unique_id=994254787 node_paths=PackedStringArray("_combatant", "_stats")]
 script = ExtResource("3_qxgmm")
 _combatant = NodePath("..")
+_stats = NodePath("../Stats")
