@@ -7,9 +7,9 @@
 [ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_n1kao"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_8rvsd"]
 
-[node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("AbilitiesNode", "Stats", "Status", "Movement")]
+[node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
 script = ExtResource("3_8k012")
-AbilitiesNode = NodePath("Abilities")
+AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")

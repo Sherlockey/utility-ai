@@ -7,9 +7,9 @@
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_vbcjk"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_hqykf"]
 
-[node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("AbilitiesNode", "Stats", "Status", "Movement")]
+[node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
 script = ExtResource("1_4rdcq")
-AbilitiesNode = NodePath("Abilities")
+AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")

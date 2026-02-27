@@ -14,8 +14,4 @@ public partial class Stats : Node
     public int Movement { get; set; } = 4;
     [Export]
     public int Evasion { get; set; } = 5;
-    [Export]
-    public int Level { get; set; } = 1;
-    [Export]
-    public int Experience { get; set; } = 0;
 }
