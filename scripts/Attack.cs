@@ -20,9 +20,11 @@ public partial class Attack : Node, IAbility
     public int _damage;
     public Combatant _target;
 
-    public void Apply()
+    public void Apply(Combatant[] targets)
     {
-        Combatant coyena = GetNode<Combatant>("/root/TestLevel/Coyena");
-        coyena.Status.TakeDamage(_damage * _damage);
+        foreach (Combatant target in targets)
+        {
+            target.Status.TakeDamage(_damage);
+        }
     }
 }

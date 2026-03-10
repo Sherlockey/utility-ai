@@ -4,16 +4,19 @@ using System;
 
 public partial class Status : Node
 {
-    public event EventHandler Died;
+    public event EventHandler<Combatant> Died;
 
     [Export]
     public Stats Stats;
 
     public int CurrentHealth { get; set; }
 
+    public int AbilitiesRemaining { get; set; } // TODO: this concept is @Incomplete
+
     public override void _Ready()
     {
         CurrentHealth = Stats.Health;
+        AbilitiesRemaining = Stats.AbilitiesPerTurn;
     }
 
 
@@ -23,14 +26,14 @@ public partial class Status : Node
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
-            Died?.Invoke(this, EventArgs.Empty);
-
-            // TODO: testing only
-            Node parent = GetParent();
-            if (parent != null)
+            if (Owner is Combatant owner)
             {
-                GD.Print(parent.Name + " died");
+                Died?.Invoke(this, owner);
+                // TODO: this is temporary. Really we want to be able to resurrect fallen Combatants
+                Owner.QueueFree();
             }
         }
+        // TODO: testing only
+        GD.Print(Owner.Name + " took " + damage + " damage and has " + CurrentHealth + " health remaining.");
     }
 }

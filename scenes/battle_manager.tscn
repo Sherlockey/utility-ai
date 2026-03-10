@@ -2,6 +2,5 @@
 
 [ext_resource type="Script" uid="uid://bf36aga04uopq" path="res://scripts/BattleManager.cs" id="1_3jpuh"]
 
-[node name="BattleManager" type="Node" unique_id=1050662039 node_paths=PackedStringArray("_combatants")]
+[node name="BattleManager" type="Node" unique_id=1050662039]
 script = ExtResource("1_3jpuh")
-_combatants = []

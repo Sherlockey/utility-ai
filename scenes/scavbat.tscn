@@ -13,6 +13,7 @@ AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
+MyTeam = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("1_qh7of")
