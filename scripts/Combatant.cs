@@ -80,17 +80,15 @@ public partial class Combatant : Node2D
                 }
                 if (target != null)
                 {
-                    if (Abilities[0] is Attack attack)
+                    foreach (IAbility ability in Abilities)
                     {
-                        attack._accuracy = 100;
-                        GD.Print("Stats.Attack for " + Name + " is " + Stats.Attack);
-                        attack._damage = Stats.Attack * Stats.Attack;
                         Combatant[] targets = { target };
-                        attack.Apply(targets);
-                        // reduce number of Abilities in Status by one
-                        // should check number of Abilities in Status before allowing to do an Ability
-                        // End turn if abilities is <=0, otherwise allow to choose again?
+                        ability.Apply(Stats, targets);
+                        GD.Print("Stats.Attack for " + Name + " is " + Stats.Attack);
                     }
+                    // reduce number of Abilities in Status by one
+                    // should check number of Abilities in Status before allowing to do an Ability
+                    // End turn if abilities is <=0, otherwise allow to choose again?
                 }
             }
         }
