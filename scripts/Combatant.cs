@@ -69,13 +69,13 @@ public partial class Combatant : Node2D
                 }
                 // TODO: this is temporary for testing
                 Vector2 mousePos = GetGlobalMousePosition();
-                Vector2I tileCoordinates = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
+                Vector2I tileCoords = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
                 Combatant target = null;
                 foreach (Combatant combatant in BattleManager.Get().Combatants)
                 {
-                    Vector2I combatantCoordinates = BattleManager.Get().TileMapLayer.LocalToMap
+                    Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap
                         (combatant.GlobalPosition);
-                    if (combatantCoordinates == tileCoordinates)
+                    if (combatantCoords == tileCoords)
                     {
                         target = combatant;
                         break;
@@ -85,11 +85,16 @@ public partial class Combatant : Node2D
                 {
                     foreach (IAbility ability in Abilities)
                     {
-                        Combatant[] targets = { target };
-                        ability.Apply(Stats, targets);
-                        GD.Print("Stats.Attack for " + Name + " is " + Stats.Attack);
+                        Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+                        if (ability.IsInRange(myCoords, tileCoords) && ability.IsTargetValid(this, target))
+                        {
+                            Combatant[] targets = { target };
+                            ability.Apply(this, targets);
+                            GD.Print("Stats.Attack for " + Name + " is " + Stats.Attack);
+                            Status.AbilitiesRemaining -= 1;
+                            return; // TODO this is temporary
+                        }
                     }
-                    Status.AbilitiesRemaining -= 1;
                 }
             }
         }

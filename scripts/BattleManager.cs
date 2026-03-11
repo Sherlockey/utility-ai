@@ -7,8 +7,9 @@ using System.Linq;
 public partial class BattleManager : Node
 {
     public const int TurnThreshold = 100;
-    public List<Combatant> Combatants = []; // Initialized by Level Constructor
-    public TileMapLayer TileMapLayer { get; set; }
+    public List<Combatant> Combatants = []; // Initialized by Level
+    public TileMapLayer TileMapLayer { get; set; } // Initialized by Level
+    public Vector2I TileSize { get; set; } // Initialized by Level
 
     private static BattleManager s_battleManager = null;
 
@@ -56,14 +57,6 @@ public partial class BattleManager : Node
     public static BattleManager Get()
     {
         return s_battleManager;
-    }
-
-    public void InitializeCombatantsTileSize(Vector2I tileSize)
-    {
-        foreach (Combatant combatant in Combatants)
-        {
-            combatant.Movement.TileSize = tileSize;
-        }
     }
 
     private bool CheckIfACombatantHasTurn()

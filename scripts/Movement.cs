@@ -4,8 +4,6 @@ using System;
 
 public partial class Movement : Node
 {
-    public Vector2I TileSize { get; set; } = new Vector2I(16, 24);
-
     [Export]
     private Combatant _combatant;
 
@@ -21,19 +19,19 @@ public partial class Movement : Node
             // Movement
             if (keyEvent.Keycode == Key.A)
             {
-                TryMove(new Vector2I(-TileSize.X, 0));
+                TryMove(new Vector2I(-BattleManager.Get().TileSize.X, 0));
             }
             if (keyEvent.Keycode == Key.D)
             {
-                TryMove(new Vector2I(TileSize.X, 0));
+                TryMove(new Vector2I(BattleManager.Get().TileSize.X, 0));
             }
             if (keyEvent.Keycode == Key.S)
             {
-                TryMove(new Vector2I(0, TileSize.Y));
+                TryMove(new Vector2I(0, BattleManager.Get().TileSize.Y));
             }
             if (keyEvent.Keycode == Key.W)
             {
-                TryMove(new Vector2I(0, -TileSize.Y));
+                TryMove(new Vector2I(0, -BattleManager.Get().TileSize.Y));
             }
         }
     }

@@ -23,14 +23,13 @@ public partial class Level : Node2D
                 _combatantSpawnMarkers.Add(marker2D);
             }
         }
-
         InstantiateChildren();
     }
 
     public void InstantiateChildren()
     {
         BattleManager battleManager = _battleManagerScene.Instantiate<BattleManager>();
-
+        // Instantiate combatants and register them in battleManager
         for (int i = 0; i < _combatantScenes.Length; i++)
         {
             Combatant combatant = _combatantScenes[i].Instantiate<Combatant>();
@@ -38,10 +37,8 @@ public partial class Level : Node2D
             combatant.Position = _combatantSpawnMarkers[i].Position;
             battleManager.Combatants.Add(combatant);
         }
-
         battleManager.TileMapLayer = _tileMapLayer;
-        battleManager.InitializeCombatantsTileSize(_tileMapLayer.TileSet.TileSize);
-
+        battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
     }
