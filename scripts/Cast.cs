@@ -2,10 +2,10 @@ using Godot;
 
 using System.Collections.Generic;
 
-public partial class Attack : Ability
+public partial class Cast : Ability
 {
     [Export]
-    private int _range = 1;
+    private int _range = 4;
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
@@ -16,20 +16,16 @@ public partial class Attack : Ability
         }
     }
 
+    public override bool IsTargetValid(Combatant user, Combatant target)
+    {
+        return true;
+    }
+
     public override bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords)
     {
-        if (startTileCoords == endTileCoords)
-        {
-            return false;
-        }
         int rangeX = Mathf.Abs(endTileCoords.X - startTileCoords.X);
         int rangeY = Mathf.Abs(endTileCoords.Y - startTileCoords.Y);
         int rangeSum = rangeX + rangeY;
         return rangeSum <= _range;
-    }
-
-    public override bool IsTargetValid(Combatant user, Combatant target)
-    {
-        return target != user;
     }
 }

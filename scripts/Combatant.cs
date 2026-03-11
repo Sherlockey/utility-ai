@@ -69,31 +69,27 @@ public partial class Combatant : Node2D
                 }
                 // TODO: this is temporary for testing
                 Vector2 mousePos = GetGlobalMousePosition();
-                Vector2I tileCoords = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
-                Combatant target = null;
-                foreach (Combatant combatant in BattleManager.Get().Combatants)
+                Vector2I selectedCoords = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
+                Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+                // Combatant target = null;
+                // foreach (Combatant combatant in BattleManager.Get().Combatants)
+                // {
+                //     Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap
+                //         (combatant.GlobalPosition);
+                //     if (combatantCoords == selectedCoords)
+                //     {
+                //         target = combatant;
+                //         break;
+                //     }
+                // }
+                foreach (IAbility ability in Abilities)
                 {
-                    Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap
-                        (combatant.GlobalPosition);
-                    if (combatantCoords == tileCoords)
+                    if (ability.IsInRange(myCoords, selectedCoords))
                     {
-                        target = combatant;
-                        break;
-                    }
-                }
-                if (target != null)
-                {
-                    foreach (IAbility ability in Abilities)
-                    {
-                        Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-                        if (ability.IsInRange(myCoords, tileCoords) && ability.IsTargetValid(this, target))
-                        {
-                            Combatant[] targets = { target };
-                            ability.Apply(this, targets);
-                            GD.Print("Stats.Attack for " + Name + " is " + Stats.Attack);
-                            Status.AbilitiesRemaining -= 1;
-                            return; // TODO this is temporary
-                        }
+                        List<Combatant> targets = ability.CombatantsInAreaOfEffect(selectedCoords);
+                        ability.Apply(this, targets);
+                        Status.AbilitiesRemaining -= 1;
+                        return; // TODO this is temporary
                     }
                 }
             }
