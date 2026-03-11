@@ -19,6 +19,8 @@ public partial class Combatant : Node2D
     public event EventHandler TurnEnded;
 
     [Export]
+    public Team MyTeam { get; private set; }
+    [Export]
     public Node AbilitiesParent;
     [Export]
     public Stats Stats { get; private set; }
@@ -26,12 +28,9 @@ public partial class Combatant : Node2D
     public Status Status { get; private set; }
     [Export]
     public Movement Movement;
-    [Export]
-    public Team MyTeam { get; private set; }
 
     public List<IAbility> Abilities = [];
     public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
-    public int AccumulatedSpeed { get; set; } = 0;
     public int BattleIndex { get; set; }
 
     public override void _Ready()
@@ -61,9 +60,13 @@ public partial class Combatant : Node2D
                 GetViewport().SetInputAsHandled();
                 EndTurn();
             }
-
             if (keyEvent.Keycode == Key.T)
             {
+                // Don't do anything if combatant doesn't have any AbilitiesRemaining
+                if (Status.AbilitiesRemaining <= 0)
+                {
+                    return;
+                }
                 // TODO: this is temporary for testing
                 Vector2 mousePos = GetGlobalMousePosition();
                 Vector2I tileCoordinates = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
@@ -86,19 +89,24 @@ public partial class Combatant : Node2D
                         ability.Apply(Stats, targets);
                         GD.Print("Stats.Attack for " + Name + " is " + Stats.Attack);
                     }
-                    // reduce number of Abilities in Status by one
-                    // should check number of Abilities in Status before allowing to do an Ability
-                    // End turn if abilities is <=0, otherwise allow to choose again?
+                    Status.AbilitiesRemaining -= 1;
                 }
             }
         }
+    }
+
+    public void InitializeTurn()
+    {
+        Status.CurrentMovement = Stats.Movement;
+        Status.AbilitiesRemaining = Stats.AbilitiesPerTurn;
+        CurrentTurnState = TurnState.Active;
     }
 
     public void EndTurn()
     {
         if (CurrentTurnState == TurnState.Active)
         {
-            AccumulatedSpeed %= BattleManager.TurnThreshold;
+            Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
             CurrentTurnState = TurnState.Waiting;
             TurnEnded?.Invoke(this, EventArgs.Empty);
         }
@@ -110,7 +118,7 @@ public partial class Combatant : Node2D
     {
         public int Compare(Combatant x, Combatant y)
         {
-            int result = y.AccumulatedSpeed.CompareTo(x.AccumulatedSpeed);
+            int result = y.Status.AccumulatedSpeed.CompareTo(x.Status.AccumulatedSpeed);
             if (result == 0)
             {
                 result = x.BattleIndex.CompareTo(y.BattleIndex);

@@ -7,9 +7,8 @@ using System.Linq;
 public partial class BattleManager : Node
 {
     public const int TurnThreshold = 100;
-    public TileMapLayer TileMapLayer { get; set; }
-
     public List<Combatant> Combatants = []; // Initialized by Level Constructor
+    public TileMapLayer TileMapLayer { get; set; }
 
     private static BattleManager s_battleManager = null;
 
@@ -38,11 +37,9 @@ public partial class BattleManager : Node
                 combatant.BattleIndex = i;
             }
         }
-
         AdvanceTurnOrder();
         Combatant firstCombatant = Combatants.First();
-        firstCombatant.Movement.CurrentMovement = firstCombatant.Stats.Movement;
-        firstCombatant.CurrentTurnState = Combatant.TurnState.Active;
+        firstCombatant.InitializeTurn();
     }
 
     public override void _Input(InputEvent @event)
@@ -71,7 +68,7 @@ public partial class BattleManager : Node
 
     private bool CheckIfACombatantHasTurn()
     {
-        return Combatants.First().AccumulatedSpeed >= TurnThreshold;
+        return Combatants.First().Status.AccumulatedSpeed >= TurnThreshold;
     }
 
     private void AdvanceTurnOrder()
@@ -81,8 +78,8 @@ public partial class BattleManager : Node
         {
             foreach (Combatant combatant in Combatants)
             {
-                combatant.AccumulatedSpeed += combatant.Stats.Speed;
-                if (combatant.AccumulatedSpeed >= TurnThreshold)
+                combatant.Status.AccumulatedSpeed += combatant.Stats.Speed;
+                if (combatant.Status.AccumulatedSpeed >= TurnThreshold)
                 {
                     anyCombatantHasTurn = true;
                 }
@@ -95,7 +92,7 @@ public partial class BattleManager : Node
     {
         foreach (Combatant combatant in Combatants)
         {
-            GD.Print(combatant.Name + ": " + combatant.AccumulatedSpeed);
+            GD.Print(combatant.Name + ": " + combatant.Status.AccumulatedSpeed);
         }
     }
 
@@ -106,9 +103,8 @@ public partial class BattleManager : Node
         {
             AdvanceTurnOrder();
         }
-        Combatant combatant = Combatants.First();
-        combatant.Movement.CurrentMovement = combatant.Stats.Movement;
-        combatant.CurrentTurnState = Combatant.TurnState.Active;
+        Combatant firstCombatant = Combatants.First();
+        firstCombatant.InitializeTurn();
     }
 
     private void OnStatusDied(object sender, Combatant combatant)

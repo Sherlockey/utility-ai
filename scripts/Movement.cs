@@ -5,12 +5,9 @@ using System;
 public partial class Movement : Node
 {
     public Vector2I TileSize { get; set; } = new Vector2I(16, 24);
-    public int CurrentMovement { get; set; }
 
     [Export]
     private Combatant _combatant;
-    [Export]
-    private Stats _stats;
 
     public override void _Input(InputEvent @event)
     {
@@ -43,10 +40,10 @@ public partial class Movement : Node
 
     private bool TryMove(Vector2I movement)
     {
-        if (CurrentMovement > 0)
+        if (_combatant.Status.CurrentMovement > 0)
         {
             _combatant.GlobalPosition = _combatant.GlobalPosition + movement;
-            CurrentMovement -= 1;
+            _combatant.Status.CurrentMovement -= 1;
             return true;
         }
 

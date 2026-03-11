@@ -9,14 +9,14 @@ public partial class Status : Node
     [Export]
     public Stats Stats;
 
+    public int CurrentMovement { get; set; }
+    public int AccumulatedSpeed { get; set; } = 0;
     public int CurrentHealth { get; set; }
-
-    public int AbilitiesRemaining { get; set; } // TODO: this concept is @Incomplete
+    public int AbilitiesRemaining { get; set; } = 0; // TODO: this concept is @Incomplete
 
     public override void _Ready()
     {
         CurrentHealth = Stats.Health;
-        AbilitiesRemaining = Stats.AbilitiesPerTurn;
     }
 
 
