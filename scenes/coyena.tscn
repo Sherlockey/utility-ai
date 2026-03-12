@@ -24,6 +24,7 @@ script = ExtResource("3_tvq8u")
 
 [node name="Stats" type="Node" parent="." unique_id=1593060130]
 script = ExtResource("4_vbcjk")
+Health = 33
 
 [node name="Status" type="Node" parent="." unique_id=2083474519 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_hqykf")
