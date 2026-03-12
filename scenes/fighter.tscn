@@ -4,16 +4,17 @@
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_38ety"]
 [ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_rsphg"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="3_tlqsq"]
+[ext_resource type="Script" uid="uid://xr73l7sufil2" path="res://scripts/Backstab.cs" id="4_1bj3w"]
 [ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_eelhu"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="6_1bj3w"]
 
 [node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
 script = ExtResource("3_38ety")
+MyTeam = 1
 AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
-MyTeam = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
 texture = ExtResource("2_umvcx")
@@ -22,6 +23,10 @@ texture = ExtResource("2_umvcx")
 
 [node name="Attack" type="Node" parent="Abilities" unique_id=1057367636]
 script = ExtResource("5_eelhu")
+
+[node name="Backstab" type="Node" parent="Abilities" unique_id=1420777587]
+script = ExtResource("4_1bj3w")
+_damagePercentNumerator = 150
 
 [node name="Stats" type="Node" parent="." unique_id=212706154]
 script = ExtResource("3_tlqsq")
@@ -32,7 +37,6 @@ Evasion = 15
 script = ExtResource("6_1bj3w")
 Stats = NodePath("../Stats")
 
-[node name="Movement" type="Node" parent="." unique_id=1423821104 node_paths=PackedStringArray("_combatant", "_stats")]
+[node name="Movement" type="Node" parent="." unique_id=1423821104 node_paths=PackedStringArray("_combatant")]
 script = ExtResource("3_rsphg")
 _combatant = NodePath("..")
-_stats = NodePath("../Stats")

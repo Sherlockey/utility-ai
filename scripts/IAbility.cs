@@ -9,4 +9,6 @@ public interface IAbility
     public bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords);
 
     public List<Combatant> CombatantsInAreaOfEffect(Vector2I startCoords);
+
+    public List<Combatant> ValidatedTargets(Combatant user, List<Combatant> targets);
 }

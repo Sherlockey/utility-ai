@@ -42,7 +42,7 @@ position = Vector2(40, 12)
 position = Vector2(56, 12)
 
 [node name="Marker2D5" type="Marker2D" parent="." unique_id=573259782]
-position = Vector2(8, 252)
+position = Vector2(8, 60)
 
 [node name="Marker2D6" type="Marker2D" parent="." unique_id=1407573742]
-position = Vector2(24, 252)
+position = Vector2(24, 60)

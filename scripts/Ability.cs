@@ -6,6 +6,8 @@ public abstract partial class Ability : Node, IAbility
 {
     [Export]
     protected int _areaOfEffect = 1;
+    [Export]
+    protected int _damagePercentNumerator = 100;
 
     public abstract void Apply(Combatant user, List<Combatant> targets);
 
@@ -26,5 +28,10 @@ public abstract partial class Ability : Node, IAbility
             }
         }
         return combatants;
+    }
+
+    public virtual List<Combatant> ValidatedTargets(Combatant user, List<Combatant> targets)
+    {
+        return targets;
     }
 }

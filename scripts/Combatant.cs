@@ -76,9 +76,10 @@ public partial class Combatant : Node2D
                     if (ability.IsInRange(myCoords, selectedCoords))
                     {
                         List<Combatant> targets = ability.CombatantsInAreaOfEffect(selectedCoords);
-                        ability.Apply(this, targets);
+                        targets = ability.ValidatedTargets(this, targets);
+                        ability.Apply(this, targets); // TODO this is temporary should choose best option
                         Status.AbilitiesRemaining -= 1;
-                        return; // TODO this is temporary
+                        // return; // TODO this is temporary
                     }
                 }
             }

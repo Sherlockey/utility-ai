@@ -14,7 +14,7 @@ public partial class Shoot : Ability
         int damage = user.Stats.Attack * user.Stats.Attack;
         foreach (Combatant target in targets)
         {
-            target.Status.TakeDamage(damage);
+            target.Status.TakeDamage(damage * _damagePercentNumerator / 100);
         }
     }
 

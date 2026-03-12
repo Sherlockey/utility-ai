@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_qxgmm"]
 [ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_swm0g"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_0dyjn"]
+[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_5fsgc"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_swm0g"]
 
 [node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
@@ -20,9 +21,13 @@ texture = ExtResource("2_qxgmm")
 
 [node name="Abilities" type="Node" parent="." unique_id=1014024241]
 
+[node name="Attack" type="Node" parent="Abilities" unique_id=10511072]
+script = ExtResource("5_5fsgc")
+
 [node name="Slam" type="Node" parent="Abilities" unique_id=1213089474]
 script = ExtResource("3_swm0g")
 _areaOfEffect = 2
+_damagePercentNumerator = 67
 
 [node name="Stats" type="Node" parent="." unique_id=1034357615]
 script = ExtResource("4_0dyjn")

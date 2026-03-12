@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bpxxrwnhbht1p" path="res://assets/mage.png" id="2_ip8om"]
 [ext_resource type="Script" uid="uid://di4ou7dbi4fvf" path="res://scripts/Cast.cs" id="3_nc4w5"]
+[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_p0roq"]
 [ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_r5lxc"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_t2cfv"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="3_yb71v"]
@@ -20,9 +21,14 @@ texture = ExtResource("2_ip8om")
 
 [node name="Abilities" type="Node" parent="." unique_id=226643063]
 
+[node name="Attack" type="Node" parent="Abilities" unique_id=1158664593]
+script = ExtResource("3_p0roq")
+_damagePercentNumerator = 33
+
 [node name="Cast" type="Node" parent="Abilities" unique_id=338080924]
 script = ExtResource("3_nc4w5")
 _areaOfEffect = 2
+_damagePercentNumerator = 67
 
 [node name="Stats" type="Node" parent="." unique_id=625439113]
 script = ExtResource("3_yb71v")
