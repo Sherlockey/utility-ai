@@ -16,7 +16,6 @@ public partial class Movement : Node
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
-            // Movement
             if (keyEvent.Keycode == Key.A)
             {
                 TryMove(new Vector2I(-BattleManager.Get().TileSize.X, 0));
@@ -38,13 +37,25 @@ public partial class Movement : Node
 
     private bool TryMove(Vector2I movement)
     {
-        if (_combatant.Status.CurrentMovement > 0)
+        TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
+        Vector2I newTile = tileMapLayer.LocalToMap(_combatant.Position + movement);
+        TileData tileData = tileMapLayer.GetCellTileData(newTile);
+        bool isTileTraversable = false;
+        if (tileData.HasCustomData("Traversable"))
         {
-            _combatant.GlobalPosition = _combatant.GlobalPosition + movement;
+            isTileTraversable = tileData.GetCustomData("Traversable").AsBool();
+        }
+        else
+        {
+            // TODO assertions or error handling?
+            GD.Print("ERROR in Movement.TryMove: custom data 'Traversable' is missing in TileMapLayer");
+        }
+        if (_combatant.Status.CurrentMovement > 0 && isTileTraversable)
+        {
+            _combatant.Position = _combatant.Position + movement;
             _combatant.Status.CurrentMovement -= 1;
             return true;
         }
-
         return false;
     }
 }
