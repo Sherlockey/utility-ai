@@ -9,11 +9,9 @@ public abstract partial class Ability : Node, IAbility
 
     public abstract void Apply(Combatant user, List<Combatant> targets);
 
-    public abstract bool IsTargetValid(Combatant user, Combatant target);
-
     public abstract bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords);
 
-    public List<Combatant> CombatantsInAreaOfEffect(Vector2I startCoords)
+    public virtual List<Combatant> CombatantsInAreaOfEffect(Vector2I startCoords)
     {
         List<Combatant> combatants = [];
         List<Vector2I> coordsInAOE = Utils.CoordsInDist(startCoords, _areaOfEffect - 1);

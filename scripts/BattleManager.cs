@@ -103,7 +103,7 @@ public partial class BattleManager : Node
     private void OnStatusDied(object sender, Combatant combatant)
     {
         GD.Print("BattleManager.OnStatusDied not implemented yet!");
-        // TODO: Lots more cleanup needed when a Status informs that a Combatant died
+        // TODO Lots more cleanup needed when a Status informs that a Combatant died
         Combatants.Remove(combatant);
     }
 }

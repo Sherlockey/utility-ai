@@ -13,7 +13,6 @@ AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
-MyTeam = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("1_qh7of")
@@ -31,7 +30,6 @@ Health = 10
 script = ExtResource("5_febxk")
 Stats = NodePath("../Stats")
 
-[node name="Movement" type="Node" parent="." unique_id=1251461647 node_paths=PackedStringArray("_combatant", "_stats")]
+[node name="Movement" type="Node" parent="." unique_id=1251461647 node_paths=PackedStringArray("_combatant")]
 script = ExtResource("3_82ri0")
 _combatant = NodePath("..")
-_stats = NodePath("../Stats")

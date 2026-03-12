@@ -27,9 +27,4 @@ public partial class Attack : Ability
         int rangeSum = rangeX + rangeY;
         return rangeSum <= _range;
     }
-
-    public override bool IsTargetValid(Combatant user, Combatant target)
-    {
-        return target != user;
-    }
 }

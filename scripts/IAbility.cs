@@ -6,8 +6,6 @@ public interface IAbility
 {
     public void Apply(Combatant user, List<Combatant> targets);
 
-    public bool IsTargetValid(Combatant user, Combatant target);
-
     public bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords);
 
     public List<Combatant> CombatantsInAreaOfEffect(Vector2I startCoords);

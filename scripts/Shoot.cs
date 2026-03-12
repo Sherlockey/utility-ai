@@ -25,9 +25,4 @@ public partial class Shoot : Ability
         int rangeSum = rangeX + rangeY;
         return rangeSum >= _minRange && rangeSum <= _maxRange;
     }
-
-    public override bool IsTargetValid(Combatant user, Combatant target)
-    {
-        return target != user;
-    }
 }

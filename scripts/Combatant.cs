@@ -56,7 +56,7 @@ public partial class Combatant : Node2D
             // Turn Management
             if (keyEvent.Keycode == Key.Space)
             {
-                // TODO: is there another way to handle this?
+                // TODO is there another way to handle this?
                 GetViewport().SetInputAsHandled();
                 EndTurn();
             }
@@ -67,21 +67,10 @@ public partial class Combatant : Node2D
                 {
                     return;
                 }
-                // TODO: this is temporary for testing
+                // TODO this is temporary for testing
                 Vector2 mousePos = GetGlobalMousePosition();
                 Vector2I selectedCoords = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
                 Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-                // Combatant target = null;
-                // foreach (Combatant combatant in BattleManager.Get().Combatants)
-                // {
-                //     Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap
-                //         (combatant.GlobalPosition);
-                //     if (combatantCoords == selectedCoords)
-                //     {
-                //         target = combatant;
-                //         break;
-                //     }
-                // }
                 foreach (IAbility ability in Abilities)
                 {
                     if (ability.IsInRange(myCoords, selectedCoords))

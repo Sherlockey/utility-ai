@@ -12,7 +12,7 @@ public partial class Status : Node
     public int CurrentMovement { get; set; }
     public int AccumulatedSpeed { get; set; } = 0;
     public int CurrentHealth { get; set; }
-    public int AbilitiesRemaining { get; set; } = 0; // TODO: this concept is @Incomplete
+    public int AbilitiesRemaining { get; set; } = 0; // TODO this concept is @Incomplete
 
     public override void _Ready()
     {
@@ -29,11 +29,11 @@ public partial class Status : Node
             if (Owner is Combatant owner)
             {
                 Died?.Invoke(this, owner);
-                // TODO: this is temporary. Really we want to be able to resurrect fallen Combatants
+                // TODO this is temporary. Really we want to be able to resurrect fallen Combatants
                 Owner.QueueFree();
             }
         }
-        // TODO: testing only
+        // TODO testing only
         GD.Print(Owner.Name + " took " + damage + " damage and has " + CurrentHealth + " health remaining.");
     }
 }

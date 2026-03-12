@@ -16,11 +16,6 @@ public partial class Cast : Ability
         }
     }
 
-    public override bool IsTargetValid(Combatant user, Combatant target)
-    {
-        return true;
-    }
-
     public override bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords)
     {
         int rangeX = Mathf.Abs(endTileCoords.X - startTileCoords.X);
