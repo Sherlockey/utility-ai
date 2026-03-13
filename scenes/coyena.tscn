@@ -7,12 +7,13 @@
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_vbcjk"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_hqykf"]
 
-[node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
+[node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement", "Sprite2D")]
 script = ExtResource("1_4rdcq")
 AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
+Sprite2D = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("2_4rdcq")

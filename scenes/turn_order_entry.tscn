@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://c677gc1k7adga"]
+
+[ext_resource type="Script" uid="uid://bxndonyipumsr" path="res://scripts/TurnOrderEntry.cs" id="1_60igw"]
+[ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="1_vw7n4"]
+
+[node name="TurnOrderEntry" type="Control" unique_id=1616405668 node_paths=PackedStringArray("Label", "TextureRect")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_60igw")
+Label = NodePath("ColorRect/MarginContainer/TurnOrderEntry/Label")
+TextureRect = NodePath("ColorRect/MarginContainer/TurnOrderEntry/TextureRect")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=304040041]
+layout_mode = 0
+offset_right = 29.0
+offset_bottom = 26.0
+color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=974554536]
+layout_mode = 0
+offset_right = 29.0
+offset_bottom = 26.0
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="TurnOrderEntry" type="HBoxContainer" parent="ColorRect/MarginContainer" unique_id=1864345226]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/MarginContainer/TurnOrderEntry" unique_id=1457446330]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect/MarginContainer/TurnOrderEntry" unique_id=1147313945]
+layout_mode = 2
+texture = ExtResource("1_vw7n4")
+stretch_mode = 3

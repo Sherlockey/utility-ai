@@ -8,13 +8,14 @@
 [ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_eelhu"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="6_1bj3w"]
 
-[node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
+[node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement", "Sprite2D")]
 script = ExtResource("3_38ety")
 MyTeam = 1
 AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
+Sprite2D = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
 texture = ExtResource("2_umvcx")

@@ -15,6 +15,11 @@ public partial class BattleManager : Node
 
     private static BattleManager s_battleManager = null;
 
+    [Export]
+    private VBoxContainer _turnOrderEntryVBox;
+    [Export]
+    private PackedScene _turnOrderEntryScene;
+
     public BattleManager()
     {
         if (s_battleManager == null)
@@ -41,20 +46,10 @@ public partial class BattleManager : Node
             }
         }
         AdvanceTurnOrder();
+        UpdateTurnOrderDisplay();
         Combatant firstCombatant = Combatants.First();
         Camera.Target = firstCombatant;
         firstCombatant.InitializeTurn();
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
-        {
-            if (keyEvent.Keycode == Key.I)
-            {
-                DisplayTurnOrder();
-            }
-        }
     }
 
     public static BattleManager Get()
@@ -84,11 +79,21 @@ public partial class BattleManager : Node
         Combatants.Sort(new Combatant.SortDescendingAccumulatedSpeed());
     }
 
-    private void DisplayTurnOrder()
+    private void UpdateTurnOrderDisplay()
     {
+        foreach (Node child in _turnOrderEntryVBox.GetChildren())
+        {
+            _turnOrderEntryVBox.RemoveChild(child);
+            child.QueueFree();
+        }
+        int i = 1;
         foreach (Combatant combatant in Combatants)
         {
-            GD.Print(combatant.Name + ": " + combatant.Status.AccumulatedSpeed);
+            TurnOrderEntry turnOrderEntry = _turnOrderEntryScene.Instantiate<TurnOrderEntry>();
+            turnOrderEntry.Label.Text = i.ToString();
+            turnOrderEntry.TextureRect.Texture = combatant.Sprite2D.Texture;
+            _turnOrderEntryVBox.AddChild(turnOrderEntry);
+            i++;
         }
     }
 
@@ -99,6 +104,7 @@ public partial class BattleManager : Node
         {
             AdvanceTurnOrder();
         }
+        UpdateTurnOrderDisplay();
         Combatant firstCombatant = Combatants.First();
         Camera.Target = firstCombatant;
         firstCombatant.InitializeTurn();
@@ -106,8 +112,9 @@ public partial class BattleManager : Node
 
     private void OnStatusDied(object sender, Combatant combatant)
     {
-        GD.Print("BattleManager.OnStatusDied not implemented yet!");
+        GD.Print("BattleManager.OnStatusDied not fully implemented yet!");
         // TODO Lots more cleanup needed when a Status informs that a Combatant died
         Combatants.Remove(combatant);
+        UpdateTurnOrderDisplay();
     }
 }

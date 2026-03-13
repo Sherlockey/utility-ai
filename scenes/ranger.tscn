@@ -8,13 +8,14 @@
 [ext_resource type="Script" uid="uid://dl7ds1b3f8u67" path="res://scripts/Shoot.cs" id="3_n1kao"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_8rvsd"]
 
-[node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement")]
+[node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement", "Sprite2D")]
 script = ExtResource("3_8k012")
 MyTeam = 1
 AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
+Sprite2D = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2042220450]
 texture = ExtResource("2_uxtlj")

@@ -28,6 +28,8 @@ public partial class Combatant : Node2D
     public Status Status { get; private set; }
     [Export]
     public Movement Movement;
+    [Export]
+    public Sprite2D Sprite2D { get; private set; }
 
     public List<IAbility> Abilities = [];
     public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
