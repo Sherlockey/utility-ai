@@ -42,7 +42,22 @@ public partial class Level : Node2D
         battleManager.TileMapLayer = _tileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
+        battleManager.BattleEnded += OnBattleManagerBattleEnded;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
+    }
+
+    private void OnBattleManagerBattleEnded(object sender, bool isVictory)
+    {
+        if (isVictory)
+        {
+            // TODO goto next level
+            GetTree().ReloadCurrentScene();
+        }
+        else
+        {
+            // TODO restart game
+            GetTree().ReloadCurrentScene();
+        }
     }
 }

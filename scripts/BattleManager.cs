@@ -6,6 +6,8 @@ using System.Linq;
 
 public partial class BattleManager : Node
 {
+    public event EventHandler<bool> BattleEnded;
+
     public const int TurnThreshold = 100;
 
     public List<Combatant> Combatants = []; // Initialized by Level
@@ -22,14 +24,7 @@ public partial class BattleManager : Node
 
     public BattleManager()
     {
-        if (s_battleManager == null)
-        {
-            s_battleManager = this;
-        }
-        else
-        {
-            QueueFree();
-        }
+        s_battleManager = this;
     }
 
     public override void _Ready()
@@ -97,6 +92,47 @@ public partial class BattleManager : Node
         }
     }
 
+    private void CheckBattleOver()
+    {
+        List<Combatant> allyCombatants = [];
+        List<Combatant> enemyCombatants = [];
+        foreach (Combatant combatant in Combatants)
+        {
+            if (combatant.MyTeam == Combatant.Team.Ally)
+            {
+                allyCombatants.Add(combatant);
+            }
+            else if (combatant.MyTeam == Combatant.Team.Enemy)
+            {
+                enemyCombatants.Add(combatant);
+            }
+        }
+        if (allyCombatants.Count == 0)
+        {
+            BattleEnd(false);
+        }
+        else if (enemyCombatants.Count == 0)
+        {
+            BattleEnd(true);
+        }
+    }
+
+    private void BattleEnd(bool isVictory)
+    {
+        if (isVictory)
+        {
+            // TODO UI elements here
+            GD.Print("Victory!");
+            BattleEnded?.Invoke(this, isVictory);
+        }
+        else
+        {
+            // TODO UI elements here
+            GD.Print("Defeat!");
+            BattleEnded?.Invoke(this, isVictory);
+        }
+    }
+
     private void OnCombatantTurnEnded(object sender, EventArgs e)
     {
         Combatants.Sort(new Combatant.SortDescendingAccumulatedSpeed());
@@ -115,6 +151,7 @@ public partial class BattleManager : Node
         GD.Print("BattleManager.OnStatusDied not fully implemented yet!");
         // TODO Lots more cleanup needed when a Status informs that a Combatant died
         Combatants.Remove(combatant);
+        CheckBattleOver();
         UpdateTurnOrderDisplay();
     }
 }
