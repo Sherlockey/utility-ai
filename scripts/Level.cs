@@ -8,6 +8,8 @@ public partial class Level : Node2D
     [Export]
     private TileMapLayer _tileMapLayer;
     [Export]
+    private Camera _camera;
+    [Export]
     private PackedScene[] _combatantScenes;
     [Export]
     private PackedScene _battleManagerScene;
@@ -39,6 +41,7 @@ public partial class Level : Node2D
         }
         battleManager.TileMapLayer = _tileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
+        battleManager.Camera = _camera;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
     }

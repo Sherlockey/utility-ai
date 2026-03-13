@@ -7,9 +7,11 @@ using System.Linq;
 public partial class BattleManager : Node
 {
     public const int TurnThreshold = 100;
+
     public List<Combatant> Combatants = []; // Initialized by Level
     public TileMapLayer TileMapLayer { get; set; } // Initialized by Level
     public Vector2I TileSize { get; set; } // Initialized by Level
+    public Camera Camera { get; set; } // Initialized by Level
 
     private static BattleManager s_battleManager = null;
 
@@ -40,6 +42,7 @@ public partial class BattleManager : Node
         }
         AdvanceTurnOrder();
         Combatant firstCombatant = Combatants.First();
+        Camera.Target = firstCombatant;
         firstCombatant.InitializeTurn();
     }
 
@@ -97,6 +100,7 @@ public partial class BattleManager : Node
             AdvanceTurnOrder();
         }
         Combatant firstCombatant = Combatants.First();
+        Camera.Target = firstCombatant;
         firstCombatant.InitializeTurn();
     }
 
