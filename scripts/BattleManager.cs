@@ -36,6 +36,7 @@ public partial class BattleManager : Node
             if (combatant != null)
             {
                 combatant.TurnEnded += OnCombatantTurnEnded;
+                combatant.Status.DamageTaken += OnStatusDamageTaken;
                 combatant.Status.Died += OnStatusDied;
                 combatant.BattleIndex = i;
             }
@@ -84,9 +85,12 @@ public partial class BattleManager : Node
         int i = 1;
         foreach (Combatant combatant in Combatants)
         {
+            // TODO decouple the health bar from the turn order
             TurnOrderEntry turnOrderEntry = _turnOrderEntryScene.Instantiate<TurnOrderEntry>();
             turnOrderEntry.Label.Text = i.ToString();
             turnOrderEntry.TextureRect.Texture = combatant.Sprite2D.Texture;
+            turnOrderEntry.HealthBar.TextureProgressBar.MaxValue = combatant.Stats.Health;
+            turnOrderEntry.HealthBar.TextureProgressBar.Value = combatant.Status.CurrentHealth;
             _turnOrderEntryVBox.AddChild(turnOrderEntry);
             i++;
         }
@@ -144,6 +148,11 @@ public partial class BattleManager : Node
         Combatant firstCombatant = Combatants.First();
         Camera.Target = firstCombatant;
         firstCombatant.InitializeTurn();
+    }
+
+    private void OnStatusDamageTaken(object sender, EventArgs e)
+    {
+        UpdateTurnOrderDisplay();
     }
 
     private void OnStatusDied(object sender, Combatant combatant)

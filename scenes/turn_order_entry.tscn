@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bxndonyipumsr" path="res://scripts/TurnOrderEntry.cs" id="1_60igw"]
 [ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="1_vw7n4"]
+[ext_resource type="PackedScene" uid="uid://bssj5788iphc6" path="res://scenes/health_bar.tscn" id="3_cbphb"]
 
-[node name="TurnOrderEntry" type="Control" unique_id=1616405668 node_paths=PackedStringArray("Label", "TextureRect")]
+[node name="TurnOrderEntry" type="Control" unique_id=1616405668 node_paths=PackedStringArray("Label", "TextureRect", "HealthBar")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -13,16 +14,22 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_60igw")
-Label = NodePath("ColorRect/MarginContainer/TurnOrderEntry/Label")
-TextureRect = NodePath("ColorRect/MarginContainer/TurnOrderEntry/TextureRect")
+Label = NodePath("VBoxContainer/BorderColorRect/MarginContainer/MarginContainer/HBoxContainer/Label")
+TextureRect = NodePath("VBoxContainer/BorderColorRect/MarginContainer/MarginContainer/HBoxContainer/TextureRect")
+HealthBar = NodePath("VBoxContainer/HealthBar")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=304040041]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2040210012]
 layout_mode = 0
 offset_right = 29.0
-offset_bottom = 26.0
-color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+offset_bottom = 27.985
+theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=974554536]
+[node name="BorderColorRect" type="ColorRect" parent="VBoxContainer" unique_id=304040041]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/BorderColorRect" unique_id=974554536]
 layout_mode = 0
 offset_right = 29.0
 offset_bottom = 26.0
@@ -31,17 +38,33 @@ theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="TurnOrderEntry" type="HBoxContainer" parent="ColorRect/MarginContainer" unique_id=1864345226]
+[node name="BackgroundColorRect" type="ColorRect" parent="VBoxContainer/BorderColorRect/MarginContainer" unique_id=387103598]
 layout_mode = 2
+color = Color(0.1882353, 0.039215688, 0.14117648, 1)
 
-[node name="Label" type="Label" parent="ColorRect/MarginContainer/TurnOrderEntry" unique_id=1457446330]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/BorderColorRect/MarginContainer" unique_id=1204189915]
 layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/BorderColorRect/MarginContainer/MarginContainer" unique_id=1864345226]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/BorderColorRect/MarginContainer/MarginContainer/HBoxContainer" unique_id=1457446330]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_font_sizes/font_size = 12
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="ColorRect/MarginContainer/TurnOrderEntry" unique_id=1147313945]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/BorderColorRect/MarginContainer/MarginContainer/HBoxContainer" unique_id=1147313945]
 layout_mode = 2
 texture = ExtResource("1_vw7n4")
 stretch_mode = 3
+
+[node name="HealthBar" parent="VBoxContainer" unique_id=893533983 instance=ExtResource("3_cbphb")]
+layout_mode = 2

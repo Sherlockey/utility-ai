@@ -8,4 +8,6 @@ public partial class TurnOrderEntry : Control
     public Label Label { get; set; }
     [Export]
     public TextureRect TextureRect { get; set; }
+    [Export]
+    public HealthBar HealthBar { get; set; }
 }

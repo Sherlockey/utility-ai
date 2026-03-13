@@ -5,6 +5,7 @@ using System;
 public partial class Status : Node
 {
     public event EventHandler<Combatant> Died;
+    public event EventHandler DamageTaken;
 
     [Export]
     public Stats Stats;
@@ -19,10 +20,10 @@ public partial class Status : Node
         CurrentHealth = Stats.Health;
     }
 
-
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+        DamageTaken?.Invoke(this, EventArgs.Empty);
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;

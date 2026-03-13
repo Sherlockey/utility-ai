@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bssj5788iphc6"]
+
+[ext_resource type="Script" uid="uid://dtrbukglnoyu5" path="res://scripts/HealthBar.cs" id="1_1bvlm"]
+
+[sub_resource type="Gradient" id="Gradient_1bvlm"]
+colors = PackedColorArray(0.1882353, 0.039215688, 0.14117648, 1, 0.1882353, 0.039215688, 0.14117648, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y3kqx"]
+gradient = SubResource("Gradient_1bvlm")
+
+[sub_resource type="Gradient" id="Gradient_6opq1"]
+colors = PackedColorArray(0.14901961, 0.61960787, 0.40784314, 1, 0.14901961, 0.61960787, 0.40784314, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tujlf"]
+gradient = SubResource("Gradient_6opq1")
+
+[node name="HealthBar" type="Control" unique_id=1616405668 node_paths=PackedStringArray("TextureProgressBar")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1bvlm")
+TextureProgressBar = NodePath("TextureProgressBar")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=421486645]
+layout_mode = 0
+offset_right = 29.0
+offset_bottom = 8.0
+color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=866044123]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 28.0
+offset_bottom = 7.0
+max_value = 44.0
+value = 33.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_y3kqx")
+texture_progress = SubResource("GradientTexture1D_tujlf")

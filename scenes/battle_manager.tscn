@@ -22,6 +22,7 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
+offset_right = 8.0
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD/TurnOrderVBox" unique_id=35697944]
@@ -33,7 +34,7 @@ theme_override_constants/margin_bottom = 4
 
 [node name="TurnOrderEntryVBox" type="VBoxContainer" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer" unique_id=1374376555]
 layout_mode = 2
-theme_override_constants/separation = 28
+theme_override_constants/separation = 39
 
 [node name="TurnOrderEntry" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=1864345226 instance=ExtResource("2_05opc")]
 layout_mode = 2
