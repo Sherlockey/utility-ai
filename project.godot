@@ -28,6 +28,10 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="utility-ai"
 
+[gui]
+
+theme/custom="uid://dkcr404nlgkw1"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

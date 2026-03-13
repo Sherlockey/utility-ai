@@ -1,0 +1,18 @@
+[gd_resource type="Theme" format=3 uid="uid://dkcr404nlgkw1"]
+
+[ext_resource type="FontFile" uid="uid://dp04sx7eyxk0s" path="res://resources/font/Lilex-Regular.woff2" id="1_mwhd1"]
+
+[resource]
+default_font = ExtResource("1_mwhd1")
+default_font_size = 14
+Button/colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/font_focus_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/font_hover_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/font_hover_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/font_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_focus_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_hover_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_hover_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_normal_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Label/colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)

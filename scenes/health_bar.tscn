@@ -29,7 +29,7 @@ TextureProgressBar = NodePath("TextureProgressBar")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=421486645]
 layout_mode = 0
-offset_right = 29.0
+offset_right = 26.0
 offset_bottom = 8.0
 color = Color(0.9647059, 0.9372549, 0.8, 1)
 
@@ -37,7 +37,7 @@ color = Color(0.9647059, 0.9372549, 0.8, 1)
 layout_mode = 0
 offset_left = 1.0
 offset_top = 1.0
-offset_right = 28.0
+offset_right = 25.0
 offset_bottom = 7.0
 max_value = 44.0
 value = 33.0

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://qdw6j1juc0iu"]
+
+[ext_resource type="PackedScene" uid="uid://c677gc1k7adga" path="res://scenes/turn_order_entry.tscn" id="1_padsd"]
+
+[node name="TurnOrderDisplay" type="VBoxContainer" unique_id=921137513]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 8.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2126151014]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TurnOrderEntryVBox" type="VBoxContainer" parent="MarginContainer" unique_id=1565388913]
+layout_mode = 2
+theme_override_constants/separation = 39
+
+[node name="TurnOrderEntry" parent="MarginContainer/TurnOrderEntryVBox" unique_id=1616405668 instance=ExtResource("1_padsd")]
+layout_mode = 2
+
+[node name="TurnOrderEntry2" parent="MarginContainer/TurnOrderEntryVBox" unique_id=1695376857 instance=ExtResource("1_padsd")]
+layout_mode = 2
+
+[node name="TurnOrderEntry3" parent="MarginContainer/TurnOrderEntryVBox" unique_id=1543180194 instance=ExtResource("1_padsd")]
+layout_mode = 2
+
+[node name="TurnOrderEntry4" parent="MarginContainer/TurnOrderEntryVBox" unique_id=346888316 instance=ExtResource("1_padsd")]
+layout_mode = 2
+
+[node name="TurnOrderEntry5" parent="MarginContainer/TurnOrderEntryVBox" unique_id=1959853072 instance=ExtResource("1_padsd")]
+layout_mode = 2
+
+[node name="TurnOrderEntry6" parent="MarginContainer/TurnOrderEntryVBox" unique_id=1920120897 instance=ExtResource("1_padsd")]
+layout_mode = 2

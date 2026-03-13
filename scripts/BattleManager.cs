@@ -20,6 +20,10 @@ public partial class BattleManager : Node
     [Export]
     private VBoxContainer _turnOrderEntryVBox;
     [Export]
+    private StatusDisplay _activeStatusDisplay;
+    [Export]
+    private StatusDisplay _targetedStatusDisplay;
+    [Export]
     private PackedScene _turnOrderEntryScene;
 
     public BattleManager()
@@ -43,9 +47,12 @@ public partial class BattleManager : Node
         }
         AdvanceTurnOrder();
         UpdateTurnOrderDisplay();
-        Combatant firstCombatant = Combatants.First();
-        Camera.Target = firstCombatant;
-        firstCombatant.InitializeTurn();
+        Combatant c = Combatants.First();
+        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
+            c.Stats.Movement.ToString());
+        Camera.Target = c;
+        c.InitializeTurn();
     }
 
     public static BattleManager Get()
@@ -77,11 +84,13 @@ public partial class BattleManager : Node
 
     private void UpdateTurnOrderDisplay()
     {
+        // Remove old entires from TurnOrderVBox
         foreach (Node child in _turnOrderEntryVBox.GetChildren())
         {
             _turnOrderEntryVBox.RemoveChild(child);
             child.QueueFree();
         }
+        // Repopulate TurnOrderVBox
         int i = 1;
         foreach (Combatant combatant in Combatants)
         {
@@ -93,6 +102,10 @@ public partial class BattleManager : Node
             turnOrderEntry.HealthBar.TextureProgressBar.Value = combatant.Status.CurrentHealth;
             _turnOrderEntryVBox.AddChild(turnOrderEntry);
             i++;
+            if (i > 9) // TODO 9 is currently a hardcoded # of entries allowed in turn order display
+            {
+                break;
+            }
         }
     }
 
@@ -145,9 +158,12 @@ public partial class BattleManager : Node
             AdvanceTurnOrder();
         }
         UpdateTurnOrderDisplay();
-        Combatant firstCombatant = Combatants.First();
-        Camera.Target = firstCombatant;
-        firstCombatant.InitializeTurn();
+        Combatant c = Combatants.First();
+        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
+            c.Stats.Movement.ToString());
+        Camera.Target = c;
+        c.InitializeTurn();
     }
 
     private void OnStatusDamageTaken(object sender, EventArgs e)

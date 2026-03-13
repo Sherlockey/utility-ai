@@ -2,54 +2,35 @@
 
 [ext_resource type="Script" uid="uid://bf36aga04uopq" path="res://scripts/BattleManager.cs" id="1_3jpuh"]
 [ext_resource type="PackedScene" uid="uid://c677gc1k7adga" path="res://scenes/turn_order_entry.tscn" id="2_05opc"]
+[ext_resource type="PackedScene" uid="uid://qdw6j1juc0iu" path="res://scenes/turn_order_display.tscn" id="3_8w533"]
+[ext_resource type="PackedScene" uid="uid://bk3oexwkotyu" path="res://scenes/status_display.tscn" id="4_7wf3v"]
 
-[node name="BattleManager" type="Node" unique_id=1050662039 node_paths=PackedStringArray("_turnOrderEntryVBox")]
+[node name="BattleManager" type="Node" unique_id=1050662039 node_paths=PackedStringArray("_turnOrderEntryVBox", "_activeStatusDisplay", "_targetedStatusDisplay")]
 script = ExtResource("1_3jpuh")
-_turnOrderEntryVBox = NodePath("CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox")
+_turnOrderEntryVBox = NodePath("HUD/TurnOrderDisplay/MarginContainer/TurnOrderEntryVBox")
+_activeStatusDisplay = NodePath("HUD/ActiveStatusDisplay")
+_targetedStatusDisplay = NodePath("HUD/TargetedStatusDisplay")
 _turnOrderEntryScene = ExtResource("2_05opc")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1364119465]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1364119465]
 
-[node name="HUD" type="Control" parent="CanvasLayer" unique_id=1942814329]
-layout_mode = 3
-anchors_preset = 15
+[node name="TurnOrderDisplay" parent="HUD" unique_id=921137513 instance=ExtResource("3_8w533")]
+anchors_preset = 0
+anchor_bottom = 0.0
+offset_bottom = 203.0
+grow_vertical = 1
+
+[node name="ActiveStatusDisplay" parent="HUD" unique_id=842227053 instance=ExtResource("4_7wf3v")]
+
+[node name="TargetedStatusDisplay" parent="HUD" unique_id=243878447 instance=ExtResource("4_7wf3v")]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -126.0
+offset_top = 0.0
+offset_right = -126.0
+offset_bottom = 0.0
+grow_horizontal = 0
 
-[node name="TurnOrderVBox" type="VBoxContainer" parent="CanvasLayer/HUD" unique_id=1300451023]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 8.0
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HUD/TurnOrderVBox" unique_id=35697944]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="TurnOrderEntryVBox" type="VBoxContainer" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer" unique_id=1374376555]
-layout_mode = 2
-theme_override_constants/separation = 39
-
-[node name="TurnOrderEntry" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=1864345226 instance=ExtResource("2_05opc")]
-layout_mode = 2
-
-[node name="TurnOrderEntry2" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=1594821020 instance=ExtResource("2_05opc")]
-layout_mode = 2
-
-[node name="TurnOrderEntry3" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=1897744754 instance=ExtResource("2_05opc")]
-layout_mode = 2
-
-[node name="TurnOrderEntry4" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=774789250 instance=ExtResource("2_05opc")]
-layout_mode = 2
-
-[node name="TurnOrderEntry5" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=571212555 instance=ExtResource("2_05opc")]
-layout_mode = 2
-
-[node name="TurnOrderEntry6" parent="CanvasLayer/HUD/TurnOrderVBox/MarginContainer/TurnOrderEntryVBox" unique_id=132177026 instance=ExtResource("2_05opc")]
-layout_mode = 2
+[editable path="HUD/TurnOrderDisplay"]
