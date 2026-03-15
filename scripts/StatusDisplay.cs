@@ -17,6 +17,7 @@ public partial class StatusDisplay : Control
     [Export]
     private Label _movementLabel;
 
+    // name should be <= 8 characters long for proper alignment
     public void Update(StringName name, Texture2D portraitTexture,
         string currentHealth, string maxHealth, string attack, string speed, string movement)
     {

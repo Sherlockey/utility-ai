@@ -7,13 +7,17 @@
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_vbcjk"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_hqykf"]
 
-[node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("AbilitiesParent", "Stats", "Status", "Movement", "Sprite2D")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvq8u"]
+size = Vector2(16, 24)
+
+[node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent", "_area2D")]
 script = ExtResource("1_4rdcq")
-AbilitiesParent = NodePath("Abilities")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
+AbilitiesParent = NodePath("Abilities")
+_area2D = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("2_4rdcq")
@@ -34,3 +38,9 @@ Stats = NodePath("../Stats")
 [node name="Movement" type="Node" parent="." unique_id=92483909 node_paths=PackedStringArray("_combatant")]
 script = ExtResource("3_u14bp")
 _combatant = NodePath("..")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1612773522]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=271858626]
+visible = false
+shape = SubResource("RectangleShape2D_tvq8u")

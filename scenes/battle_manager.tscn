@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://qdw6j1juc0iu" path="res://scenes/turn_order_display.tscn" id="3_8w533"]
 [ext_resource type="PackedScene" uid="uid://bk3oexwkotyu" path="res://scenes/status_display.tscn" id="4_7wf3v"]
 
-[node name="BattleManager" type="Node" unique_id=1050662039 node_paths=PackedStringArray("_turnOrderEntryVBox", "_activeStatusDisplay", "_targetedStatusDisplay")]
+[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("_turnOrderEntryVBox", "_activeStatusDisplay", "_targetedStatusDisplay")]
 script = ExtResource("1_3jpuh")
 _turnOrderEntryVBox = NodePath("HUD/TurnOrderDisplay/MarginContainer/TurnOrderEntryVBox")
 _activeStatusDisplay = NodePath("HUD/ActiveStatusDisplay")
@@ -19,18 +19,30 @@ anchors_preset = 0
 anchor_bottom = 0.0
 offset_bottom = 203.0
 grow_vertical = 1
+metadata/_edit_lock_ = true
 
 [node name="ActiveStatusDisplay" parent="HUD" unique_id=842227053 instance=ExtResource("4_7wf3v")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 34.0
+offset_top = -54.0
+offset_right = 34.0
+offset_bottom = -54.0
+grow_horizontal = 1
+grow_vertical = 0
+metadata/_edit_lock_ = true
 
 [node name="TargetedStatusDisplay" parent="HUD" unique_id=243878447 instance=ExtResource("4_7wf3v")]
-visible = false
 anchors_preset = 3
 anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -126.0
-offset_top = 0.0
-offset_right = -126.0
-offset_bottom = 0.0
+anchor_top = 1.0
+offset_left = -138.0
+offset_top = -54.0
+offset_right = -138.0
+offset_bottom = -54.0
 grow_horizontal = 0
+grow_vertical = 0
+metadata/_edit_lock_ = true
 
 [editable path="HUD/TurnOrderDisplay"]

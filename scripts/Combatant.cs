@@ -21,8 +21,6 @@ public partial class Combatant : Node2D
     [Export]
     public Team MyTeam { get; private set; }
     [Export]
-    public Node AbilitiesParent;
-    [Export]
     public Stats Stats { get; private set; }
     [Export]
     public Status Status { get; private set; }
@@ -30,6 +28,8 @@ public partial class Combatant : Node2D
     public Movement Movement;
     [Export]
     public Sprite2D Sprite2D { get; private set; }
+    [Export]
+    public Node AbilitiesParent;
 
     public List<IAbility> Abilities = [];
     public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
@@ -121,7 +121,7 @@ public partial class Combatant : Node2D
         }
     }
 
-    public void OnStatusDied(object sender, Combatant combatant)
+    private void OnStatusDied(object sender, Combatant combatant)
     {
         if (CurrentTurnState == TurnState.Active)
         {
