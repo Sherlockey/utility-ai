@@ -26,6 +26,8 @@ public partial class BattleManager : Node
     [Export]
     private PackedScene _turnOrderEntryScene;
 
+    private Combatant _activeCombatant = null;
+
     public BattleManager()
     {
         s_battleManager = this;
@@ -48,11 +50,12 @@ public partial class BattleManager : Node
         AdvanceTurnOrder();
         UpdateTurnOrderDisplay();
         Combatant c = Combatants.First();
+        _activeCombatant = c;
+        Camera.Target = c;
+        c.InitializeTurn();
         _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
             c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
             c.Stats.Movement.ToString());
-        Camera.Target = c;
-        c.InitializeTurn();
     }
 
     public static BattleManager Get()
@@ -163,12 +166,22 @@ public partial class BattleManager : Node
             c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
             c.Stats.Movement.ToString());
         Camera.Target = c;
+        _activeCombatant = c;
         c.InitializeTurn();
+        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
+            c.Stats.Movement.ToString());
     }
 
-    private void OnStatusDamageTaken(object sender, EventArgs e)
+    private void OnStatusDamageTaken(object sender, Combatant c)
     {
         UpdateTurnOrderDisplay();
+        if (c == _activeCombatant)
+        {
+            _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+                c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
+                c.Stats.Movement.ToString());
+        }
     }
 
     private void OnStatusDied(object sender, Combatant combatant)

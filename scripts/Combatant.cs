@@ -37,6 +37,7 @@ public partial class Combatant : Node2D
 
     public override void _Ready()
     {
+        Status.Died += OnStatusDied;
         foreach (Node node in AbilitiesParent.GetChildren())
         {
             if (node is IAbility ability)
@@ -117,6 +118,14 @@ public partial class Combatant : Node2D
                 result = x.BattleIndex.CompareTo(y.BattleIndex);
             }
             return result;
+        }
+    }
+
+    public void OnStatusDied(object sender, Combatant combatant)
+    {
+        if (CurrentTurnState == TurnState.Active)
+        {
+            EndTurn();
         }
     }
 }

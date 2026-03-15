@@ -8,6 +8,9 @@ public partial class Camera : Camera2D
 
     public override void _Process(double delta)
     {
-        Position = Target.Position;
+        if (Target != null)
+        {
+            Position = Target.Position;
+        }
     }
 }

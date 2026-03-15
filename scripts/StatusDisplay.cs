@@ -22,9 +22,9 @@ public partial class StatusDisplay : Control
     {
         _nameLabel.Text = name;
         _portrait.Texture = portraitTexture;
-        _healthLabel.Text = currentHealth + "/" + maxHealth;
-        _attackLabel.Text = attack;
-        _speedLabel.Text = speed;
-        _movementLabel.Text = movement;
+        _healthLabel.Text = "HP:" + currentHealth.PadZeros(3) + "/" + maxHealth.PadZeros(3);
+        _attackLabel.Text = "ATK:" + attack;
+        _speedLabel.Text = "SPD:" + speed;
+        _movementLabel.Text = "MOV:" + movement;
     }
 }
