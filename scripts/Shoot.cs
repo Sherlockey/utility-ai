@@ -25,4 +25,36 @@ public partial class Shoot : Ability
         int rangeSum = rangeX + rangeY;
         return rangeSum >= _minRange && rangeSum <= _maxRange;
     }
+
+    // Remove any targets that have a cell between the user and the target which blocks projectiles
+    public override List<Combatant> ValidatedTargets(Combatant user, List<Combatant> targets)
+    {
+        List<Combatant> result = [];
+        foreach (Combatant target in targets)
+        {
+            result.Add(target);
+        }
+        TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
+        Vector2I startCoords = tileMapLayer.LocalToMap(user.Position);
+        foreach (Combatant target in targets)
+        {
+            Vector2I endCoords = tileMapLayer.LocalToMap(target.Position);
+            List<Vector2I> coordsTraversedToTarget = Utils.PlotLine(startCoords, endCoords);
+            foreach (Vector2I coords in coordsTraversedToTarget)
+            {
+                string customDataLayerName = "BlocksProjectiles";
+                if (tileMapLayer.GetCellTileData(coords).HasCustomData(customDataLayerName))
+                {
+                    bool doesBlockProjectiles =
+                        tileMapLayer.GetCellTileData(coords).GetCustomData(customDataLayerName).AsBool();
+                    if (doesBlockProjectiles)
+                    {
+                        result.Remove(target);
+                        continue;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }

@@ -59,6 +59,7 @@ public partial class Combatant : Node2D
             // Turn Management
             if (keyEvent.Keycode == Key.Space)
             {
+                // Added to prevent ending turn of the combatant who next has a turn immediately
                 // TODO is there another way to handle this?
                 GetViewport().SetInputAsHandled();
                 EndTurn();
@@ -80,9 +81,11 @@ public partial class Combatant : Node2D
                     {
                         List<Combatant> targets = ability.CombatantsInAreaOfEffect(selectedCoords);
                         targets = ability.ValidatedTargets(this, targets);
-                        ability.Apply(this, targets); // TODO this is temporary should choose best option
-                        Status.AbilitiesRemaining -= 1;
-                        // return; // TODO this is temporary
+                        if (targets.Count > 0)
+                        {
+                            ability.Apply(this, targets);
+                            Status.AbilitiesRemaining -= 1;
+                        }
                     }
                 }
             }
