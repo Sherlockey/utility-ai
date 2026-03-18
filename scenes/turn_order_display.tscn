@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://qdw6j1juc0iu"]
 
+[ext_resource type="Script" uid="uid://5jd66j3ejuc4" path="res://scripts/TurnOrderDisplay.cs" id="1_p1kkb"]
 [ext_resource type="PackedScene" uid="uid://c677gc1k7adga" path="res://scenes/turn_order_entry.tscn" id="1_padsd"]
 
-[node name="TurnOrderDisplay" type="VBoxContainer" unique_id=921137513]
+[node name="TurnOrderDisplay" type="VBoxContainer" unique_id=921137513 node_paths=PackedStringArray("_turnOrderEntryVBox")]
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 8.0
 grow_vertical = 2
+script = ExtResource("1_p1kkb")
+_turnOrderEntryVBox = NodePath("MarginContainer/TurnOrderEntryVBox")
+_turnOrderEntryScene = ExtResource("1_padsd")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2126151014]
 layout_mode = 2

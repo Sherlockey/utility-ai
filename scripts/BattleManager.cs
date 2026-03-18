@@ -18,13 +18,11 @@ public partial class BattleManager : Node2D
     private static BattleManager s_battleManager = null;
 
     [Export]
-    private VBoxContainer _turnOrderEntryVBox;
+    private TurnOrderDisplay _turnOrderDisplay;
     [Export]
     private StatusDisplay _activeStatusDisplay;
     [Export]
     private StatusDisplay _targetedStatusDisplay;
-    [Export]
-    private PackedScene _turnOrderEntryScene;
 
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
@@ -49,14 +47,7 @@ public partial class BattleManager : Node2D
             }
         }
         AdvanceTurnOrder();
-        UpdateTurnOrderDisplay();
-        Combatant c = Combatants.First();
-        _activeCombatant = c;
-        Camera.Target = c;
-        c.InitializeTurn();
-        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-            c.Stats.Movement.ToString());
+        UpdateForNewCombatantTurn();
     }
 
     public override void _Process(double delta)
@@ -90,33 +81,6 @@ public partial class BattleManager : Node2D
             }
         }
         Combatants.Sort(new Combatant.SortDescendingAccumulatedSpeed());
-    }
-
-    private void UpdateTurnOrderDisplay()
-    {
-        // Remove old entires from TurnOrderVBox
-        foreach (Node child in _turnOrderEntryVBox.GetChildren())
-        {
-            _turnOrderEntryVBox.RemoveChild(child);
-            child.QueueFree();
-        }
-        // Repopulate TurnOrderVBox
-        int i = 1;
-        foreach (Combatant combatant in Combatants)
-        {
-            // TODO decouple the health bar from the turn order
-            TurnOrderEntry turnOrderEntry = _turnOrderEntryScene.Instantiate<TurnOrderEntry>();
-            turnOrderEntry.Label.Text = i.ToString();
-            turnOrderEntry.TextureRect.Texture = combatant.Sprite2D.Texture;
-            turnOrderEntry.HealthBar.TextureProgressBar.MaxValue = combatant.Stats.Health;
-            turnOrderEntry.HealthBar.TextureProgressBar.Value = combatant.Status.CurrentHealth;
-            _turnOrderEntryVBox.AddChild(turnOrderEntry);
-            i++;
-            if (i > 9) // TODO 9 is currently a hardcoded # of entries allowed in turn order display
-            {
-                break;
-            }
-        }
     }
 
     private void CheckBattleOver()
@@ -202,6 +166,18 @@ public partial class BattleManager : Node2D
         }
     }
 
+    private void UpdateForNewCombatantTurn()
+    {
+        _turnOrderDisplay.Update(Combatants);
+        Combatant c = Combatants.First();
+        _activeCombatant = c;
+        Camera.Target = c;
+        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
+            c.Stats.Movement.ToString());
+        c.InitializeTurn();
+    }
+
     private void OnCombatantTurnEnded(object sender, EventArgs e)
     {
         Combatants.Sort(new Combatant.SortDescendingAccumulatedSpeed());
@@ -209,22 +185,12 @@ public partial class BattleManager : Node2D
         {
             AdvanceTurnOrder();
         }
-        UpdateTurnOrderDisplay();
-        Combatant c = Combatants.First();
-        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-            c.Stats.Movement.ToString());
-        Camera.Target = c;
-        _activeCombatant = c;
-        c.InitializeTurn();
-        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-            c.Stats.Movement.ToString());
+        UpdateForNewCombatantTurn();
     }
 
     private void OnStatusDamageTaken(object sender, Combatant c)
     {
-        UpdateTurnOrderDisplay();
+        _turnOrderDisplay.Update(Combatants);
         if (c == _activeCombatant)
         {
             _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
@@ -245,6 +211,6 @@ public partial class BattleManager : Node2D
         // TODO Lots more cleanup needed when a Status informs that a Combatant died
         Combatants.Remove(combatant);
         CheckBattleOver();
-        UpdateTurnOrderDisplay();
+        _turnOrderDisplay.Update(Combatants);
     }
 }
