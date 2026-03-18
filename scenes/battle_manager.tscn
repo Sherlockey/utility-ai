@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://qdw6j1juc0iu" path="res://scenes/turn_order_display.tscn" id="3_8w533"]
 [ext_resource type="PackedScene" uid="uid://5f0b60lrw5b3" path="res://scenes/message_log.tscn" id="4_4wxy3"]
 [ext_resource type="PackedScene" uid="uid://bk3oexwkotyu" path="res://scenes/status_display.tscn" id="4_7wf3v"]
+[ext_resource type="PackedScene" uid="uid://8ghr7fn38td3" path="res://scenes/time_display.tscn" id="5_4wxy3"]
 
 [node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay")]
 script = ExtResource("1_3jpuh")
@@ -46,5 +47,7 @@ metadata/_edit_lock_ = true
 
 [node name="MessageLog" parent="HUD" unique_id=861706622 instance=ExtResource("4_4wxy3")]
 metadata/_edit_lock_ = true
+
+[node name="TimeDisplay" parent="HUD" unique_id=316205934 instance=ExtResource("5_4wxy3")]
 
 [editable path="HUD/TurnOrderDisplay"]

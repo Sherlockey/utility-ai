@@ -217,8 +217,7 @@ public partial class BattleManager : Node2D
 
     private void OnStatusDied(object sender, Combatant combatant)
     {
-        GD.Print("BattleManager.OnStatusDied not fully implemented yet!");
-        // TODO Lots more cleanup needed when a Status informs that a Combatant died
+        // TODO @Incomplete Lots more cleanup needed when a Status informs that a Combatant died
         Combatants.Remove(combatant);
         CheckBattleOver();
         _turnOrderDisplay.Update(Combatants);
