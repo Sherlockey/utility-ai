@@ -1,6 +1,7 @@
 using Godot;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class Shoot : Ability
 {
@@ -43,6 +44,7 @@ public partial class Shoot : Ability
             foreach (Vector2I coords in coordsTraversedToTarget)
             {
                 string customDataLayerName = "BlocksProjectiles";
+                Debug.Assert(tileMapLayer.GetCellTileData(coords).HasCustomData(customDataLayerName));
                 if (tileMapLayer.GetCellTileData(coords).HasCustomData(customDataLayerName))
                 {
                     bool doesBlockProjectiles =

@@ -13,7 +13,7 @@ public partial class Status : Node
     public int CurrentMovement { get; set; }
     public int AccumulatedSpeed { get; set; } = 0;
     public int CurrentHealth { get; set; }
-    public int AbilitiesRemaining { get; set; } = 0; // TODO this concept is @Incomplete
+    public int AbilitiesRemaining { get; set; } = 0; // TODO @Incomplete
 
     public override void _Ready()
     {
@@ -26,18 +26,15 @@ public partial class Status : Node
         if (Owner is Combatant combatant)
         {
             DamageTaken?.Invoke(this, combatant);
-        }
-        if (CurrentHealth <= 0)
-        {
-            CurrentHealth = 0;
-            if (Owner is Combatant owner)
+            MessageLog.Get().Write(combatant.Name + " took " + damage + " damage");
+            if (CurrentHealth <= 0)
             {
-                Died?.Invoke(this, owner);
+                CurrentHealth = 0;
+                Died?.Invoke(this, combatant);
+                MessageLog.Get().Write(combatant.Name + " was knocked out");
                 // TODO this is temporary. Really we want to be able to resurrect fallen Combatants
-                Owner.QueueFree();
+                combatant.QueueFree();
             }
         }
-        // TODO testing only
-        GD.Print(Owner.Name + " took " + damage + " damage and has " + CurrentHealth + " health remaining.");
     }
 }

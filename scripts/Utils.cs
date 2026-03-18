@@ -17,7 +17,6 @@ public partial class Utils : Node
                 }
                 Vector2I coords = new(startCoords.X + x, startCoords.Y + y);
                 result.Add(coords);
-                GD.Print(coords);
             }
         }
         return result;

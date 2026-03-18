@@ -1,6 +1,6 @@
 using Godot;
 
-using System;
+using System.Diagnostics;
 
 public partial class Movement : Node
 {
@@ -41,14 +41,11 @@ public partial class Movement : Node
         Vector2I newTile = tileMapLayer.LocalToMap(_combatant.Position + movement);
         TileData tileData = tileMapLayer.GetCellTileData(newTile);
         bool isTileTraversable = false;
-        if (tileData.HasCustomData("Traversable"))
+        string customDataLayerName = "Traversable";
+        Debug.Assert(tileData.HasCustomData(customDataLayerName));
+        if (tileData.HasCustomData(customDataLayerName))
         {
-            isTileTraversable = tileData.GetCustomData("Traversable").AsBool();
-        }
-        else
-        {
-            // TODO assertions or error handling?
-            GD.Print("ERROR in Movement.TryMove: custom data 'Traversable' is missing in TileMapLayer");
+            isTileTraversable = tileData.GetCustomData(customDataLayerName).AsBool();
         }
         if (_combatant.Status.CurrentMovement > 0 && isTileTraversable)
         {

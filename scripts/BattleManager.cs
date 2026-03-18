@@ -46,6 +46,16 @@ public partial class BattleManager : Node2D
                 combatant.BattleIndex = i;
             }
         }
+        int enemyCount = 0;
+        foreach (Combatant combatant in Combatants)
+        {
+            if (combatant.MyTeam == Combatant.Team.Enemy)
+            {
+                enemyCount++;
+            }
+        }
+        string enemyString = enemyCount == 1 ? "enemy" : "enemies";
+        MessageLog.Get().Write(enemyCount + " " + enemyString + " encountered!", true, false);
         AdvanceTurnOrder();
         UpdateForNewCombatantTurn();
     }
@@ -113,13 +123,13 @@ public partial class BattleManager : Node2D
         if (isVictory)
         {
             // TODO UI elements here
-            GD.Print("Victory!");
+            MessageLog.Get().Write("Victory!", true, false);
             BattleEnded?.Invoke(this, isVictory);
         }
         else
         {
             // TODO UI elements here
-            GD.Print("Defeat!");
+            MessageLog.Get().Write("Defeat!", true, false);
             BattleEnded?.Invoke(this, isVictory);
         }
     }

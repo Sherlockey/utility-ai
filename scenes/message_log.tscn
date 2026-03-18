@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://5f0b60lrw5b3"]
+
+[ext_resource type="LabelSettings" uid="uid://dwgjamwg3c3r2" path="res://resources/message_log_label_settings.tres" id="1_p1cxw"]
+[ext_resource type="Script" uid="uid://cy11rmjpdy4t7" path="res://scripts/MessageLog.cs" id="1_vb6bw"]
+[ext_resource type="Theme" uid="uid://dkcr404nlgkw1" path="res://resources/default_theme.tres" id="2_vb6bw"]
+[ext_resource type="PackedScene" uid="uid://dlaigeh8c2jmh" path="res://scenes/message_log_entry.tscn" id="4_cwqgj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8w533"]
+
+[node name="MessageLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -111.0
+offset_bottom = 219.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8w533")
+script = ExtResource("1_vb6bw")
+_messagesVBox = NodePath("MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox")
+_messageLogEntryScene = ExtResource("4_cwqgj")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1051581845]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="BorderColorRect" type="ColorRect" parent="MarginContainer" unique_id=1526932808]
+layout_mode = 2
+color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer" unique_id=657856876]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BackgroundColorRect" type="ColorRect" parent="MarginContainer/MarginContainer" unique_id=174204094]
+layout_mode = 2
+color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/BackgroundColorRect" unique_id=1000347149]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 212.0
+theme_override_constants/separation = 0
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer" unique_id=90545215]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+color = Color(0.32941177, 0.08235294, 0.27058825, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ColorRect" unique_id=181549595]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 10.0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Title" type="Label" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ColorRect/MarginContainer" unique_id=1599654828]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Message Log"
+label_settings = ExtResource("1_p1cxw")
+
+[node name="ColorRect2" type="ColorRect" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer" unique_id=58380789]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer" unique_id=1634871107]
+custom_minimum_size = Vector2(0, 196)
+layout_mode = 2
+theme = ExtResource("2_vb6bw")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer" unique_id=1101655945]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 1
+
+[node name="MessagesVBox" type="VBoxContainer" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer" unique_id=1358326613]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MessageLogEntry" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=826179947 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry2" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=515777051 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry3" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=1642159847 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry4" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=1792239445 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry5" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=514145257 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry6" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=306522220 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry7" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=852720249 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry8" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=124225206 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry9" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=447068951 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry10" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=1197100929 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry11" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=457074958 instance=ExtResource("4_cwqgj")]
+layout_mode = 2
+
+[node name="MessageLogEntry12" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=729283580 instance=ExtResource("4_cwqgj")]
+layout_mode = 2

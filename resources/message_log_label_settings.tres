@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dwgjamwg3c3r2"]
+
+[ext_resource type="FontFile" uid="uid://dp04sx7eyxk0s" path="res://resources/font/Lilex-Regular.woff2" id="1_a8qqk"]
+
+[resource]
+line_spacing = 0.0
+font = ExtResource("1_a8qqk")
+font_size = 6
+font_color = Color(0.9647059, 0.9372549, 0.8, 1)
