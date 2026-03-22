@@ -7,7 +7,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8w533"]
 
-[node name="MessageLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox")]
+[node name="MessageLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox", "_scrollContainer", "_timer")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -17,6 +17,8 @@ grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_8w533")
 script = ExtResource("1_vb6bw")
 _messagesVBox = NodePath("MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox")
+_scrollContainer = NodePath("MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer")
+_timer = NodePath("")
 _messageLogEntryScene = ExtResource("4_cwqgj")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1051581845]
@@ -119,8 +121,5 @@ layout_mode = 2
 [node name="MessageLogEntry10" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=1197100929 instance=ExtResource("4_cwqgj")]
 layout_mode = 2
 
-[node name="MessageLogEntry11" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=457074958 instance=ExtResource("4_cwqgj")]
-layout_mode = 2
-
-[node name="MessageLogEntry12" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=729283580 instance=ExtResource("4_cwqgj")]
+[node name="MessageLogEntry11" parent="MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=402851095 instance=ExtResource("4_cwqgj")]
 layout_mode = 2

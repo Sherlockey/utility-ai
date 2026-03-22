@@ -49,6 +49,8 @@ public partial class Combatant : Node2D
 
     public override void _Input(InputEvent @event)
     {
+        // Toggle whether input comes from the player or from the AI
+
         if (CurrentTurnState == TurnState.Waiting)
         {
             return;

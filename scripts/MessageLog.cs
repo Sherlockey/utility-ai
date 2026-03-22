@@ -7,9 +7,13 @@ public partial class MessageLog : PanelContainer
     [Export]
     private VBoxContainer _messagesVBox;
     [Export]
+    private ScrollContainer _scrollContainer;
+    [Export]
     private PackedScene _messageLogEntryScene;
 
     private static MessageLog s_messageLog = null;
+
+    private const int MAX_MESSAGES = 100;
 
     private int _count = 0;
 
@@ -46,12 +50,21 @@ public partial class MessageLog : PanelContainer
         Label entry = _messageLogEntryScene.Instantiate<Label>();
         entry.Text = message;
         _count++;
-        if (_count > 100)
+        if (_count > MAX_MESSAGES)
         {
             Node firstChild = _messagesVBox.GetChild(0);
-            firstChild?.QueueFree();
+            firstChild?.Free();
             _count--;
         }
         _messagesVBox.AddChild(entry);
+        UpdateScroll();
+    }
+
+    private async void UpdateScroll()
+    {
+        // TODO this causes an error if the scene is removed from the tree before the timer goes off. Low priority
+        await ToSignal(GetTree().CreateTimer(0.05f), Timer.SignalName.Timeout);
+        _scrollContainer.ScrollVertical = (int)_scrollContainer.GetVScrollBar().MaxValue + 1;
+
     }
 }

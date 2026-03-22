@@ -5,10 +5,14 @@ using System.Collections.Generic;
 public partial class Slam : Ability
 {
     [Export]
+    protected new int _areaOfEffect = 2;
+
+    [Export]
     private int _range = 0;
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
+        MessageLog.Get().Write(user.Name + " used Slam");
         int damage = user.Stats.Attack * user.Stats.Attack;
         foreach (Combatant target in targets)
         {

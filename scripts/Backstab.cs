@@ -9,6 +9,7 @@ public partial class Backstab : Ability
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
+        MessageLog.Get().Write(user.Name + " used Backstab");
         int damage = user.Stats.Attack * user.Stats.Attack;
         foreach (Combatant target in targets)
         {

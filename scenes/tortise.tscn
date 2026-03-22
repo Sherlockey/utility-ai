@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://nfxw0ngtofsh"]
+
+[ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_dy6v3"]
+[ext_resource type="Texture2D" uid="uid://bfodky0s8mfmp" path="res://assets/tortise.png" id="2_dy6v3"]
+[ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_dy6v3"]
+[ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_uljw3"]
+[ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_ysj3k"]
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="6_1pr7s"]
+
+[node name="Tortise" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent")]
+script = ExtResource("1_dy6v3")
+Stats = NodePath("Stats")
+Status = NodePath("Status")
+Movement = NodePath("Movement")
+Sprite2D = NodePath("Sprite2D")
+AbilitiesParent = NodePath("Abilities")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
+texture = ExtResource("2_dy6v3")
+
+[node name="Abilities" type="Node" parent="." unique_id=712162907]
+
+[node name="Slam" type="Node" parent="Abilities" unique_id=1833231167]
+script = ExtResource("3_dy6v3")
+_areaOfEffect = 2
+_areaOfEffect = 2
+_damagePercentNumerator = 67
+
+[node name="Stats" type="Node" parent="." unique_id=1771981559]
+script = ExtResource("4_uljw3")
+Health = 88
+Attack = 3
+Speed = 4
+Movement = 2
+
+[node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
+script = ExtResource("5_ysj3k")
+Stats = NodePath("../Stats")
+
+[node name="Movement" type="Node" parent="." unique_id=1251461647 node_paths=PackedStringArray("_combatant")]
+script = ExtResource("6_1pr7s")
+_combatant = NodePath("..")
