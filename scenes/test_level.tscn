@@ -18,10 +18,14 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0hol4"]
 texture = ExtResource("3_epypp")
 texture_region_size = Vector2i(16, 24)
+0:0/next_alternative_id = 6
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 1
 0:0/0/custom_data_0 = true
+0:0/4 = 4
+0:0/4/modulate = Color(18.892157, 18.892157, 18.892157, 1)
+0:0/4/custom_data_0 = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dw7u0"]
 texture = ExtResource("10_4asn1")

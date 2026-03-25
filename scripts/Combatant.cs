@@ -91,6 +91,24 @@ public partial class Combatant : Node2D
                     }
                 }
             }
+            if (keyEvent.Keycode == Key.M)
+            {
+                Vector2I source = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+                List<Vector2I> graph = Utils.CoordsInDist(source, Status.CurrentMovement);
+                graph = Utils.TraversableCoords(graph);
+                (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) distPrevTuple =
+                    Utils.Dijkstra(graph, source);
+                foreach (KeyValuePair<Vector2I, int> kvp in distPrevTuple.Item1)
+                {
+                    // zzz working on getting rid of cells that don't have a connected path
+                    if (kvp.Value <= Status.CurrentMovement
+                            && distPrevTuple.Item2[kvp.Key].X < int.MaxValue
+                            && distPrevTuple.Item2[kvp.Key].Y < int.MaxValue)
+                    {
+                        BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 4);
+                    }
+                }
+            }
         }
     }
 

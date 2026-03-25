@@ -1,6 +1,8 @@
 using Godot;
 
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 public partial class Utils : Node
 {
@@ -105,5 +107,115 @@ public partial class Utils : Node
             }
         }
         return result;
+    }
+
+    // Returns a tuple with a distance Dictionary and a previous cell Dictionary.
+    // To be used for true pathfinding, graph needs to have invalid cells pruned before passing to this method.
+    // Invalid might include cells that are not in the TileMapLayer or cells that are marked as !isTraversable.
+    // If prev[i] == Vector2I(int.MaxValue, int.MaxValue) it is invalid.
+    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) Dijkstra(List<Vector2I> graph, Vector2I source)
+    {
+        Dictionary<Vector2I, int> dist = [];
+        Dictionary<Vector2I, Vector2I> prev = [];
+        Dictionary<Vector2I, int> free = [];
+
+        foreach (Vector2I coords in graph)
+        {
+            prev[coords] = new(int.MaxValue, int.MaxValue);
+            if (coords == source)
+            {
+                dist[coords] = 0;
+                free[coords] = 0;
+            }
+            else
+            {
+                dist[coords] = int.MaxValue;
+                free[coords] = int.MaxValue;
+            }
+        }
+
+        while (free.Count > 0)
+        {
+            Vector2I current = free.First().Key;
+            int currentMin = int.MaxValue;
+            foreach (KeyValuePair<Vector2I, int> kvp in free)
+            {
+                if (kvp.Value <= currentMin)
+                {
+                    current = kvp.Key;
+                    currentMin = kvp.Value;
+                }
+            }
+            free.Remove(current);
+            List<Vector2I> neighbors = GetNeighborsInFree(current, free);
+            foreach (Vector2I neighbor in neighbors)
+            {
+                int altDist = dist[current] + MovementRequired(current, neighbor);
+                if (altDist < dist[neighbor])
+                {
+                    dist[neighbor] = altDist;
+                    prev[neighbor] = current;
+                    free[neighbor] = altDist;
+                }
+            }
+        }
+        return (dist, prev);
+    }
+
+    public static List<Vector2I> TraversableCoords(List<Vector2I> coordsList)
+    {
+        List<Vector2I> result = [];
+        TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
+        foreach (Vector2I coords in coordsList)
+        {
+            if (tileMapLayer.GetCellSourceId(coords) != -1)
+            {
+                TileData tileData = tileMapLayer.GetCellTileData(coords);
+                bool isTileTraversable = false;
+                string customDataLayerName = "Traversable";
+                Debug.Assert(tileData.HasCustomData(customDataLayerName));
+                if (tileData.HasCustomData(customDataLayerName))
+                {
+                    isTileTraversable = tileData.GetCustomData(customDataLayerName).AsBool();
+                    if (isTileTraversable)
+                    {
+                        result.Add(coords);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private static List<Vector2I> GetNeighborsInFree(Vector2I current, Dictionary<Vector2I, int> free)
+    {
+        List<Vector2I> result = [];
+        List<Vector2I> neighbors = GetNeighbors(current);
+        for (int i = 0; i < neighbors.Count; i++)
+        {
+            if (free.ContainsKey(neighbors[i]))
+            {
+                result.Add(neighbors[i]);
+            }
+        }
+        return result;
+    }
+
+    private static List<Vector2I> GetNeighbors(Vector2I current)
+    {
+        List<Vector2I> result = [
+            new(current.X - 1, current.Y),
+            new(current.X + 1, current.Y),
+            new(current.X, current.Y - 1),
+            new(current.X, current.Y + 1)
+        ];
+        return result;
+    }
+
+    private static int MovementRequired(Vector2I start, Vector2I end)
+    {
+        int xDist = Mathf.Abs(end.X - start.X);
+        int yDist = Mathf.Abs(end.Y - start.Y);
+        return xDist + yDist;
     }
 }

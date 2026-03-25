@@ -62,9 +62,9 @@ public partial class MessageLog : PanelContainer
 
     private async void UpdateScroll()
     {
-        // TODO this causes an error if the scene is removed from the tree before the timer goes off. Low priority
+        // TODO this causes an error if the scene is removed from the tree before the timer goes off.
+        // Low priority
         await ToSignal(GetTree().CreateTimer(0.05f), Timer.SignalName.Timeout);
         _scrollContainer.ScrollVertical = (int)_scrollContainer.GetVScrollBar().MaxValue + 1;
-
     }
 }
