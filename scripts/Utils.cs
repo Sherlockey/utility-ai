@@ -138,18 +138,6 @@ public partial class Utils : Node
         return (dist, prev);
     }
 
-    private static void RemoveOccupiedCoords(Dictionary<Vector2I, int> source)
-    {
-        BattleManager battleManager = BattleManager.Get();
-        List<Vector2I> occupiedCoords = [];
-        foreach (Combatant combatant in battleManager.Combatants)
-        {
-            Vector2I occupiedCoord = battleManager.TileMapLayer.LocalToMap(combatant.Position);
-            occupiedCoords.Add(occupiedCoord);
-            source.Remove(occupiedCoord);
-        }
-    }
-
     // Returns a tuple with a distance Dictionary and a previous cell Dictionary.
     // If prev[i] == Vector2I(int.MaxValue, int.MaxValue) it is invalid.
     // TODO replace above with an Option type?
@@ -238,11 +226,11 @@ public partial class Utils : Node
         return result;
     }
 
-    // zzz need to add making cells which contain enemies not a valid neighbor cell
     private static List<Vector2I> GetValidNeighbors(Vector2I current, Combatant.Team sourceTeam)
     {
         List<Vector2I> result = [];
-        TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
+        BattleManager battleManager = BattleManager.Get();
+        TileMapLayer tileMapLayer = battleManager.TileMapLayer;
         List<Vector2I> neighbors = GetNeighbors(current);
         foreach (Vector2I neighbor in neighbors)
         {
@@ -255,7 +243,23 @@ public partial class Utils : Node
                 {
                     if (tileData.GetCustomData(customDataLayerName).AsBool())
                     {
-                        result.Add(neighbor);
+                        bool occupiedByEnemy = false;
+                        foreach (Combatant combatant in battleManager.Combatants)
+                        {
+                            if (combatant.MyTeam != sourceTeam)
+                            {
+                                Vector2I combatantCoords = battleManager.TileMapLayer.LocalToMap(combatant.Position);
+                                if (combatantCoords == neighbor)
+                                {
+                                    occupiedByEnemy = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!occupiedByEnemy)
+                        {
+                            result.Add(neighbor);
+                        }
                     }
                 }
             }
@@ -282,5 +286,17 @@ public partial class Utils : Node
         int xDist = Mathf.Abs(end.X - start.X);
         int yDist = Mathf.Abs(end.Y - start.Y);
         return xDist + yDist;
+    }
+
+    private static void RemoveOccupiedCoords(Dictionary<Vector2I, int> source)
+    {
+        BattleManager battleManager = BattleManager.Get();
+        List<Vector2I> occupiedCoords = [];
+        foreach (Combatant combatant in battleManager.Combatants)
+        {
+            Vector2I occupiedCoord = battleManager.TileMapLayer.LocalToMap(combatant.Position);
+            occupiedCoords.Add(occupiedCoord);
+            source.Remove(occupiedCoord);
+        }
     }
 }
