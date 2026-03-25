@@ -35,6 +35,8 @@ public partial class Combatant : Node2D
     public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
     public int BattleIndex { get; set; }
 
+    private (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) _distPrevTuple = new();
+
     public override void _Ready()
     {
         Status.Died += OnStatusDied;
@@ -91,21 +93,23 @@ public partial class Combatant : Node2D
                     }
                 }
             }
-            if (keyEvent.Keycode == Key.M)
+            if (keyEvent.Keycode == Key.F1)
             {
-                Vector2I source = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-                List<Vector2I> graph = Utils.CoordsInDist(source, Status.CurrentMovement);
-                graph = Utils.TraversableCoords(graph);
-                (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) distPrevTuple =
-                    Utils.Dijkstra(graph, source);
-                foreach (KeyValuePair<Vector2I, int> kvp in distPrevTuple.Item1)
+                BattleManager battleManager = BattleManager.Get();
+                bool currentlyDebug = battleManager.DebugMovement;
+                battleManager.DebugMovement = !battleManager.DebugMovement;
+                if (currentlyDebug)
                 {
-                    // zzz working on getting rid of cells that don't have a connected path
-                    if (kvp.Value <= Status.CurrentMovement
-                            && distPrevTuple.Item2[kvp.Key].X < int.MaxValue
-                            && distPrevTuple.Item2[kvp.Key].Y < int.MaxValue)
+                    foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
                     {
-                        BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 4);
+                        BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
+                    }
+                }
+                else
+                {
+                    foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+                    {
+                        BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
                     }
                 }
             }
@@ -117,10 +121,27 @@ public partial class Combatant : Node2D
         Status.CurrentMovement = Stats.Movement;
         Status.AbilitiesRemaining = Stats.AbilitiesPerTurn;
         CurrentTurnState = TurnState.Active;
+        Vector2I source = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(source, Status.CurrentMovement);
+
+        if (BattleManager.Get().DebugMovement)
+        {
+            foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+            {
+                BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
+            }
+        }
     }
 
     public void EndTurn()
     {
+        if (BattleManager.Get().DebugMovement)
+        {
+            foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+            {
+                BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
+            }
+        }
         if (CurrentTurnState == TurnState.Active)
         {
             Status.AccumulatedSpeed %= BattleManager.TurnThreshold;

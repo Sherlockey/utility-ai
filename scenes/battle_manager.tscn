@@ -8,6 +8,7 @@
 
 [node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay")]
 script = ExtResource("1_3jpuh")
+DebugMovement = true
 _turnOrderDisplay = NodePath("HUD/TurnOrderDisplay")
 _activeStatusDisplay = NodePath("HUD/ActiveStatusDisplay")
 _targetedStatusDisplay = NodePath("HUD/TargetedStatusDisplay")

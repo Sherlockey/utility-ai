@@ -109,15 +109,42 @@ public partial class Utils : Node
         return result;
     }
 
+    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) WalkableCoordsDistAndPrev(Vector2I source, int movementDist)
+    {
+        Dictionary<Vector2I, int> dist = [];
+        Dictionary<Vector2I, Vector2I> prev = [];
+        PriorityQueue<Vector2I, int> queue = new();
+
+        dist[source] = 0;
+        queue.Enqueue(source, 0);
+
+        while (queue.Count > 0)
+        {
+            Vector2I current = queue.Dequeue();
+            List<Vector2I> neighbors = GetValidNeighbors(current);
+            foreach (Vector2I neighbor in neighbors)
+            {
+                int altDist = dist[current] + MovementRequired(current, neighbor);
+                int neighborDist = dist.GetValueOrDefault(neighbor, int.MaxValue);
+                if (altDist < neighborDist && altDist <= movementDist)
+                {
+                    dist[neighbor] = altDist;
+                    prev[neighbor] = current;
+                    queue.Enqueue(neighbor, altDist);
+                }
+            }
+        }
+        return (dist, prev);
+    }
+
     // Returns a tuple with a distance Dictionary and a previous cell Dictionary.
-    // To be used for true pathfinding, graph needs to have invalid cells pruned before passing to this method.
-    // Invalid might include cells that are not in the TileMapLayer or cells that are marked as !isTraversable.
     // If prev[i] == Vector2I(int.MaxValue, int.MaxValue) it is invalid.
+    // TODO replace above with an Option type?
     public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) Dijkstra(List<Vector2I> graph, Vector2I source)
     {
         Dictionary<Vector2I, int> dist = [];
         Dictionary<Vector2I, Vector2I> prev = [];
-        Dictionary<Vector2I, int> free = [];
+        Dictionary<Vector2I, int> queue = [];
 
         foreach (Vector2I coords in graph)
         {
@@ -125,20 +152,20 @@ public partial class Utils : Node
             if (coords == source)
             {
                 dist[coords] = 0;
-                free[coords] = 0;
+                queue[coords] = 0;
             }
             else
             {
                 dist[coords] = int.MaxValue;
-                free[coords] = int.MaxValue;
+                queue[coords] = int.MaxValue;
             }
         }
 
-        while (free.Count > 0)
+        while (queue.Count > 0)
         {
-            Vector2I current = free.First().Key;
+            Vector2I current = queue.First().Key;
             int currentMin = int.MaxValue;
-            foreach (KeyValuePair<Vector2I, int> kvp in free)
+            foreach (KeyValuePair<Vector2I, int> kvp in queue)
             {
                 if (kvp.Value <= currentMin)
                 {
@@ -146,8 +173,8 @@ public partial class Utils : Node
                     currentMin = kvp.Value;
                 }
             }
-            free.Remove(current);
-            List<Vector2I> neighbors = GetNeighborsInFree(current, free);
+            queue.Remove(current);
+            List<Vector2I> neighbors = GetNeighborsInQueue(current, queue);
             foreach (Vector2I neighbor in neighbors)
             {
                 int altDist = dist[current] + MovementRequired(current, neighbor);
@@ -155,7 +182,7 @@ public partial class Utils : Node
                 {
                     dist[neighbor] = altDist;
                     prev[neighbor] = current;
-                    free[neighbor] = altDist;
+                    queue[neighbor] = altDist;
                 }
             }
         }
@@ -171,7 +198,7 @@ public partial class Utils : Node
             if (tileMapLayer.GetCellSourceId(coords) != -1)
             {
                 TileData tileData = tileMapLayer.GetCellTileData(coords);
-                bool isTileTraversable = false;
+                bool isTileTraversable;
                 string customDataLayerName = "Traversable";
                 Debug.Assert(tileData.HasCustomData(customDataLayerName));
                 if (tileData.HasCustomData(customDataLayerName))
@@ -187,7 +214,39 @@ public partial class Utils : Node
         return result;
     }
 
-    private static List<Vector2I> GetNeighborsInFree(Vector2I current, Dictionary<Vector2I, int> free)
+    // TODO not functioning
+    // public static List<Vector2I> WalkableCoords(Vector2I start, List<Vector2I> coordsList, Dictionary<Vector2I, Vector2I> prevDict)
+    // {
+    //     List<Vector2I> result = [];
+    //     foreach (Vector2I coords in coordsList)
+    //     {
+    //         Vector2I current = coords;
+    //         List<Vector2I> steps = [];
+    //         while (prevDict.TryGetValue(current, out Vector2I prev))
+    //         {
+    //             steps.Add(prev);
+    //             current = prev;
+    //         }
+    //         if (current == start)
+    //         {
+    //             result.Add(coords);
+    //         }
+    //     }
+    //     return result;
+    // }
+
+    private static List<Vector2I> GetNeighbors(Vector2I current)
+    {
+        List<Vector2I> result = [
+            new(current.X - 1, current.Y),
+            new(current.X + 1, current.Y),
+            new(current.X, current.Y - 1),
+            new(current.X, current.Y + 1)
+        ];
+        return result;
+    }
+
+    private static List<Vector2I> GetNeighborsInQueue(Vector2I current, Dictionary<Vector2I, int> free)
     {
         List<Vector2I> result = [];
         List<Vector2I> neighbors = GetNeighbors(current);
@@ -201,14 +260,27 @@ public partial class Utils : Node
         return result;
     }
 
-    private static List<Vector2I> GetNeighbors(Vector2I current)
+    private static List<Vector2I> GetValidNeighbors(Vector2I current)
     {
-        List<Vector2I> result = [
-            new(current.X - 1, current.Y),
-            new(current.X + 1, current.Y),
-            new(current.X, current.Y - 1),
-            new(current.X, current.Y + 1)
-        ];
+        List<Vector2I> result = [];
+        TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
+        List<Vector2I> neighbors = GetNeighbors(current);
+        foreach (Vector2I neighbor in neighbors)
+        {
+            if (tileMapLayer.GetCellSourceId(neighbor) != -1)
+            {
+                TileData tileData = tileMapLayer.GetCellTileData(neighbor);
+                string customDataLayerName = "Traversable";
+                Debug.Assert(tileData.HasCustomData(customDataLayerName));
+                if (tileData.HasCustomData(customDataLayerName))
+                {
+                    if (tileData.GetCustomData(customDataLayerName).AsBool())
+                    {
+                        result.Add(neighbor);
+                    }
+                }
+            }
+        }
         return result;
     }
 

@@ -10,6 +10,9 @@ public partial class BattleManager : Node2D
 
     public const int TurnThreshold = 100;
 
+    [Export]
+    public bool DebugMovement = false;
+
     public List<Combatant> Combatants = []; // Initialized by Level
     public TileMapLayer TileMapLayer { get; set; } // Initialized by Level
     public Vector2I TileSize { get; set; } // Initialized by Level

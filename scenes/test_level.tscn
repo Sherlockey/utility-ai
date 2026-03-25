@@ -14,8 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://c8uh00uq3csjg" path="res://assets/cave-walls.png" id="10_4asn1"]
 [ext_resource type="Script" uid="uid://irh32ljwfg3p" path="res://scripts/Camera.cs" id="11_dw7u0"]
 [ext_resource type="Texture2D" uid="uid://cye3n1gn57244" path="res://assets/water.png" id="11_fyxdr"]
+[ext_resource type="Texture2D" uid="uid://dksadfqk4rkie" path="res://assets/background-walkable.png" id="14_13hs1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0hol4"]
+resource_name = "background"
 texture = ExtResource("3_epypp")
 texture_region_size = Vector2i(16, 24)
 0:0/next_alternative_id = 6
@@ -23,11 +25,9 @@ texture_region_size = Vector2i(16, 24)
 0:0/0/terrain_set = 0
 0:0/0/terrain = 1
 0:0/0/custom_data_0 = true
-0:0/4 = 4
-0:0/4/modulate = Color(18.892157, 18.892157, 18.892157, 1)
-0:0/4/custom_data_0 = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dw7u0"]
+resource_name = "cave-wall"
 texture = ExtResource("10_4asn1")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
@@ -144,6 +144,7 @@ texture_region_size = Vector2i(16, 24)
 3:3/0/custom_data_1 = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kpk0m"]
+resource_name = "water"
 texture = ExtResource("11_fyxdr")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
@@ -243,6 +244,13 @@ texture_region_size = Vector2i(16, 24)
 3:3/0/terrain = 2
 3:3/0/terrains_peering_bit/left_side = 2
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fptmo"]
+resource_name = "background-walkable"
+texture = ExtResource("14_13hs1")
+texture_region_size = Vector2i(16, 24)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
 [sub_resource type="TileSet" id="TileSet_0e48y"]
 tile_size = Vector2i(16, 24)
 terrain_set_0/mode = 0
@@ -259,6 +267,7 @@ custom_data_layer_1/type = 1
 sources/0 = SubResource("TileSetAtlasSource_0hol4")
 sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
+sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
 [node name="TestLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_camera")]
 script = ExtResource("1_wtcfe")
