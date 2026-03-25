@@ -122,7 +122,7 @@ public partial class Combatant : Node2D
         Status.AbilitiesRemaining = Stats.AbilitiesPerTurn;
         CurrentTurnState = TurnState.Active;
         Vector2I source = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(source, Status.CurrentMovement);
+        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(source, Status.CurrentMovement, MyTeam);
 
         if (BattleManager.Get().DebugMovement)
         {

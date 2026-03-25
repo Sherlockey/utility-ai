@@ -109,7 +109,7 @@ public partial class Utils : Node
         return result;
     }
 
-    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) WalkableCoordsDistAndPrev(Vector2I source, int movementDist)
+    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) WalkableCoordsDistAndPrev(Vector2I source, int movementDist, Combatant.Team sourceTeam)
     {
         Dictionary<Vector2I, int> dist = [];
         Dictionary<Vector2I, Vector2I> prev = [];
@@ -121,7 +121,7 @@ public partial class Utils : Node
         while (queue.Count > 0)
         {
             Vector2I current = queue.Dequeue();
-            List<Vector2I> neighbors = GetValidNeighbors(current);
+            List<Vector2I> neighbors = GetValidNeighbors(current, sourceTeam);
             foreach (Vector2I neighbor in neighbors)
             {
                 int altDist = dist[current] + MovementRequired(current, neighbor);
@@ -134,7 +134,20 @@ public partial class Utils : Node
                 }
             }
         }
+        RemoveOccupiedCoords(dist);
         return (dist, prev);
+    }
+
+    private static void RemoveOccupiedCoords(Dictionary<Vector2I, int> source)
+    {
+        BattleManager battleManager = BattleManager.Get();
+        List<Vector2I> occupiedCoords = [];
+        foreach (Combatant combatant in battleManager.Combatants)
+        {
+            Vector2I occupiedCoord = battleManager.TileMapLayer.LocalToMap(combatant.Position);
+            occupiedCoords.Add(occupiedCoord);
+            source.Remove(occupiedCoord);
+        }
     }
 
     // Returns a tuple with a distance Dictionary and a previous cell Dictionary.
@@ -214,27 +227,6 @@ public partial class Utils : Node
         return result;
     }
 
-    // TODO not functioning
-    // public static List<Vector2I> WalkableCoords(Vector2I start, List<Vector2I> coordsList, Dictionary<Vector2I, Vector2I> prevDict)
-    // {
-    //     List<Vector2I> result = [];
-    //     foreach (Vector2I coords in coordsList)
-    //     {
-    //         Vector2I current = coords;
-    //         List<Vector2I> steps = [];
-    //         while (prevDict.TryGetValue(current, out Vector2I prev))
-    //         {
-    //             steps.Add(prev);
-    //             current = prev;
-    //         }
-    //         if (current == start)
-    //         {
-    //             result.Add(coords);
-    //         }
-    //     }
-    //     return result;
-    // }
-
     private static List<Vector2I> GetNeighbors(Vector2I current)
     {
         List<Vector2I> result = [
@@ -246,21 +238,8 @@ public partial class Utils : Node
         return result;
     }
 
-    private static List<Vector2I> GetNeighborsInQueue(Vector2I current, Dictionary<Vector2I, int> free)
-    {
-        List<Vector2I> result = [];
-        List<Vector2I> neighbors = GetNeighbors(current);
-        for (int i = 0; i < neighbors.Count; i++)
-        {
-            if (free.ContainsKey(neighbors[i]))
-            {
-                result.Add(neighbors[i]);
-            }
-        }
-        return result;
-    }
-
-    private static List<Vector2I> GetValidNeighbors(Vector2I current)
+    // zzz need to add making cells which contain enemies not a valid neighbor cell
+    private static List<Vector2I> GetValidNeighbors(Vector2I current, Combatant.Team sourceTeam)
     {
         List<Vector2I> result = [];
         TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
@@ -279,6 +258,20 @@ public partial class Utils : Node
                         result.Add(neighbor);
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+    private static List<Vector2I> GetNeighborsInQueue(Vector2I current, Dictionary<Vector2I, int> free)
+    {
+        List<Vector2I> result = [];
+        List<Vector2I> neighbors = GetNeighbors(current);
+        for (int i = 0; i < neighbors.Count; i++)
+        {
+            if (free.ContainsKey(neighbors[i]))
+            {
+                result.Add(neighbors[i]);
             }
         }
         return result;
