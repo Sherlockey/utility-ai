@@ -37,22 +37,16 @@ public partial class BattleManager : Node2D
 
     public override void _Ready()
     {
-        // Subscribe to turn ended for each combatant and set their battle indices
+        // Subscribe to events from combatants, set their battle indices, count enemies
+        int enemyCount = 0;
         for (int i = 0; i < Combatants.Count; i++)
         {
             Combatant combatant = Combatants[i];
-            if (combatant != null)
-            {
-                combatant.TurnEnded += OnCombatantTurnEnded;
-                combatant.Status.DamageTaken += OnStatusDamageTaken;
-                combatant.Status.Died += OnStatusDied;
-                combatant.BattleIndex = i;
-                combatant.Movement.Moved += Camera.OnCombatantMoved; // inform camera when a combatant moves
-            }
-        }
-        int enemyCount = 0;
-        foreach (Combatant combatant in Combatants)
-        {
+            combatant.TurnEnded += OnCombatantTurnEnded;
+            combatant.Status.DamageTaken += OnStatusDamageTaken;
+            combatant.Status.Died += OnStatusDied;
+            combatant.BattleIndex = i;
+            combatant.Movement.Moved += Camera.OnCombatantMoved;
             if (combatant.MyTeam == Combatant.Team.Enemy)
             {
                 enemyCount++;
