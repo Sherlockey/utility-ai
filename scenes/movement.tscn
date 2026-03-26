@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://1hpbkhf1afc0"]
+
+[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="1_w7wdm"]
+
+[node name="Movement" type="Node" unique_id=1018986739 node_paths=PackedStringArray("_combatant", "_walkWaitTimer")]
+script = ExtResource("1_w7wdm")
+_combatant = NodePath("")
+_walkWaitTimer = NodePath("WalkTimer")
+
+[node name="WalkTimer" type="Timer" parent="." unique_id=1135340217]
+wait_time = 0.2
+one_shot = true

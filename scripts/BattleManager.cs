@@ -47,6 +47,7 @@ public partial class BattleManager : Node2D
                 combatant.Status.DamageTaken += OnStatusDamageTaken;
                 combatant.Status.Died += OnStatusDied;
                 combatant.BattleIndex = i;
+                combatant.Movement.Moved += Camera.OnCombatantMoved; // inform camera when a combatant moves
             }
         }
         int enemyCount = 0;
@@ -184,7 +185,7 @@ public partial class BattleManager : Node2D
         _turnOrderDisplay.Update(Combatants);
         Combatant c = Combatants.First();
         _activeCombatant = c;
-        Camera.Target = c;
+        Camera.Position = c.Position;
         _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
             c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
             c.Stats.Movement.ToString());

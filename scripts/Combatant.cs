@@ -2,6 +2,7 @@ using Godot;
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class Combatant : Node2D
 {
@@ -21,6 +22,8 @@ public partial class Combatant : Node2D
     [Export]
     public Team MyTeam { get; private set; }
     [Export]
+    public Brain Brain { get; private set; }
+    [Export]
     public Stats Stats { get; private set; }
     [Export]
     public Status Status { get; private set; }
@@ -34,6 +37,11 @@ public partial class Combatant : Node2D
     public List<IAbility> Abilities = [];
     public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
     public int BattleIndex { get; set; }
+
+    private const double TURN_START_WAIT_TIME = 0.5;
+
+    [Export]
+    private Timer _turnStartTimer;
 
     private (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) _distPrevTuple = new();
 
@@ -116,13 +124,13 @@ public partial class Combatant : Node2D
         }
     }
 
-    public void InitializeTurn()
+    public async Task InitializeTurn()
     {
         Status.CurrentMovement = Stats.Movement;
         Status.AbilitiesRemaining = Stats.AbilitiesPerTurn;
         CurrentTurnState = TurnState.Active;
-        Vector2I source = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(source, Status.CurrentMovement, MyTeam);
+        Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
 
         if (BattleManager.Get().DebugMovement)
         {
@@ -130,6 +138,15 @@ public partial class Combatant : Node2D
             {
                 BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
             }
+        }
+
+        _turnStartTimer.Start();
+        await ToSignal(_turnStartTimer, Timer.SignalName.Timeout);
+
+        Vector2I coords = Brain.ChooseMoveLocation(currentCoords, [.. _distPrevTuple.Item1.Keys]);
+        if (coords != currentCoords)
+        {
+            Movement.WalkTo(coords, _distPrevTuple.Item2);
         }
     }
 

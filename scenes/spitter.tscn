@@ -2,21 +2,27 @@
 
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_xdvmd"]
 [ext_resource type="Texture2D" uid="uid://bdigryj4inlj4" path="res://assets/spitter.png" id="2_xdvmd"]
+[ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_e1l7o"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_2s38u"]
 [ext_resource type="Script" uid="uid://dl7ds1b3f8u67" path="res://scripts/Shoot.cs" id="4_e1l7o"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_3q8e4"]
-[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="6_aps7v"]
+[ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_e1l7o"]
 
-[node name="Spitter" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent")]
+[node name="Spitter" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent", "_turnStartTimer")]
 script = ExtResource("1_xdvmd")
+Brain = NodePath("Brain")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 AbilitiesParent = NodePath("Abilities")
+_turnStartTimer = NodePath("TurnStartTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("2_xdvmd")
+
+[node name="Brain" type="Node" parent="." unique_id=1736472598]
+script = ExtResource("3_e1l7o")
 
 [node name="Abilities" type="Node" parent="." unique_id=712162907]
 
@@ -34,6 +40,9 @@ Movement = 3
 script = ExtResource("5_3q8e4")
 Stats = NodePath("../Stats")
 
-[node name="Movement" type="Node" parent="." unique_id=1251461647 node_paths=PackedStringArray("_combatant")]
-script = ExtResource("6_aps7v")
+[node name="Movement" parent="." unique_id=1018986739 node_paths=PackedStringArray("_combatant") instance=ExtResource("7_e1l7o")]
 _combatant = NodePath("..")
+
+[node name="TurnStartTimer" type="Timer" parent="." unique_id=878051305]
+wait_time = 0.5
+one_shot = true

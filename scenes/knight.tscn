@@ -2,23 +2,29 @@
 
 [ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="2_qxgmm"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_01nm4"]
-[ext_resource type="Script" uid="uid://d8wmhdwmjd0e" path="res://scripts/Movement.cs" id="3_qxgmm"]
+[ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_mvyd6"]
 [ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_swm0g"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_0dyjn"]
 [ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_5fsgc"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_swm0g"]
+[ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_mvyd6"]
 
-[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent")]
+[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent", "_turnStartTimer")]
 script = ExtResource("3_01nm4")
 MyTeam = 1
+Brain = NodePath("Brain")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 AbilitiesParent = NodePath("Abilities")
+_turnStartTimer = NodePath("TurnStartTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
 texture = ExtResource("2_qxgmm")
+
+[node name="Brain" type="Node" parent="." unique_id=1843467975]
+script = ExtResource("3_mvyd6")
 
 [node name="Abilities" type="Node" parent="." unique_id=1014024241]
 
@@ -27,6 +33,7 @@ script = ExtResource("5_5fsgc")
 
 [node name="Slam" type="Node" parent="Abilities" unique_id=1213089474]
 script = ExtResource("3_swm0g")
+_areaOfEffect = 2
 _areaOfEffect = 2
 _damagePercentNumerator = 67
 
@@ -41,6 +48,9 @@ Evasion = 20
 script = ExtResource("5_swm0g")
 Stats = NodePath("../Stats")
 
-[node name="Movement" type="Node" parent="." unique_id=994254787 node_paths=PackedStringArray("_combatant")]
-script = ExtResource("3_qxgmm")
+[node name="Movement" parent="." unique_id=1018986739 node_paths=PackedStringArray("_combatant") instance=ExtResource("8_mvyd6")]
 _combatant = NodePath("..")
+
+[node name="TurnStartTimer" type="Timer" parent="." unique_id=956012131]
+wait_time = 0.5
+one_shot = true
