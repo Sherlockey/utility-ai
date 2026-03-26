@@ -37,4 +37,10 @@ public partial class Status : Node
             }
         }
     }
+
+    // TODO this is a temporary calculation
+    public int GetInfluence()
+    {
+        return Stats.Attack * Stats.Attack;
+    }
 }

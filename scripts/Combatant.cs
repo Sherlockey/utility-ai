@@ -38,8 +38,6 @@ public partial class Combatant : Node2D
     public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
     public int BattleIndex { get; set; }
 
-    private const double TURN_START_WAIT_TIME = 0.5;
-
     [Export]
     private Timer _turnStartTimer;
 
@@ -126,9 +124,12 @@ public partial class Combatant : Node2D
 
     public async Task InitializeTurn()
     {
+        // Set state
         Status.CurrentMovement = Stats.Movement;
         Status.AbilitiesRemaining = Stats.AbilitiesPerTurn;
         CurrentTurnState = TurnState.Active;
+
+        //Gather walkable cells
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
         _distPrevTuple = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
 
@@ -140,9 +141,11 @@ public partial class Combatant : Node2D
             }
         }
 
+        // Delay
         _turnStartTimer.Start();
         await ToSignal(_turnStartTimer, Timer.SignalName.Timeout);
 
+        // Ask Brain, then move
         Vector2I coords = Brain.ChooseMoveLocation(currentCoords, [.. _distPrevTuple.Item1.Keys]);
         if (coords != currentCoords)
         {

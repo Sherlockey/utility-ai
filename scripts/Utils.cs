@@ -109,7 +109,8 @@ public partial class Utils : Node
         return result;
     }
 
-    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) WalkableCoordsDistAndPrev(Vector2I source, int movementDist, Combatant.Team sourceTeam)
+    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>)
+    WalkableCoordsDistAndPrev(Vector2I source, int movementDist, Combatant.Team sourceTeam)
     {
         Dictionary<Vector2I, int> dist = [];
         Dictionary<Vector2I, Vector2I> prev = [];
@@ -124,7 +125,7 @@ public partial class Utils : Node
             List<Vector2I> neighbors = GetValidNeighbors(current, sourceTeam);
             foreach (Vector2I neighbor in neighbors)
             {
-                int altDist = dist[current] + MovementRequired(current, neighbor);
+                int altDist = dist[current] + DistanceXY(current, neighbor);
                 int neighborDist = dist.GetValueOrDefault(neighbor, int.MaxValue);
                 if (altDist < neighborDist && altDist <= movementDist)
                 {
@@ -138,10 +139,40 @@ public partial class Utils : Node
         return (dist, prev);
     }
 
+    // TODO currently not adding influence to any locations where a combatant is standing
+    // TODO a little hack involved with setting movement to int.MaxValue
+    public static Dictionary<Vector2I, int> MakeCombatantInfluenceMap(Combatant combatant)
+    {
+        Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap(combatant.Position);
+        Dictionary<Vector2I, int> result =
+            WalkableCoordsDistAndPrev(combatantCoords, int.MaxValue, combatant.MyTeam).Item1;
+        int sign = 1;
+        if (combatant.MyTeam == Combatant.Team.Enemy)
+        {
+            sign = -1;
+        }
+        int influence = combatant.Status.GetInfluence();
+        int divisor = Mathf.Max(combatant.Stats.Movement + 1, 1);
+        foreach (Vector2I coords in result.Keys)
+        {
+            // Preprocess coords so they are affected by movement + 1
+            // (assuming all units have an ability with a range of 1). // TODO replace with GetRange()
+            // This makes it so your influence is diminished by how many turns it would take
+            // for you to reach that location.
+            int numberOfTurns = result[coords] / divisor + 1;
+            result[coords] = (numberOfTurns == 0)
+                ? influence
+                : Mathf.RoundToInt((float)influence / numberOfTurns);
+            result[coords] *= sign;
+        }
+        return result;
+    }
+
     // Returns a tuple with a distance Dictionary and a previous cell Dictionary.
     // If prev[i] == Vector2I(int.MaxValue, int.MaxValue) it is invalid.
     // TODO replace above with an Option type?
-    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) Dijkstra(List<Vector2I> graph, Vector2I source)
+    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>)
+    Dijkstra(List<Vector2I> graph, Vector2I source)
     {
         Dictionary<Vector2I, int> dist = [];
         Dictionary<Vector2I, Vector2I> prev = [];
@@ -178,7 +209,7 @@ public partial class Utils : Node
             List<Vector2I> neighbors = GetNeighborsInQueue(current, queue);
             foreach (Vector2I neighbor in neighbors)
             {
-                int altDist = dist[current] + MovementRequired(current, neighbor);
+                int altDist = dist[current] + DistanceXY(current, neighbor);
                 if (altDist < dist[neighbor])
                 {
                     dist[neighbor] = altDist;
@@ -226,6 +257,7 @@ public partial class Utils : Node
         return result;
     }
 
+    // Valid means the cell is traversable and is not occupied by a combatant of the opposing team
     private static List<Vector2I> GetValidNeighbors(Vector2I current, Combatant.Team sourceTeam)
     {
         List<Vector2I> result = [];
@@ -281,7 +313,7 @@ public partial class Utils : Node
         return result;
     }
 
-    private static int MovementRequired(Vector2I start, Vector2I end)
+    private static int DistanceXY(Vector2I start, Vector2I end)
     {
         int xDist = Mathf.Abs(end.X - start.X);
         int yDist = Mathf.Abs(end.Y - start.Y);

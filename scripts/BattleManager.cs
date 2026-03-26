@@ -17,6 +17,7 @@ public partial class BattleManager : Node2D
     public TileMapLayer TileMapLayer { get; set; } // Initialized by Level
     public Vector2I TileSize { get; set; } // Initialized by Level
     public Camera Camera { get; set; } // Initialized by Level
+    public Dictionary<Vector2I, int> InfluenceMap { get; private set; } = [];
 
     private static BattleManager s_battleManager = null;
 
@@ -35,8 +36,15 @@ public partial class BattleManager : Node2D
         s_battleManager = this;
     }
 
+    public static BattleManager Get()
+    {
+        return s_battleManager;
+    }
+
     public override void _Ready()
     {
+        InitializeInfluenceMap();
+
         // Subscribe to events from combatants, set their battle indices, count enemies
         int enemyCount = 0;
         for (int i = 0; i < Combatants.Count; i++)
@@ -64,9 +72,15 @@ public partial class BattleManager : Node2D
         UpdateTargetedStatusDisplay(_targetedCombatant);
     }
 
-    public static BattleManager Get()
+    public override void _Input(InputEvent @event)
     {
-        return s_battleManager;
+        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        {
+            if (keyEvent.Keycode == Key.U)
+            {
+                UpdateInfluenceMap();
+            }
+        }
     }
 
     private bool CheckIfACombatantHasTurn()
@@ -184,6 +198,37 @@ public partial class BattleManager : Node2D
             c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
             c.Stats.Movement.ToString());
         c.InitializeTurn();
+    }
+
+    private void InitializeInfluenceMap()
+    {
+        foreach (Vector2I coords in TileMapLayer.GetUsedCellsById(0)) // 0 = background, aka traversable
+        {
+            InfluenceMap[coords] = 0;
+        }
+    }
+
+    private void UpdateInfluenceMap()
+    {
+        foreach (Vector2I coords in InfluenceMap.Keys)
+        {
+            InfluenceMap[coords] = 0;
+        }
+
+        List<Dictionary<Vector2I, int>> combatantInfluenceMaps = [];
+        foreach (Combatant combatant in Combatants)
+        {
+            Dictionary<Vector2I, int> combatantInfluenceMap =
+                Utils.MakeCombatantInfluenceMap(combatant);
+            combatantInfluenceMaps.Add(combatantInfluenceMap);
+        }
+        foreach (Vector2I coords in InfluenceMap.Keys)
+        {
+            foreach (Dictionary<Vector2I, int> entry in combatantInfluenceMaps)
+            {
+                InfluenceMap[coords] += entry.GetValueOrDefault(coords, 0);
+            }
+        }
     }
 
     private void OnCombatantTurnEnded(object sender, EventArgs e)
