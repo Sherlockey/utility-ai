@@ -1,25 +1,19 @@
-[gd_scene format=4 uid="uid://dkwtmkqp6x8nb"]
+[gd_scene format=4 uid="uid://bcqxey0v88gt5"]
 
-[ext_resource type="Script" uid="uid://bty2hr1mqb301" path="res://scripts/Level.cs" id="1_wtcfe"]
-[ext_resource type="PackedScene" uid="uid://c14k3sjlmyhd4" path="res://scenes/knight.tscn" id="2_0e48y"]
-[ext_resource type="Texture2D" uid="uid://dk4vgbaepjcpx" path="res://assets/background.png" id="3_epypp"]
-[ext_resource type="PackedScene" uid="uid://claadvfxus2xj" path="res://scenes/fighter.tscn" id="4_gbhdq"]
-[ext_resource type="PackedScene" uid="uid://dpr25f23d8n2w" path="res://scenes/ranger.tscn" id="5_y646j"]
-[ext_resource type="PackedScene" uid="uid://y73gjhbhogfx" path="res://scenes/mage.tscn" id="6_lnbra"]
-[ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="7_88ety"]
-[ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="8_ahbqi"]
-[ext_resource type="PackedScene" uid="uid://bnvkat15ynblj" path="res://scenes/spitter.tscn" id="8_kpk0m"]
-[ext_resource type="PackedScene" uid="uid://dj76lrbomat1o" path="res://scenes/scavbat.tscn" id="9_7gix3"]
-[ext_resource type="PackedScene" uid="uid://nfxw0ngtofsh" path="res://scenes/tortise.tscn" id="9_qs1vn"]
-[ext_resource type="Texture2D" uid="uid://c8uh00uq3csjg" path="res://assets/cave-walls.png" id="10_4asn1"]
-[ext_resource type="Script" uid="uid://irh32ljwfg3p" path="res://scripts/Camera.cs" id="11_dw7u0"]
-[ext_resource type="Texture2D" uid="uid://cye3n1gn57244" path="res://assets/water.png" id="11_fyxdr"]
-[ext_resource type="Texture2D" uid="uid://dksadfqk4rkie" path="res://assets/background-walkable.png" id="14_13hs1"]
-[ext_resource type="Texture2D" uid="uid://de137iwa1lsho" path="res://assets/white-tile.png" id="15_fptmo"]
-[ext_resource type="Script" uid="uid://3mah4xcj6u2j" path="res://scripts/DebugTileMapLayer.cs" id="16_bakr3"]
+[ext_resource type="Script" uid="uid://bty2hr1mqb301" path="res://scripts/Level.cs" id="1_ciufd"]
+[ext_resource type="PackedScene" uid="uid://c14k3sjlmyhd4" path="res://scenes/knight.tscn" id="2_8ead3"]
+[ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="6_7fycn"]
+[ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="10_afp1p"]
+[ext_resource type="Texture2D" uid="uid://de137iwa1lsho" path="res://assets/white-tile.png" id="11_i6rf1"]
+[ext_resource type="Script" uid="uid://3mah4xcj6u2j" path="res://scripts/DebugTileMapLayer.cs" id="12_s0nyt"]
+[ext_resource type="Texture2D" uid="uid://dk4vgbaepjcpx" path="res://assets/background.png" id="13_gg4tg"]
+[ext_resource type="Texture2D" uid="uid://c8uh00uq3csjg" path="res://assets/cave-walls.png" id="14_tei8s"]
+[ext_resource type="Texture2D" uid="uid://cye3n1gn57244" path="res://assets/water.png" id="15_qfbyw"]
+[ext_resource type="Texture2D" uid="uid://dksadfqk4rkie" path="res://assets/background-walkable.png" id="16_b2l1v"]
+[ext_resource type="Script" uid="uid://irh32ljwfg3p" path="res://scripts/Camera.cs" id="17_2xm1n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bakr3"]
-texture = ExtResource("15_fptmo")
+texture = ExtResource("11_i6rf1")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
 
@@ -29,7 +23,7 @@ sources/0 = SubResource("TileSetAtlasSource_bakr3")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0hol4"]
 resource_name = "background"
-texture = ExtResource("3_epypp")
+texture = ExtResource("13_gg4tg")
 texture_region_size = Vector2i(16, 24)
 0:0/next_alternative_id = 6
 0:0/0 = 0
@@ -39,7 +33,7 @@ texture_region_size = Vector2i(16, 24)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dw7u0"]
 resource_name = "cave-wall"
-texture = ExtResource("10_4asn1")
+texture = ExtResource("14_tei8s")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -156,7 +150,7 @@ texture_region_size = Vector2i(16, 24)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kpk0m"]
 resource_name = "water"
-texture = ExtResource("11_fyxdr")
+texture = ExtResource("15_qfbyw")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -257,7 +251,7 @@ texture_region_size = Vector2i(16, 24)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fptmo"]
 resource_name = "background-walkable"
-texture = ExtResource("14_13hs1")
+texture = ExtResource("16_b2l1v")
 texture_region_size = Vector2i(16, 24)
 0:0/0 = 0
 0:0/0/custom_data_0 = true
@@ -280,18 +274,18 @@ sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
 sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
-[node name="TestLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera")]
-script = ExtResource("1_wtcfe")
+[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera")]
+script = ExtResource("1_ciufd")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
 _camera = NodePath("Camera2D")
-_combatantScenes = Array[PackedScene]([ExtResource("2_0e48y"), ExtResource("4_gbhdq"), ExtResource("5_y646j"), ExtResource("6_lnbra"), ExtResource("8_ahbqi"), ExtResource("9_7gix3"), ExtResource("8_kpk0m"), ExtResource("9_qs1vn")])
-_battleManagerScene = ExtResource("7_88ety")
+_combatantScenes = Array[PackedScene]([ExtResource("2_8ead3"), ExtResource("6_7fycn")])
+_battleManagerScene = ExtResource("10_afp1p")
 
 [node name="DebugTileMapLayer" type="TileMapLayer" parent="." unique_id=311799121]
 visible = false
 tile_set = SubResource("TileSet_fptmo")
-script = ExtResource("16_bakr3")
+script = ExtResource("12_s0nyt")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=977931786]
 z_index = -1
@@ -301,27 +295,9 @@ tile_set = SubResource("TileSet_0e48y")
 [node name="Marker2D" type="Marker2D" parent="." unique_id=2113117202]
 position = Vector2(296, 60)
 
-[node name="Marker2D2" type="Marker2D" parent="." unique_id=253849304]
-position = Vector2(312, 60)
-
-[node name="Marker2D3" type="Marker2D" parent="." unique_id=1088253509]
-position = Vector2(328, 60)
-
-[node name="Marker2D4" type="Marker2D" parent="." unique_id=583132434]
-position = Vector2(344, 60)
-
-[node name="Marker2D5" type="Marker2D" parent="." unique_id=573259782]
-position = Vector2(296, 300)
-
-[node name="Marker2D6" type="Marker2D" parent="." unique_id=1407573742]
-position = Vector2(312, 300)
-
-[node name="Marker2D7" type="Marker2D" parent="." unique_id=2036266929]
-position = Vector2(328, 300)
-
-[node name="Marker2D8" type="Marker2D" parent="." unique_id=1348065202]
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=1348065202]
 position = Vector2(344, 300)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1068788131]
 position = Vector2(320, 180)
-script = ExtResource("11_dw7u0")
+script = ExtResource("17_2xm1n")

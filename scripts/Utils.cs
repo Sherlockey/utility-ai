@@ -139,109 +139,26 @@ public partial class Utils : Node
         return (dist, prev);
     }
 
-    // TODO currently not adding influence to any locations where a combatant is standing
-    // TODO a little hack involved with setting movement to int.MaxValue
+    // TODO @Low Priority currently not adding influence to any locations where a combatant is standing
+    // TODO @Low Priority a little hack involved with setting movement to int.MaxValue
     public static Dictionary<Vector2I, int> MakeCombatantInfluenceMap(Combatant combatant)
     {
         Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap(combatant.Position);
         Dictionary<Vector2I, int> result =
             WalkableCoordsDistAndPrev(combatantCoords, int.MaxValue, combatant.MyTeam).Item1;
-        int sign = 1;
-        if (combatant.MyTeam == Combatant.Team.Enemy)
-        {
-            sign = -1;
-        }
         int influence = combatant.Status.GetInfluence();
         int divisor = Mathf.Max(combatant.Stats.Movement + 1, 1);
         foreach (Vector2I coords in result.Keys)
         {
+            // TODO replace with GetRange()
             // Preprocess coords so they are affected by movement + 1
-            // (assuming all units have an ability with a range of 1). // TODO replace with GetRange()
+            // (assuming all units have an ability with a range of 1).
             // This makes it so your influence is diminished by how many turns it would take
             // for you to reach that location.
             int numberOfTurns = result[coords] / divisor + 1;
             result[coords] = (numberOfTurns == 0)
                 ? influence
                 : Mathf.RoundToInt((float)influence / numberOfTurns);
-            result[coords] *= sign;
-        }
-        return result;
-    }
-
-    // Returns a tuple with a distance Dictionary and a previous cell Dictionary.
-    // If prev[i] == Vector2I(int.MaxValue, int.MaxValue) it is invalid.
-    // TODO replace above with an Option type?
-    public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>)
-    Dijkstra(List<Vector2I> graph, Vector2I source)
-    {
-        Dictionary<Vector2I, int> dist = [];
-        Dictionary<Vector2I, Vector2I> prev = [];
-        Dictionary<Vector2I, int> queue = [];
-
-        foreach (Vector2I coords in graph)
-        {
-            prev[coords] = new(int.MaxValue, int.MaxValue);
-            if (coords == source)
-            {
-                dist[coords] = 0;
-                queue[coords] = 0;
-            }
-            else
-            {
-                dist[coords] = int.MaxValue;
-                queue[coords] = int.MaxValue;
-            }
-        }
-
-        while (queue.Count > 0)
-        {
-            Vector2I current = queue.First().Key;
-            int currentMin = int.MaxValue;
-            foreach (KeyValuePair<Vector2I, int> kvp in queue)
-            {
-                if (kvp.Value <= currentMin)
-                {
-                    current = kvp.Key;
-                    currentMin = kvp.Value;
-                }
-            }
-            queue.Remove(current);
-            List<Vector2I> neighbors = GetNeighborsInQueue(current, queue);
-            foreach (Vector2I neighbor in neighbors)
-            {
-                int altDist = dist[current] + DistanceXY(current, neighbor);
-                if (altDist < dist[neighbor])
-                {
-                    dist[neighbor] = altDist;
-                    prev[neighbor] = current;
-                    queue[neighbor] = altDist;
-                }
-            }
-        }
-        return (dist, prev);
-    }
-
-    public static List<Vector2I> TraversableCoords(List<Vector2I> coordsList)
-    {
-        List<Vector2I> result = [];
-        TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
-        foreach (Vector2I coords in coordsList)
-        {
-            if (tileMapLayer.GetCellSourceId(coords) != -1)
-            {
-                TileData tileData = tileMapLayer.GetCellTileData(coords);
-                bool isTileTraversable;
-                string customDataLayerName = "Traversable";
-                Debug.Assert(tileData.HasCustomData(customDataLayerName));
-                if (tileData.HasCustomData(customDataLayerName))
-                {
-                    isTileTraversable = tileData.GetCustomData(customDataLayerName).AsBool();
-                    if (isTileTraversable)
-                    {
-                        result.Add(coords);
-                    }
-                }
-            }
         }
         return result;
     }
@@ -299,20 +216,6 @@ public partial class Utils : Node
         return result;
     }
 
-    private static List<Vector2I> GetNeighborsInQueue(Vector2I current, Dictionary<Vector2I, int> free)
-    {
-        List<Vector2I> result = [];
-        List<Vector2I> neighbors = GetNeighbors(current);
-        for (int i = 0; i < neighbors.Count; i++)
-        {
-            if (free.ContainsKey(neighbors[i]))
-            {
-                result.Add(neighbors[i]);
-            }
-        }
-        return result;
-    }
-
     private static int DistanceXY(Vector2I start, Vector2I end)
     {
         int xDist = Mathf.Abs(end.X - start.X);
@@ -331,4 +234,93 @@ public partial class Utils : Node
             source.Remove(occupiedCoord);
         }
     }
+
+    // public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>)
+    // Dijkstra(List<Vector2I> graph, Vector2I source)
+    // {
+    //     Dictionary<Vector2I, int> dist = [];
+    //     Dictionary<Vector2I, Vector2I> prev = [];
+    //     Dictionary<Vector2I, int> queue = [];
+
+    //     foreach (Vector2I coords in graph)
+    //     {
+    //         prev[coords] = new(int.MaxValue, int.MaxValue);
+    //         if (coords == source)
+    //         {
+    //             dist[coords] = 0;
+    //             queue[coords] = 0;
+    //         }
+    //         else
+    //         {
+    //             dist[coords] = int.MaxValue;
+    //             queue[coords] = int.MaxValue;
+    //         }
+    //     }
+
+    //     while (queue.Count > 0)
+    //     {
+    //         Vector2I current = queue.First().Key;
+    //         int currentMin = int.MaxValue;
+    //         foreach (KeyValuePair<Vector2I, int> kvp in queue)
+    //         {
+    //             if (kvp.Value <= currentMin)
+    //             {
+    //                 current = kvp.Key;
+    //                 currentMin = kvp.Value;
+    //             }
+    //         }
+    //         queue.Remove(current);
+    //         List<Vector2I> neighbors = GetNeighborsInQueue(current, queue);
+    //         foreach (Vector2I neighbor in neighbors)
+    //         {
+    //             int altDist = dist[current] + DistanceXY(current, neighbor);
+    //             if (altDist < dist[neighbor])
+    //             {
+    //                 dist[neighbor] = altDist;
+    //                 prev[neighbor] = current;
+    //                 queue[neighbor] = altDist;
+    //             }
+    //         }
+    //     }
+    //     return (dist, prev);
+    // }
+
+    // public static List<Vector2I> TraversableCoords(List<Vector2I> coordsList)
+    // {
+    //     List<Vector2I> result = [];
+    //     TileMapLayer tileMapLayer = BattleManager.Get().TileMapLayer;
+    //     foreach (Vector2I coords in coordsList)
+    //     {
+    //         if (tileMapLayer.GetCellSourceId(coords) != -1)
+    //         {
+    //             TileData tileData = tileMapLayer.GetCellTileData(coords);
+    //             bool isTileTraversable;
+    //             string customDataLayerName = "Traversable";
+    //             Debug.Assert(tileData.HasCustomData(customDataLayerName));
+    //             if (tileData.HasCustomData(customDataLayerName))
+    //             {
+    //                 isTileTraversable = tileData.GetCustomData(customDataLayerName).AsBool();
+    //                 if (isTileTraversable)
+    //                 {
+    //                     result.Add(coords);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return result;
+    // }
+
+    // private static List<Vector2I> GetNeighborsInQueue(Vector2I current, Dictionary<Vector2I, int> free)
+    // {
+    //     List<Vector2I> result = [];
+    //     List<Vector2I> neighbors = GetNeighbors(current);
+    //     for (int i = 0; i < neighbors.Count; i++)
+    //     {
+    //         if (free.ContainsKey(neighbors[i]))
+    //         {
+    //             result.Add(neighbors[i]);
+    //         }
+    //     }
+    //     return result;
+    // }
 }

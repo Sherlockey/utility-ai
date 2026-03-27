@@ -8,14 +8,14 @@
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_3q8e4"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_e1l7o"]
 
-[node name="Spitter" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent", "_turnStartTimer")]
+[node name="Spitter" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
 script = ExtResource("1_xdvmd")
 Brain = NodePath("Brain")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
-AbilitiesParent = NodePath("Abilities")
+_abilitiesParent = NodePath("Abilities")
 _turnStartTimer = NodePath("TurnStartTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]

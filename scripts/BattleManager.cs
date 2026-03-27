@@ -11,13 +11,16 @@ public partial class BattleManager : Node2D
     public const int TurnThreshold = 100;
 
     [Export]
-    public bool DebugMovement = false;
+    public bool DebugManualControl = false;
 
     public List<Combatant> Combatants = []; // Initialized by Level
-    public TileMapLayer TileMapLayer { get; set; } // Initialized by Level
-    public Vector2I TileSize { get; set; } // Initialized by Level
-    public Camera Camera { get; set; } // Initialized by Level
-    public Dictionary<Vector2I, int> InfluenceMap { get; private set; } = [];
+    public TileMapLayer TileMapLayer; // Initialized by Level
+    public DebugTileMapLayer DebugTileMapLayer; // Initialized by Level
+    public Vector2I TileSize; // Initialized by Level
+    public Camera Camera; // Initialized by Level
+
+    // Item1 = enemy influence, Item2 = ally influence
+    public Dictionary<Vector2I, (int, int)> InfluenceMap { get; private set; } = [];
 
     private static BattleManager s_battleManager = null;
 
@@ -43,6 +46,7 @@ public partial class BattleManager : Node2D
 
     public override void _Ready()
     {
+        DebugTileMapLayer.InitializeDebugTileMapLayer(TileMapLayer);
         InitializeInfluenceMap();
 
         // Subscribe to events from combatants, set their battle indices, count enemies
@@ -76,10 +80,35 @@ public partial class BattleManager : Node2D
     {
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
-            if (keyEvent.Keycode == Key.U)
+            if (keyEvent.Keycode == Key.F5)
             {
-                UpdateInfluenceMap();
+                RefreshDebugDisplays();
             }
+            if (keyEvent.Keycode == Key.F2)
+            {
+                DebugManualControl = !DebugManualControl;
+            }
+        }
+    }
+
+    public void DrawInfluenceMap()
+    {
+        int max = 1;
+        foreach (Vector2I coords in InfluenceMap.Keys)
+        {
+            int item1 = InfluenceMap[coords].Item1;
+            int item2 = InfluenceMap[coords].Item2;
+            int maxItem = Mathf.Max(item1, item2);
+            max = Mathf.Max(maxItem, max);
+        }
+        float scalar = 255.0f / max;
+
+        foreach (Vector2I coords in InfluenceMap.Keys)
+        {
+            int red = Mathf.RoundToInt(InfluenceMap[coords].Item1 * scalar);
+            int blue = Mathf.RoundToInt(InfluenceMap[coords].Item2 * scalar);
+            DebugTileMapLayer.SetCellModulate
+                (coords, Color.Color8((byte)red, 0, (byte)blue));
         }
     }
 
@@ -190,6 +219,11 @@ public partial class BattleManager : Node2D
 
     private void UpdateForNewCombatantTurn()
     {
+        UpdateInfluenceMap();
+        if (DebugTileMapLayer.Visible)
+        {
+            DrawInfluenceMap();
+        }
         _turnOrderDisplay.Update(Combatants);
         Combatant c = Combatants.First();
         _activeCombatant = c;
@@ -204,7 +238,7 @@ public partial class BattleManager : Node2D
     {
         foreach (Vector2I coords in TileMapLayer.GetUsedCellsById(0)) // 0 = background, aka traversable
         {
-            InfluenceMap[coords] = 0;
+            InfluenceMap[coords] = (0, 0);
         }
     }
 
@@ -212,22 +246,53 @@ public partial class BattleManager : Node2D
     {
         foreach (Vector2I coords in InfluenceMap.Keys)
         {
-            InfluenceMap[coords] = 0;
+            InfluenceMap[coords] = (0, 0);
         }
 
-        List<Dictionary<Vector2I, int>> combatantInfluenceMaps = [];
+        List<Dictionary<Vector2I, int>> enemyInfluenceMaps = [];
+        List<Dictionary<Vector2I, int>> allyInfluenceMaps = [];
         foreach (Combatant combatant in Combatants)
         {
-            Dictionary<Vector2I, int> combatantInfluenceMap =
-                Utils.MakeCombatantInfluenceMap(combatant);
-            combatantInfluenceMaps.Add(combatantInfluenceMap);
+            if (combatant.MyTeam == Combatant.Team.Enemy)
+            {
+                Dictionary<Vector2I, int> combatantInfluenceMap =
+                    Utils.MakeCombatantInfluenceMap(combatant);
+                enemyInfluenceMaps.Add(combatantInfluenceMap);
+            }
+            else if (combatant.MyTeam == Combatant.Team.Ally)
+            {
+                Dictionary<Vector2I, int> combatantInfluenceMap =
+                    Utils.MakeCombatantInfluenceMap(combatant);
+                allyInfluenceMaps.Add(combatantInfluenceMap);
+            }
         }
         foreach (Vector2I coords in InfluenceMap.Keys)
         {
-            foreach (Dictionary<Vector2I, int> entry in combatantInfluenceMaps)
+            foreach (Dictionary<Vector2I, int> entry in enemyInfluenceMaps)
             {
-                InfluenceMap[coords] += entry.GetValueOrDefault(coords, 0);
+                InfluenceMap[coords] =
+                    (
+                        InfluenceMap[coords].Item1 + entry.GetValueOrDefault(coords, 0),
+                        InfluenceMap[coords].Item2
+                    );
             }
+            foreach (Dictionary<Vector2I, int> entry in allyInfluenceMaps)
+            {
+                InfluenceMap[coords] =
+                    (
+                        InfluenceMap[coords].Item1,
+                        InfluenceMap[coords].Item2 + entry.GetValueOrDefault(coords, 0)
+                    );
+            }
+        }
+    }
+
+    private void RefreshDebugDisplays()
+    {
+        if (DebugTileMapLayer.Visible)
+        {
+            UpdateInfluenceMap(); // has some gameplay implications, but is fine due to current ordering
+            DrawInfluenceMap();
         }
     }
 

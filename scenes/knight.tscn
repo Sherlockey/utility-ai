@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_swm0g"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_mvyd6"]
 
-[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "AbilitiesParent", "_turnStartTimer")]
+[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
 script = ExtResource("3_01nm4")
 MyTeam = 1
 Brain = NodePath("Brain")
@@ -17,7 +17,7 @@ Stats = NodePath("Stats")
 Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
-AbilitiesParent = NodePath("Abilities")
+_abilitiesParent = NodePath("Abilities")
 _turnStartTimer = NodePath("TurnStartTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]

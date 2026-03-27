@@ -13,7 +13,7 @@ public partial class MessageLog : PanelContainer
 
     private static MessageLog s_messageLog = null;
 
-    private const int MAX_MESSAGES = 100;
+    private const int MaxMessages = 100;
 
     private int _count = 0;
 
@@ -50,7 +50,7 @@ public partial class MessageLog : PanelContainer
         Label entry = _messageLogEntryScene.Instantiate<Label>();
         entry.Text = message;
         _count++;
-        if (_count > MAX_MESSAGES)
+        if (_count > MaxMessages)
         {
             Node firstChild = _messagesVBox.GetChild(0);
             firstChild?.Free();

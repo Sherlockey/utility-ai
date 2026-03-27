@@ -8,6 +8,8 @@ public partial class Level : Node2D
     [Export]
     private TileMapLayer _tileMapLayer;
     [Export]
+    private DebugTileMapLayer _debugTileMapLayer;
+    [Export]
     private Camera _camera;
     [Export]
     private PackedScene[] _combatantScenes;
@@ -40,6 +42,7 @@ public partial class Level : Node2D
             battleManager.Combatants.Add(combatant);
         }
         battleManager.TileMapLayer = _tileMapLayer;
+        battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
         battleManager.BattleEnded += OnBattleManagerBattleEnded;

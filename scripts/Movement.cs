@@ -21,6 +21,10 @@ public partial class Movement : Node
         {
             return;
         }
+        if (BattleManager.Get().DebugManualControl == false)
+        {
+            return;
+        }
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
@@ -59,6 +63,7 @@ public partial class Movement : Node
         {
             _combatant.Position = _combatant.Position + movement;
             _combatant.Status.CurrentMovement -= 1;
+            Moved?.Invoke(this, _combatant);
             return true;
         }
         return false;

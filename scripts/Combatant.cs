@@ -28,16 +28,16 @@ public partial class Combatant : Node2D
     [Export]
     public Status Status { get; private set; }
     [Export]
-    public Movement Movement;
+    public Movement Movement { get; private set; }
     [Export]
     public Sprite2D Sprite2D { get; private set; }
-    [Export]
-    public Node AbilitiesParent;
 
     public List<IAbility> Abilities = [];
-    public TurnState CurrentTurnState { get; set; } = TurnState.Waiting;
-    public int BattleIndex { get; set; }
+    public TurnState CurrentTurnState = TurnState.Waiting;
+    public int BattleIndex;
 
+    [Export]
+    private Node _abilitiesParent;
     [Export]
     private Timer _turnStartTimer;
 
@@ -46,7 +46,7 @@ public partial class Combatant : Node2D
     public override void _Ready()
     {
         Status.Died += OnStatusDied;
-        foreach (Node node in AbilitiesParent.GetChildren())
+        foreach (Node node in _abilitiesParent.GetChildren())
         {
             if (node is IAbility ability)
             {
@@ -57,12 +57,16 @@ public partial class Combatant : Node2D
 
     public override void _Input(InputEvent @event)
     {
-        // Toggle whether input comes from the player or from the AI
-
         if (CurrentTurnState == TurnState.Waiting)
         {
             return;
         }
+
+        // TODO: add this back once combatants can end their own turns and use their own abilites
+        // if (BattleManager.Get().DebugManualControl == false)
+        // {
+        //     return;
+        // }
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
@@ -74,6 +78,7 @@ public partial class Combatant : Node2D
                 GetViewport().SetInputAsHandled();
                 EndTurn();
             }
+
             if (keyEvent.Keycode == Key.T)
             {
                 // Don't do anything if combatant doesn't have any AbilitiesRemaining
@@ -99,26 +104,6 @@ public partial class Combatant : Node2D
                     }
                 }
             }
-            if (keyEvent.Keycode == Key.F1)
-            {
-                BattleManager battleManager = BattleManager.Get();
-                bool currentlyDebug = battleManager.DebugMovement;
-                battleManager.DebugMovement = !battleManager.DebugMovement;
-                if (currentlyDebug)
-                {
-                    foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
-                    {
-                        BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
-                    }
-                }
-                else
-                {
-                    foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
-                    {
-                        BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
-                    }
-                }
-            }
         }
     }
 
@@ -133,12 +118,16 @@ public partial class Combatant : Node2D
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
         _distPrevTuple = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
 
-        if (BattleManager.Get().DebugMovement)
+        BattleManager battleManager = BattleManager.Get();
+        foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
         {
-            foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
-            {
-                BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
-            }
+            battleManager.TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
+        }
+
+        // For debugging purposes
+        if (BattleManager.Get().DebugManualControl == true)
+        {
+            return;
         }
 
         // Delay
@@ -155,18 +144,24 @@ public partial class Combatant : Node2D
 
     public void EndTurn()
     {
-        if (BattleManager.Get().DebugMovement)
+        BattleManager battleManager = BattleManager.Get();
+        foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
         {
-            foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
-            {
-                BattleManager.Get().TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
-            }
+            battleManager.TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
         }
         if (CurrentTurnState == TurnState.Active)
         {
             Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
             CurrentTurnState = TurnState.Waiting;
             TurnEnded?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void OnStatusDied(object sender, Combatant combatant)
+    {
+        if (CurrentTurnState == TurnState.Active)
+        {
+            EndTurn();
         }
     }
 
@@ -182,14 +177,6 @@ public partial class Combatant : Node2D
                 result = x.BattleIndex.CompareTo(y.BattleIndex);
             }
             return result;
-        }
-    }
-
-    private void OnStatusDied(object sender, Combatant combatant)
-    {
-        if (CurrentTurnState == TurnState.Active)
-        {
-            EndTurn();
         }
     }
 }
