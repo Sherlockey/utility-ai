@@ -84,7 +84,7 @@ public partial class BattleManager : Node2D
             {
                 RefreshDebugDisplays();
             }
-            if (keyEvent.Keycode == Key.F2)
+            if (keyEvent.Keycode == Key.M)
             {
                 DebugManualControl = !DebugManualControl;
             }
@@ -256,13 +256,13 @@ public partial class BattleManager : Node2D
             if (combatant.MyTeam == Combatant.Team.Enemy)
             {
                 Dictionary<Vector2I, int> combatantInfluenceMap =
-                    Utils.MakeCombatantInfluenceMap(combatant);
+                    Utils.MakeCombatantInfluenceMapNaive(combatant);
                 enemyInfluenceMaps.Add(combatantInfluenceMap);
             }
             else if (combatant.MyTeam == Combatant.Team.Ally)
             {
                 Dictionary<Vector2I, int> combatantInfluenceMap =
-                    Utils.MakeCombatantInfluenceMap(combatant);
+                    Utils.MakeCombatantInfluenceMapNaive(combatant);
                 allyInfluenceMaps.Add(combatantInfluenceMap);
             }
         }

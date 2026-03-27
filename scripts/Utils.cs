@@ -163,6 +163,21 @@ public partial class Utils : Node
         return result;
     }
 
+    // TODO @Low Priority currently not adding influence to any locations where a combatant is standing
+    // TODO @Low Priority a little hack involved with setting movement to int.MaxValue
+    public static Dictionary<Vector2I, int> MakeCombatantInfluenceMapNaive(Combatant combatant)
+    {
+        Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap(combatant.Position);
+        Dictionary<Vector2I, int> result =
+            WalkableCoordsDistAndPrev(combatantCoords, int.MaxValue, combatant.MyTeam).Item1;
+        int influence = combatant.Status.GetInfluence();
+        foreach (Vector2I coords in result.Keys)
+        {
+            result[coords] = Mathf.Max(influence - result[coords], 0);
+        }
+        return result;
+    }
+
     private static List<Vector2I> GetNeighbors(Vector2I current)
     {
         List<Vector2I> result = [

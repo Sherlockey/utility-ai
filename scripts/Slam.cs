@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public partial class Slam : Ability
 {
+    // TODO this could be handled differently to avoid having two fields in inspector
     [Export]
     protected new int _areaOfEffect = 2;
 

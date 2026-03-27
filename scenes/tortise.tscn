@@ -5,7 +5,10 @@
 [ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_dy6v3"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_eq88a"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_uljw3"]
+[ext_resource type="Script" uid="uid://bh5tliojqxsxj" path="res://scripts/MoveToAllyTerritory.cs" id="4_ysj3k"]
+[ext_resource type="Script" uid="uid://dljl0tal1ic0f" path="res://scripts/MoveToEnemyTerritory.cs" id="5_1pr7s"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_ysj3k"]
+[ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_au625"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_eq88a"]
 
 [node name="Tortise" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
@@ -21,8 +24,21 @@ _turnStartTimer = NodePath("TurnStartTimer")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("2_dy6v3")
 
-[node name="Brain" type="Node" parent="." unique_id=136249375]
+[node name="Brain" type="Node" parent="." unique_id=501793792 node_paths=PackedStringArray("_movementUtilityParent")]
 script = ExtResource("3_eq88a")
+_movementUtilityParent = NodePath("MovementUtilityParent")
+
+[node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=1172831108]
+
+[node name="MoveToEnemyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=757586396]
+script = ExtResource("5_1pr7s")
+Weight = 0.6
+
+[node name="MoveToAllyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=448621263]
+script = ExtResource("4_ysj3k")
+
+[node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=13783717]
+script = ExtResource("6_au625")
 
 [node name="Abilities" type="Node" parent="." unique_id=712162907]
 

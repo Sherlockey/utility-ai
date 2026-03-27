@@ -6,7 +6,10 @@
 [ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_p0roq"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_t2cfv"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="3_yb71v"]
+[ext_resource type="Script" uid="uid://bh5tliojqxsxj" path="res://scripts/MoveToAllyTerritory.cs" id="4_nu52m"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_p0roq"]
+[ext_resource type="Script" uid="uid://dljl0tal1ic0f" path="res://scripts/MoveToEnemyTerritory.cs" id="5_trnrn"]
+[ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_kse8p"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_66amf"]
 
 [node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
@@ -23,8 +26,22 @@ _turnStartTimer = NodePath("TurnStartTimer")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858591547]
 texture = ExtResource("2_ip8om")
 
-[node name="Brain" type="Node" parent="." unique_id=169882842]
+[node name="Brain" type="Node" parent="." unique_id=1060683676 node_paths=PackedStringArray("_movementUtilityParent")]
 script = ExtResource("3_66amf")
+_movementUtilityParent = NodePath("MovementUtilityParent")
+
+[node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=848439449]
+
+[node name="MoveToEnemyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1977729179]
+script = ExtResource("5_trnrn")
+Weight = 0.0
+
+[node name="MoveToAllyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=961004501]
+script = ExtResource("4_nu52m")
+Weight = 1.0
+
+[node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=2136273143]
+script = ExtResource("6_kse8p")
 
 [node name="Abilities" type="Node" parent="." unique_id=226643063]
 

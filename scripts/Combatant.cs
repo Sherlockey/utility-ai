@@ -118,6 +118,7 @@ public partial class Combatant : Node2D
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
         _distPrevTuple = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
 
+        // Display walkable cells
         BattleManager battleManager = BattleManager.Get();
         foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
         {
@@ -134,11 +135,16 @@ public partial class Combatant : Node2D
         _turnStartTimer.Start();
         await ToSignal(_turnStartTimer, Timer.SignalName.Timeout);
 
-        // Ask Brain, then move
-        Vector2I coords = Brain.ChooseMoveLocation(currentCoords, [.. _distPrevTuple.Item1.Keys]);
-        if (coords != currentCoords)
+        // Ask Brain for a move location
+        List<Vector2I> reachableCoords = [.. _distPrevTuple.Item1.Keys];
+        reachableCoords.Add(currentCoords);
+        Vector2I resultCoords = Brain.ChooseMoveLocation(
+            currentCoords, reachableCoords, BattleManager.Get().InfluenceMap, MyTeam);
+
+        // Move
+        if (resultCoords != currentCoords)
         {
-            Movement.WalkTo(coords, _distPrevTuple.Item2);
+            Movement.WalkTo(resultCoords, _distPrevTuple.Item2);
         }
     }
 
