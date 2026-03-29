@@ -1,6 +1,7 @@
 using Godot;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class MoveToEnemyTerritory : MovementUtility
 {
@@ -9,10 +10,22 @@ public partial class MoveToEnemyTerritory : MovementUtility
         Dictionary<Vector2I, (int, int)> influenceMap,
         Combatant.Team sourceTeam)
     {
-        // If positive, more enemy dominated. If negative, more ally dominated
-        // float difference = influenceMap[evaluatedCoords].Item1 - influenceMap[evaluatedCoords].Item2;
-        // difference *= Weight;
-        // return (sourceTeam == Combatant.Team.Enemy) ? difference : -difference;
-        return influenceMap[evaluatedCoords].Item1 * Weight;
+        int totalEnemyInfluence = 0;
+        foreach (Combatant combatant in BattleManager.Get().Combatants)
+        {
+            if (combatant.MyTeam == Combatant.Team.Enemy)
+            {
+                totalEnemyInfluence += combatant.Status.GetInfluence();
+            }
+        }
+        float utility = 0.0f;
+        if (totalEnemyInfluence != 0)
+        {
+            utility = (float)influenceMap[evaluatedCoords].Item1 / totalEnemyInfluence;
+        }
+        // float utility = Curve.Sample(influenceMap[evaluatedCoords].Item1);
+        utility *= Weight;
+        Debug.Assert(utility >= 0.0f && utility <= 1.0f);
+        return utility;
     }
 }

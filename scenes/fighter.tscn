@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dljl0tal1ic0f" path="res://scripts/MoveToEnemyTerritory.cs" id="5_siwl3"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="6_1bj3w"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_sfxrq"]
+[ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_siwl3"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_ql5yn"]
 
 [node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
@@ -38,7 +39,10 @@ Weight = 1.0
 
 [node name="MoveToAllyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1636081570]
 script = ExtResource("4_o4lsg")
-Weight = 0.75
+
+[node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=682682631]
+script = ExtResource("6_siwl3")
+Weight = 0.2
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=2126655785]
 script = ExtResource("6_sfxrq")

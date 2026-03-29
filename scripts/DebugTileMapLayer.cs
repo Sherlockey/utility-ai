@@ -35,7 +35,7 @@ public partial class DebugTileMapLayer : TileMapLayer
         }
     }
 
-    public void InitializeDebugTileMapLayer(TileMapLayer reference)
+    public void Initialize(TileMapLayer reference)
     {
         foreach (Vector2I coords in reference.GetUsedCellsById(0)) // gets all "background" cells
         {

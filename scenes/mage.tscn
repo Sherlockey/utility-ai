@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_p0roq"]
 [ext_resource type="Script" uid="uid://dljl0tal1ic0f" path="res://scripts/MoveToEnemyTerritory.cs" id="5_trnrn"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_kse8p"]
+[ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_trnrn"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_66amf"]
 
 [node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
@@ -38,6 +39,10 @@ Weight = 0.0
 
 [node name="MoveToAllyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=961004501]
 script = ExtResource("4_nu52m")
+Weight = 1.0
+
+[node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1411542430]
+script = ExtResource("6_trnrn")
 Weight = 1.0
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=2136273143]

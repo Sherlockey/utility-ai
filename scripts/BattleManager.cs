@@ -21,6 +21,7 @@ public partial class BattleManager : Node2D
 
     // Item1 = enemy influence, Item2 = ally influence
     public Dictionary<Vector2I, (int, int)> InfluenceMap { get; private set; } = [];
+    public Dictionary<Vector2I, float> ScoreMap { get; private set; } = [];
 
     private static BattleManager s_battleManager = null;
 
@@ -46,7 +47,7 @@ public partial class BattleManager : Node2D
 
     public override void _Ready()
     {
-        DebugTileMapLayer.InitializeDebugTileMapLayer(TileMapLayer);
+        DebugTileMapLayer.Initialize(TileMapLayer);
         InitializeInfluenceMap();
 
         // Subscribe to events from combatants, set their battle indices, count enemies

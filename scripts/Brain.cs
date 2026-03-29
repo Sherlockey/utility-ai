@@ -3,6 +3,7 @@ using Godot;
 using System;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public partial class Brain : Node
 {
@@ -21,35 +22,24 @@ public partial class Brain : Node
         // Calculate utility for all reachableCoords
         foreach (Vector2I coords in reachableCoords)
         {
-            float accumulatedScore = 0.0f;
-            float min = 0.0f;
-            float max = 1.0f;
+            float totalScore = 0.0f;
+            float totalWeight = 0.0f;
             foreach (Node node in _movementUtilityParent.GetChildren())
             {
                 if (node is MovementUtility movementUtility)
                 {
                     float score = movementUtility.Evaluate(coords, influenceMap, sourceTeam);
-                    accumulatedScore += score;
-                    if (score < min)
-                    {
-                        min = score;
-                    }
-                    if (score > max)
-                    {
-                        max = score;
-                    }
+                    totalScore += score;
+                    totalWeight += movementUtility.Weight;
                 }
             }
-            //Normalize then assign
-            accumulatedScore = (accumulatedScore - min) / (max - min);
-            if (scoreMap.ContainsKey(coords))
+            // Assign
+            if (totalWeight != 0.0f)
             {
-                scoreMap[coords] += accumulatedScore;
+                totalScore /= totalWeight;
             }
-            else
-            {
-                scoreMap[coords] = accumulatedScore;
-            }
+            Debug.Assert(totalScore <= 1.0f);
+            scoreMap[coords] = totalScore;
         }
 
         // DEBUG Draw map to debug

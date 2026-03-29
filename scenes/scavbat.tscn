@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bh5tliojqxsxj" path="res://scripts/MoveToAllyTerritory.cs" id="4_kjir6"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_febxk"]
 [ext_resource type="Script" uid="uid://dljl0tal1ic0f" path="res://scripts/MoveToEnemyTerritory.cs" id="5_qfa7m"]
+[ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_qfa7m"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_r6ks6"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_febxk"]
 
@@ -37,6 +38,10 @@ Weight = 1.0
 [node name="MoveToAllyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=2137202467]
 script = ExtResource("4_kjir6")
 Weight = 0.25
+
+[node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=748765186]
+script = ExtResource("6_qfa7m")
+Weight = 0.1
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=581630612]
 script = ExtResource("6_r6ks6")
