@@ -38,7 +38,7 @@ public partial class Brain : Node
             {
                 totalScore /= totalWeight;
             }
-            Debug.Assert(totalScore <= 1.0f);
+            Debug.Assert(totalScore >= 0.0f && totalScore <= 1.0f);
             scoreMap[coords] = totalScore;
         }
 

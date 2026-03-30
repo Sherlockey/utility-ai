@@ -12,26 +12,35 @@ public partial class MoveToFriendlyTerritory : MovementUtility
     {
         float utility = 0.0f;
 
+        int minAllyDifference = int.MaxValue;
         int maxAllyDifference = 0;
         foreach (Vector2I coords in influenceMap.Keys)
         {
-            int allyInfluence = influenceMap[evaluatedCoords].Item1;
-            int enemyInfluence = influenceMap[evaluatedCoords].Item2;
+            int enemyInfluence = influenceMap[coords].Item1;
+            int allyInfluence = influenceMap[coords].Item2;
             int difference = allyInfluence - enemyInfluence;
-            if (difference < 0)
+            if (difference < minAllyDifference)
             {
-                difference = 0;
+                minAllyDifference = difference;
             }
             if (difference > maxAllyDifference)
             {
                 maxAllyDifference = difference;
             }
         }
-        int diff = influenceMap[evaluatedCoords].Item1 - influenceMap[evaluatedCoords].Item2;
-        if (maxAllyDifference != 0)
+        int diff = influenceMap[evaluatedCoords].Item2 - influenceMap[evaluatedCoords].Item1;
+        if (minAllyDifference < 0)
         {
-            utility = diff / maxAllyDifference;
+            int amountToShift = Mathf.Abs(minAllyDifference);
+            minAllyDifference += amountToShift;
+            maxAllyDifference += amountToShift;
+            diff += amountToShift;
+            if (maxAllyDifference - minAllyDifference != 0)
+            {
+                utility = (float)(diff - minAllyDifference) / (maxAllyDifference - minAllyDifference);
+            }
         }
+
         utility *= Weight;
         Debug.Assert(utility >= 0.0f && utility <= 1.0f);
         return utility;

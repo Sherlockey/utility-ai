@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://bcqxey0v88gt5"]
 
 [ext_resource type="Script" uid="uid://bty2hr1mqb301" path="res://scripts/Level.cs" id="1_ciufd"]
-[ext_resource type="PackedScene" uid="uid://c14k3sjlmyhd4" path="res://scenes/knight.tscn" id="2_8ead3"]
+[ext_resource type="PackedScene" uid="uid://claadvfxus2xj" path="res://scenes/fighter.tscn" id="2_qb21p"]
 [ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="6_7fycn"]
 [ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="10_afp1p"]
 [ext_resource type="Texture2D" uid="uid://de137iwa1lsho" path="res://assets/white-tile.png" id="11_i6rf1"]
@@ -279,7 +279,7 @@ script = ExtResource("1_ciufd")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
 _camera = NodePath("Camera2D")
-_combatantScenes = Array[PackedScene]([ExtResource("2_8ead3"), ExtResource("6_7fycn")])
+_combatantScenes = Array[PackedScene]([ExtResource("2_qb21p"), ExtResource("6_7fycn")])
 _battleManagerScene = ExtResource("10_afp1p")
 
 [node name="DebugTileMapLayer" type="TileMapLayer" parent="." unique_id=311799121]

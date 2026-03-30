@@ -23,7 +23,6 @@ public partial class MoveToAllyTerritory : MovementUtility
         {
             utility = (float)influenceMap[evaluatedCoords].Item2 / totalAllyInfluence;
         }
-        // float utility = Curve.Sample(influenceMap[evaluatedCoords].Item2);
         utility *= Weight;
         Debug.Assert(utility >= 0.0f && utility <= 1.0f);
         return utility;

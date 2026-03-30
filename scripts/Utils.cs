@@ -110,7 +110,7 @@ public partial class Utils : Node
     }
 
     public static (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>)
-    WalkableCoordsDistAndPrev(Vector2I source, int movementDist, Combatant.Team sourceTeam)
+    WalkableCoordsDistAndPrev(Vector2I source, int movementDist, Combatant.Team sourceTeam, bool cullOpposingOccupied = true, bool cullFriendlyOccupied = true)
     {
         Dictionary<Vector2I, int> dist = [];
         Dictionary<Vector2I, Vector2I> prev = [];
@@ -122,7 +122,7 @@ public partial class Utils : Node
         while (queue.Count > 0)
         {
             Vector2I current = queue.Dequeue();
-            List<Vector2I> neighbors = GetValidNeighbors(current, sourceTeam);
+            List<Vector2I> neighbors = GetValidNeighbors(current, sourceTeam, cullOpposingOccupied);
             foreach (Vector2I neighbor in neighbors)
             {
                 int altDist = dist[current] + DistanceXY(current, neighbor);
@@ -135,7 +135,10 @@ public partial class Utils : Node
                 }
             }
         }
-        RemoveOccupiedCoords(dist);
+        if (cullFriendlyOccupied)
+        {
+            RemoveFriendlyOccupiedCoords(dist, sourceTeam);
+        }
         return (dist, prev);
     }
 
@@ -169,7 +172,7 @@ public partial class Utils : Node
     {
         Vector2I combatantCoords = BattleManager.Get().TileMapLayer.LocalToMap(combatant.Position);
         Dictionary<Vector2I, int> result =
-            WalkableCoordsDistAndPrev(combatantCoords, int.MaxValue, combatant.MyTeam).Item1;
+            WalkableCoordsDistAndPrev(combatantCoords, int.MaxValue, combatant.MyTeam, false, false).Item1;
         int influence = combatant.Status.GetInfluence();
         foreach (Vector2I coords in result.Keys)
         {
@@ -190,7 +193,7 @@ public partial class Utils : Node
     }
 
     // Valid means the cell is traversable and is not occupied by a combatant of the opposing team
-    private static List<Vector2I> GetValidNeighbors(Vector2I current, Combatant.Team sourceTeam)
+    private static List<Vector2I> GetValidNeighbors(Vector2I current, Combatant.Team sourceTeam, bool cullOpposingOccupied = true)
     {
         List<Vector2I> result = [];
         BattleManager battleManager = BattleManager.Get();
@@ -207,20 +210,28 @@ public partial class Utils : Node
                 {
                     if (tileData.GetCustomData(customDataLayerName).AsBool())
                     {
-                        bool occupiedByEnemy = false;
-                        foreach (Combatant combatant in battleManager.Combatants)
+                        if (cullOpposingOccupied)
                         {
-                            if (combatant.MyTeam != sourceTeam)
+                            bool occupiedByEnemy = false;
+                            foreach (Combatant combatant in battleManager.Combatants)
                             {
-                                Vector2I combatantCoords = battleManager.TileMapLayer.LocalToMap(combatant.Position);
-                                if (combatantCoords == neighbor)
+                                if (combatant.MyTeam != sourceTeam)
                                 {
-                                    occupiedByEnemy = true;
-                                    break;
+                                    Vector2I combatantCoords =
+                                        battleManager.TileMapLayer.LocalToMap(combatant.Position);
+                                    if (combatantCoords == neighbor)
+                                    {
+                                        occupiedByEnemy = true;
+                                        break;
+                                    }
                                 }
                             }
+                            if (!occupiedByEnemy)
+                            {
+                                result.Add(neighbor);
+                            }
                         }
-                        if (!occupiedByEnemy)
+                        else
                         {
                             result.Add(neighbor);
                         }
@@ -238,15 +249,16 @@ public partial class Utils : Node
         return xDist + yDist;
     }
 
-    private static void RemoveOccupiedCoords(Dictionary<Vector2I, int> source)
+    private static void RemoveFriendlyOccupiedCoords(Dictionary<Vector2I, int> source, Combatant.Team sourceTeam)
     {
         BattleManager battleManager = BattleManager.Get();
-        List<Vector2I> occupiedCoords = [];
         foreach (Combatant combatant in battleManager.Combatants)
         {
-            Vector2I occupiedCoord = battleManager.TileMapLayer.LocalToMap(combatant.Position);
-            occupiedCoords.Add(occupiedCoord);
-            source.Remove(occupiedCoord);
+            if (combatant.MyTeam == sourceTeam)
+            {
+                Vector2I occupiedCoord = battleManager.TileMapLayer.LocalToMap(combatant.Position);
+                source.Remove(occupiedCoord);
+            }
         }
     }
 
