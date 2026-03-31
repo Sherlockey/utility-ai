@@ -12,7 +12,7 @@ public partial class Shoot : Ability
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
-        MessageLog.Get().Write(user.Name + " used Shoot");
+        MessageLog.Get().Write(user.DisplayName + " used Shoot");
         int damage = user.Stats.Attack * user.Stats.Attack;
         foreach (Combatant target in targets)
         {

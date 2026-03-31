@@ -14,6 +14,7 @@
 
 [node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
 script = ExtResource("1_4rdcq")
+DisplayName = "Coyena"
 Brain = NodePath("Brain")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
@@ -37,7 +38,7 @@ Weight = 0.1
 
 [node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1793238613]
 script = ExtResource("7_eri5s")
-Weight = 0.8
+Weight = 0.7
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=60866711]
 script = ExtResource("8_7ojdo")

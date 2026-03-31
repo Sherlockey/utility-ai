@@ -31,6 +31,8 @@ public partial class BattleManager : Node2D
     private StatusDisplay _activeStatusDisplay;
     [Export]
     private StatusDisplay _targetedStatusDisplay;
+    [Export]
+    private UtilityDisplay _utilityDisplay;
 
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
@@ -64,7 +66,12 @@ public partial class BattleManager : Node2D
             {
                 enemyCount++;
             }
+            else
+            {
+                _utilityDisplay.Combatants.Add(combatant);
+            }
         }
+        _utilityDisplay.RefreshDisplay();
         string enemyString = enemyCount == 1 ? "enemy" : "enemies";
         MessageLog.Get().Write(enemyCount + " " + enemyString + " encountered!", true, false);
         AdvanceTurnOrder();
@@ -206,7 +213,7 @@ public partial class BattleManager : Node2D
         {
             if (c != _activeCombatant)
             {
-                _targetedStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+                _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
                     c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
                     c.Stats.Movement.ToString());
                 _targetedStatusDisplay.Visible = true;
@@ -229,7 +236,7 @@ public partial class BattleManager : Node2D
         Combatant c = Combatants.First();
         _activeCombatant = c;
         Camera.Position = c.Position;
-        _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+        _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
             c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
             c.Stats.Movement.ToString());
         c.InitializeTurn();
@@ -312,13 +319,13 @@ public partial class BattleManager : Node2D
         _turnOrderDisplay.Update(Combatants);
         if (c == _activeCombatant)
         {
-            _activeStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+            _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
                 c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
                 c.Stats.Movement.ToString());
         }
         if (c == _targetedCombatant)
         {
-            _targetedStatusDisplay.Update(c.Name, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
+            _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
                 c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
                 c.Stats.Movement.ToString());
         }
@@ -330,5 +337,6 @@ public partial class BattleManager : Node2D
         Combatants.Remove(combatant);
         CheckBattleOver();
         _turnOrderDisplay.Update(Combatants);
+        _utilityDisplay.Combatants.Remove(combatant);
     }
 }

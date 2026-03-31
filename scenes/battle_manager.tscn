@@ -5,12 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://5f0b60lrw5b3" path="res://scenes/message_log.tscn" id="4_4wxy3"]
 [ext_resource type="PackedScene" uid="uid://bk3oexwkotyu" path="res://scenes/status_display.tscn" id="4_7wf3v"]
 [ext_resource type="PackedScene" uid="uid://8ghr7fn38td3" path="res://scenes/time_display.tscn" id="5_4wxy3"]
+[ext_resource type="PackedScene" uid="uid://b7p0n5bqdeygc" path="res://scenes/utility_display.tscn" id="6_lhjl6"]
 
-[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay")]
+[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay", "_utilityDisplay")]
 script = ExtResource("1_3jpuh")
 _turnOrderDisplay = NodePath("HUD/TurnOrderDisplay")
 _activeStatusDisplay = NodePath("HUD/ActiveStatusDisplay")
 _targetedStatusDisplay = NodePath("HUD/TargetedStatusDisplay")
+_utilityDisplay = NodePath("HUD/UtilityDisplay")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1364119465]
 
@@ -49,5 +51,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="TimeDisplay" parent="HUD" unique_id=316205934 instance=ExtResource("5_4wxy3")]
+
+[node name="UtilityDisplay" parent="HUD" unique_id=1614214764 instance=ExtResource("6_lhjl6")]
 
 [editable path="HUD/TurnOrderDisplay"]

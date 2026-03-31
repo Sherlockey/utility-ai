@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nfxw0ngtofsh"]
 
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_dy6v3"]
-[ext_resource type="Texture2D" uid="uid://bfodky0s8mfmp" path="res://assets/tortise.png" id="2_dy6v3"]
+[ext_resource type="Texture2D" uid="uid://bfodky0s8mfmp" path="res://assets/tortoise.png" id="2_dy6v3"]
 [ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_dy6v3"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_eq88a"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_uljw3"]
@@ -12,8 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_eq88a"]
 [ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_77hok"]
 
-[node name="Tortise" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
+[node name="Tortoise" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
 script = ExtResource("1_dy6v3")
+DisplayName = "Tortoise"
 Brain = NodePath("Brain")
 Stats = NodePath("Stats")
 Status = NodePath("Status")

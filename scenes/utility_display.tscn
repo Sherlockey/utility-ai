@@ -1,0 +1,309 @@
+[gd_scene format=3 uid="uid://b7p0n5bqdeygc"]
+
+[ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="1_3bwvw"]
+[ext_resource type="Script" uid="uid://bpo2ds6o2l8su" path="res://scripts/UtilityDisplay.cs" id="1_o6fl1"]
+[ext_resource type="Texture2D" uid="uid://v1cacn2luiet" path="res://assets/left-button.png" id="2_o6fl1"]
+[ext_resource type="Texture2D" uid="uid://cyuxxb3eqfotk" path="res://assets/time-button-one.png" id="3_1epou"]
+[ext_resource type="Theme" uid="uid://dkcr404nlgkw1" path="res://resources/default_theme.tres" id="4_mapks"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wxy3"]
+bg_color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhjl6"]
+bg_color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc2mu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqm64"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[node name="UtilityDisplay" type="PanelContainer" unique_id=1614214764 node_paths=PackedStringArray("_name", "_rangeValue", "_portrait", "_combatantLeftButton", "_combatantRightButton", "_rangeLeftButton", "_rangeRightButton", "_friendlyTerritorySlider", "_oppositionTerritorySlider", "_contestedTerritorySlider", "_keepRangeSlider", "_greatestDamageSlider", "_eliminateOppositionSlider", "_targetWeakestSlider", "_avoidFriendlyDamageSlider")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -73.0
+offset_right = 98.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4wxy3")
+script = ExtResource("1_o6fl1")
+_name = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/NameLabel")
+_rangeValue = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/RangeValueLabel")
+_portrait = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/PortraitTextureRect")
+_combatantLeftButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantLeftButton")
+_combatantRightButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantRightButton")
+_rangeLeftButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/RangeLeftButton")
+_rangeRightButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/RangeRightButton")
+_friendlyTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory/HSlider")
+_oppositionTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory/HSlider")
+_contestedTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory/HSlider")
+_keepRangeSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/HSlider")
+_greatestDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage/HSlider")
+_eliminateOppositionSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition/HSlider")
+_targetWeakestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetWeakest/HSlider")
+_avoidFriendlyDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage/HSlider")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=701959541]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1031163917]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lhjl6")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=573368582]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=9169027]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CombatantVBox" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1818906965]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="NameLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox" unique_id=304214309]
+custom_minimum_size = Vector2(39, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "12345678"
+horizontal_alignment = 1
+
+[node name="PortraitTextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox" unique_id=52579198]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_3bwvw")
+stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox" unique_id=637117239]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CombatantLeftButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=1446929287]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("2_o6fl1")
+flat = true
+icon_alignment = 1
+
+[node name="CombatantRightButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=469467775]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("3_1epou")
+flat = true
+icon_alignment = 1
+
+[node name="UtilityFunctionVBox" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1670661095]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MovementFunctionsLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1917333947]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "Movement Function Weights"
+
+[node name="FriendlyTerritory" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1164730715]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory" unique_id=1553549011]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Friendly Territory"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory" unique_id=892007358]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="OppositionTerritory" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1522081245]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory" unique_id=1783404640]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Opposition Territory"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory" unique_id=65973130]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="ContestedTerritory" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=456841780]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory" unique_id=1828867324]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Contested Territory"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory" unique_id=322674116]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="MaintainRange" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=7819883]
+layout_mode = 2
+
+[node name="RangeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=810073632]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Maintain Range"
+
+[node name="RangeLeftButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=1914446290]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("2_o6fl1")
+flat = true
+icon_alignment = 1
+
+[node name="RangeValueLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=24114560]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "6"
+
+[node name="RangeRightButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=1456566646]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("3_1epou")
+flat = true
+icon_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=2004296864]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="AbilityFunctionsLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1538105164]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "Ability Function Weights"
+
+[node name="GreatestDamage" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=778547483]
+custom_minimum_size = Vector2(135.945, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage" unique_id=1226148256]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Greatest Damage"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage" unique_id=2007825068]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="EliminateOpposition" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=811639401]
+custom_minimum_size = Vector2(135.945, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition" unique_id=299372563]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Eliminate Opposition"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition" unique_id=1045138000]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="TargetWeakest" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1429255997]
+custom_minimum_size = Vector2(135.945, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetWeakest" unique_id=1320365102]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Target Weakest"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetWeakest" unique_id=2018612049]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39
+
+[node name="AvoidFriendlyDamage" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1356444415]
+custom_minimum_size = Vector2(135.945, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage" unique_id=1070039405]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Avoid Friendly Damage"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage" unique_id=965361940]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("4_mapks")
+max_value = 1.0
+step = 0.01
+value = 0.39

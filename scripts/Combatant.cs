@@ -20,6 +20,8 @@ public partial class Combatant : Node2D
     public event EventHandler TurnEnded;
 
     [Export]
+    public string DisplayName = "";
+    [Export]
     public Team MyTeam { get; private set; }
     [Export]
     public Brain Brain { get; private set; }
@@ -118,7 +120,7 @@ public partial class Combatant : Node2D
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
         _distPrevTuple = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
 
-        // Display walkable cells
+        // Display walkable coords
         BattleManager battleManager = BattleManager.Get();
         foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
         {
@@ -134,6 +136,9 @@ public partial class Combatant : Node2D
         // Delay
         _turnStartTimer.Start();
         await ToSignal(_turnStartTimer, Timer.SignalName.Timeout);
+
+        // TODO: Gather scores for walkable coords
+        // TODO: Gather scores for abilities
 
         // Ask Brain for a move location
         List<Vector2I> reachableCoords = [.. _distPrevTuple.Item1.Keys];

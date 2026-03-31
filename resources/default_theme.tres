@@ -1,6 +1,23 @@
 [gd_resource type="Theme" format=3 uid="uid://dkcr404nlgkw1"]
 
+[ext_resource type="Texture2D" uid="uid://bak0lene8oo2x" path="res://assets/grabber.png" id="1_2pkyf"]
 [ext_resource type="FontFile" uid="uid://dp04sx7eyxk0s" path="res://resources/font/Lilex-Regular.woff2" id="1_mwhd1"]
+[ext_resource type="Texture2D" uid="uid://doqs1loj7ghvs" path="res://assets/grabber-highlight.png" id="2_og51b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nva1m"]
+bg_color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_og51b"]
+color = Color(0.9647059, 0.9372549, 0.8, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nva1m"]
+color = Color(0.70980394, 0.50980395, 0.34509805, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 2
 
 [resource]
 default_font = ExtResource("1_mwhd1")
@@ -10,9 +27,19 @@ Button/colors/font_focus_color = Color(0.9647059, 0.9372549, 0.8, 1)
 Button/colors/font_hover_color = Color(0.9647059, 0.9372549, 0.8, 1)
 Button/colors/font_hover_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
 Button/colors/font_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
-Button/colors/icon_focus_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_focus_color = Color(0.70980394, 0.50980395, 0.34509805, 1)
 Button/colors/icon_hover_color = Color(0.79607844, 0.7529412, 0.62352943, 1)
-Button/colors/icon_hover_pressed_color = Color(0.9647059, 0.9372549, 0.8, 1)
+Button/colors/icon_hover_pressed_color = Color(0.70980394, 0.50980395, 0.34509805, 1)
 Button/colors/icon_normal_color = Color(0.9647059, 0.9372549, 0.8, 1)
 Button/colors/icon_pressed_color = Color(0.70980394, 0.50980395, 0.34509805, 1)
+HSlider/constants/center_grabber = 0
+HSlider/constants/grabber_offset = 0
+HSlider/constants/tick_offset = 0
+HSlider/icons/grabber = ExtResource("1_2pkyf")
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = ExtResource("2_og51b")
+HSlider/icons/tick = null
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_nva1m")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_og51b")
+HSlider/styles/slider = SubResource("StyleBoxLine_nva1m")
 Label/colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)

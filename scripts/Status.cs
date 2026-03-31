@@ -26,12 +26,12 @@ public partial class Status : Node
         if (Owner is Combatant combatant)
         {
             DamageTaken?.Invoke(this, combatant);
-            MessageLog.Get().Write(combatant.Name + " took " + damage + " damage");
+            MessageLog.Get().Write(combatant.DisplayName + " took " + damage + " damage");
             if (CurrentHealth <= 0)
             {
                 CurrentHealth = 0;
                 Died?.Invoke(this, combatant);
-                MessageLog.Get().Write(combatant.Name + " was knocked out");
+                MessageLog.Get().Write(combatant.DisplayName + " was knocked out");
                 // TODO this is temporary. Really we want to be able to resurrect fallen Combatants
                 combatant.QueueFree();
             }

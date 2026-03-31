@@ -9,7 +9,7 @@ public partial class Cast : Ability
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
-        MessageLog.Get().Write(user.Name + " used Cast");
+        MessageLog.Get().Write(user.DisplayName + " used Cast");
         int damage = user.Stats.Attack * user.Stats.Attack;
         foreach (Combatant target in targets)
         {

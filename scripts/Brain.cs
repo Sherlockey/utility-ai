@@ -10,6 +10,19 @@ public partial class Brain : Node
     [Export]
     private Node _movementUtilityParent;
 
+    public List<MovementUtility> MovementUtilities { get; private set; } = [];
+
+    public override void _Ready()
+    {
+        foreach (Node node in _movementUtilityParent.GetChildren())
+        {
+            if (node is MovementUtility movementUtility)
+            {
+                MovementUtilities.Add(movementUtility);
+            }
+        }
+    }
+
     public Vector2I ChooseMoveLocation(
         Vector2I sourceCoords,
         List<Vector2I> reachableCoords,
@@ -24,14 +37,11 @@ public partial class Brain : Node
         {
             float totalScore = 0.0f;
             float totalWeight = 0.0f;
-            foreach (Node node in _movementUtilityParent.GetChildren())
+            foreach (MovementUtility movementUtility in MovementUtilities)
             {
-                if (node is MovementUtility movementUtility)
-                {
-                    float score = movementUtility.Evaluate(coords, influenceMap, sourceTeam);
-                    totalScore += score;
-                    totalWeight += movementUtility.Weight;
-                }
+                float score = movementUtility.Evaluate(coords, influenceMap, sourceTeam);
+                totalScore += score;
+                totalWeight += movementUtility.Weight;
             }
             // Assign
             if (totalWeight != 0.0f)

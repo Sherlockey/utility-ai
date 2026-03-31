@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfodky0s8mfmp"
-path="res://.godot/imported/tortise.png-7ee099abd7f9063d5dde093c544a8410.ctex"
+uid="uid://bak0lene8oo2x"
+path="res://.godot/imported/grabber.png-a422b0f9e3e21d0b4b22cf32d0580743.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tortise.png"
-dest_files=["res://.godot/imported/tortise.png-7ee099abd7f9063d5dde093c544a8410.ctex"]
+source_file="res://assets/grabber.png"
+dest_files=["res://.godot/imported/grabber.png-a422b0f9e3e21d0b4b22cf32d0580743.ctex"]
 
 [params]
 

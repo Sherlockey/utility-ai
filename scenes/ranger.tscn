@@ -15,6 +15,7 @@
 
 [node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
 script = ExtResource("3_8k012")
+DisplayName = "Ranger"
 MyTeam = 1
 Brain = NodePath("Brain")
 Stats = NodePath("Stats")

@@ -14,6 +14,7 @@
 
 [node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
 script = ExtResource("1_x1fjo")
+DisplayName = "Scavbat"
 Brain = NodePath("Brain")
 Stats = NodePath("Stats")
 Status = NodePath("Status")
@@ -33,15 +34,15 @@ _movementUtilityParent = NodePath("MovementUtilityParent")
 
 [node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=748765186]
 script = ExtResource("6_qfa7m")
-Weight = 0.1
+Weight = 0.05
 
 [node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1614580049]
 script = ExtResource("7_r6ks6")
-Weight = 0.9
+Weight = 0.3
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=414860290]
 script = ExtResource("8_6u81d")
-Weight = 0.1
+Weight = 0.3
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=581630612]
 script = ExtResource("6_r6ks6")

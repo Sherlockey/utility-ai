@@ -13,7 +13,7 @@ public partial class Slam : Ability
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
-        MessageLog.Get().Write(user.Name + " used Slam");
+        MessageLog.Get().Write(user.DisplayName + " used Slam");
         int damage = user.Stats.Attack * user.Stats.Attack;
         foreach (Combatant target in targets)
         {

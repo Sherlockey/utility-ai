@@ -15,6 +15,8 @@ public partial class TimeDisplay : PanelContainer
 
     public override void _Ready()
     {
+        Engine.TimeScale = 0.0;
+
         _pauseButton.Pressed += OnPauseButtonPressed;
         _1XButton.Pressed += On1XButtonPressed;
         _2XButton.Pressed += On2XButtonPressed;
@@ -23,23 +25,30 @@ public partial class TimeDisplay : PanelContainer
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        if (@event is InputEventKey keyEvent)
         {
-            if (keyEvent.Keycode == Key.Quoteleft || keyEvent.Keycode == Key.P)
+            if (keyEvent.Pressed)
             {
-                OnPauseButtonPressed();
-            }
-            if (keyEvent.Keycode == Key.Key1)
-            {
-                On1XButtonPressed();
-            }
-            if (keyEvent.Keycode == Key.Key2)
-            {
-                On2XButtonPressed();
-            }
-            if (keyEvent.Keycode == Key.Key3)
-            {
-                On3XButtonPressed();
+                if (keyEvent.Keycode == Key.Quoteleft || keyEvent.Keycode == Key.P)
+                {
+                    _pauseButton.ButtonPressed = true;
+                    OnPauseButtonPressed();
+                }
+                if (keyEvent.Keycode == Key.Key1)
+                {
+                    _1XButton.ButtonPressed = true;
+                    On1XButtonPressed();
+                }
+                if (keyEvent.Keycode == Key.Key2)
+                {
+                    _2XButton.ButtonPressed = true;
+                    On2XButtonPressed();
+                }
+                if (keyEvent.Keycode == Key.Key3)
+                {
+                    _3XButton.ButtonPressed = true;
+                    On3XButtonPressed();
+                }
             }
         }
     }
