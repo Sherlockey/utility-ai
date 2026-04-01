@@ -125,6 +125,10 @@ public partial class BattleManager : Node2D
         return Combatants.First().Status.AccumulatedSpeed >= TurnThreshold;
     }
 
+    // TODO this doesn't work perfectly. Does not allow for duplicates. If one combatant were to "lap"
+    // another, it will not show them twice. Really there should be a "forecast" of the next "9" turns
+    // displayed. This would also mean I wouldn't have to be sorting the actual list of
+    // alive Combatants which would be another improvement.
     private void AdvanceTurnOrder()
     {
         bool anyCombatantHasTurn = false;
@@ -139,7 +143,7 @@ public partial class BattleManager : Node2D
                 }
             }
         }
-        Combatants.Sort(new Combatant.SortDescendingAccumulatedSpeed());
+        Combatants.Sort(new Combatant.SortIterationsUntilTurn());
     }
 
     private void CheckBattleOver()
@@ -306,7 +310,7 @@ public partial class BattleManager : Node2D
 
     private void OnCombatantTurnEnded(object sender, EventArgs e)
     {
-        Combatants.Sort(new Combatant.SortDescendingAccumulatedSpeed());
+        Combatants.Sort(new Combatant.SortIterationsUntilTurn());
         if (CheckIfACombatantHasTurn() == false)
         {
             AdvanceTurnOrder();

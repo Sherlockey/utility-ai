@@ -9,6 +9,8 @@ public partial class TurnOrderDisplay : VBoxContainer
     [Export]
     private PackedScene _turnOrderEntryScene;
 
+    private const int MaxEntries = 9;
+
     public void Update(List<Combatant> combatants)
     {
         // Remove old entires from TurnOrderVBox
@@ -29,7 +31,7 @@ public partial class TurnOrderDisplay : VBoxContainer
             turnOrderEntry.HealthBar.TextureProgressBar.Value = combatant.Status.CurrentHealth;
             _turnOrderEntryVBox.AddChild(turnOrderEntry);
             i++;
-            if (i > 9) // TODO 9 is currently a hardcoded # of entries allowed in turn order display
+            if (i > MaxEntries)
             {
                 break;
             }

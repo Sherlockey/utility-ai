@@ -8,7 +8,7 @@ public partial class RangeFromOpposition : MovementUtility
     [Export(PropertyHint.Range, "0, 2147483647")]
     public int Range = 1;
 
-    private const int _boostAmount = -5;
+    private const int BoostAmount = -5;
 
     public override float Evaluate(
         Vector2I evaluatedCoords,
@@ -35,7 +35,7 @@ public partial class RangeFromOpposition : MovementUtility
                         // Adding a boost to incentivize exact Range
                         if (difference == 0)
                         {
-                            difference = _boostAmount;
+                            difference = BoostAmount;
                         }
                         if (differenceMap.ContainsKey(coords))
                         {

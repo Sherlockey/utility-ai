@@ -176,8 +176,8 @@ public partial class Combatant : Node2D
         }
     }
 
-    // Sorts by descending order of accumlated speed. Ties go to whichever combatant was
-    // added to the array first (stored in BattleIndex).
+    // Sorts by descending order of accumlated speed.
+    // Ties go to whichever combatant was added to the array first (stored in BattleIndex).
     public class SortDescendingAccumulatedSpeed : IComparer<Combatant>
     {
         public int Compare(Combatant x, Combatant y)
@@ -189,5 +189,34 @@ public partial class Combatant : Node2D
             }
             return result;
         }
+    }
+
+    // Sorts by descending order of # of iterations taken until TurnThreshold is met.
+    // Ties go to whichever combatant was added to the array first (stored in BattleIndex).
+    public class SortIterationsUntilTurn : IComparer<Combatant>
+    {
+        public int Compare(Combatant x, Combatant y)
+        {
+            int xIterations = IterationsUntilTurn(x);
+            int yIterations = IterationsUntilTurn(y);
+            int result = xIterations.CompareTo(yIterations);
+            if (result == 0)
+            {
+                result = x.BattleIndex.CompareTo(y.BattleIndex);
+            }
+            return result;
+        }
+    }
+
+    private static int IterationsUntilTurn(Combatant combatant)
+    {
+        int iterations = 0;
+        int tempSpeed = combatant.Status.AccumulatedSpeed;
+        while (tempSpeed < BattleManager.TurnThreshold)
+        {
+            tempSpeed += combatant.Stats.Speed;
+            iterations++;
+        }
+        return iterations;
     }
 }
