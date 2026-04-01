@@ -179,7 +179,7 @@ public partial class UtilityDisplay : PanelContainer
             {
                 if (movementUtility is MoveToOppositionTerritory moveToOppositionTerritory)
                 {
-                    moveToOppositionTerritory.Weight = (float)_friendlyTerritorySlider.Value;
+                    moveToOppositionTerritory.Weight = (float)_oppositionTerritorySlider.Value;
                     break;
                 }
             }
@@ -194,7 +194,7 @@ public partial class UtilityDisplay : PanelContainer
             {
                 if (movementUtility is MoveToContestedTerritory moveToContestedTerritory)
                 {
-                    moveToContestedTerritory.Weight = (float)_friendlyTerritorySlider.Value;
+                    moveToContestedTerritory.Weight = (float)_contestedTerritorySlider.Value;
                     break;
                 }
             }
@@ -209,7 +209,7 @@ public partial class UtilityDisplay : PanelContainer
             {
                 if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
-                    rangeFromOpposition.Weight = (float)_friendlyTerritorySlider.Value;
+                    rangeFromOpposition.Weight = (float)_keepRangeSlider.Value;
                     break;
                 }
             }

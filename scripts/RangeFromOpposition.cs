@@ -8,6 +8,8 @@ public partial class RangeFromOpposition : MovementUtility
     [Export(PropertyHint.Range, "0, 2147483647")]
     public int Range = 1;
 
+    private const int _boostAmount = -5;
+
     public override float Evaluate(
         Vector2I evaluatedCoords,
         Dictionary<Vector2I, (int, int)> influenceMap,
@@ -33,7 +35,7 @@ public partial class RangeFromOpposition : MovementUtility
                         // Adding a boost to incentivize exact Range
                         if (difference == 0)
                         {
-                            difference = -1;
+                            difference = _boostAmount;
                         }
                         if (differenceMap.ContainsKey(coords))
                         {
@@ -50,7 +52,7 @@ public partial class RangeFromOpposition : MovementUtility
 
         // Extract min and max values
         int minDifference = int.MaxValue;
-        int maxDifference = 0;
+        int maxDifference = int.MinValue;
         foreach (int value in differenceMap.Values)
         {
             if (value < minDifference)

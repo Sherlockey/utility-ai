@@ -13,7 +13,7 @@ public partial class MoveToContestedTerritory : MovementUtility
         float utility = 0.0f;
 
         int minScore = int.MaxValue;
-        int maxScore = 0;
+        int maxScore = int.MinValue;
         foreach (Vector2I coords in influenceMap.Keys)
         {
             int enemyInfluence = influenceMap[evaluatedCoords].Item1;

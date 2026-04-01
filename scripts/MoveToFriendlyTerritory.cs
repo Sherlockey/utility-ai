@@ -13,7 +13,7 @@ public partial class MoveToFriendlyTerritory : MovementUtility
         float utility = 0.0f;
 
         int minAllyDifference = int.MaxValue;
-        int maxAllyDifference = 0;
+        int maxAllyDifference = int.MinValue;
         foreach (Vector2I coords in influenceMap.Keys)
         {
             int enemyInfluence = influenceMap[coords].Item1;

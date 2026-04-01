@@ -13,7 +13,7 @@ public partial class MoveToOppositionTerritory : MovementUtility
         float utility = 0.0f;
 
         int minEnemyDifference = int.MaxValue;
-        int maxEnemyDifference = 0;
+        int maxEnemyDifference = int.MinValue;
         foreach (Vector2I coords in influenceMap.Keys)
         {
             int enemyInfluence = influenceMap[coords].Item1;
