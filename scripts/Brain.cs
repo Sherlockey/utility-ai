@@ -80,4 +80,11 @@ public partial class Brain : Node
         // result = reachableCoords[randomIndex];
         return result;
     }
+
+    public Dictionary<Vector2I, float> GetUtilityForReachableCoords(Vector2I sourceCoords, List<Vector2I> reachableCoords, Dictionary<Vector2I, (int, int)> influenceMap, Combatant.Team sourceTeam)
+    {
+        // Dictionary<Vector2I, float> result = [];
+
+        // return result;
+    }
 }

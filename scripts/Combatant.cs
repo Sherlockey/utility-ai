@@ -151,6 +151,9 @@ public partial class Combatant : Node2D
         {
             Movement.WalkTo(resultCoords, _distPrevTuple.Item2);
         }
+
+        // Ask Brain for an ability and target to apply that ability on
+
     }
 
     public void EndTurn()
@@ -165,6 +168,65 @@ public partial class Combatant : Node2D
             Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
             CurrentTurnState = TurnState.Waiting;
             TurnEnded?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    // TODO this should be in Brain
+    private void GetDecision()
+    {
+        //Gather walkable coords
+        Vector2I sourceCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(sourceCoords, Status.CurrentMovement, MyTeam);
+        List<Vector2I> reachableCoords = [.. _distPrevTuple.Item1.Keys];
+        reachableCoords.Add(sourceCoords);
+
+        // Display walkable coords
+        BattleManager battleManager = BattleManager.Get();
+        foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+        {
+            battleManager.TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
+        }
+
+        // ZZZ dictionary should have keys of Vector2I coords and entries that hold PriorityQueues of
+        // Decisions which are sorted by max utility (max heap)
+        // Get utility for using each ability at each possible target coords within walkable coords
+        Dictionary<Decision, float> abilityUtilityMap = [];
+        foreach (Vector2I reachedCoords in reachableCoords)
+        {
+            foreach (IAbility ability in Abilities)
+            {
+                List<Vector2I> coordsInRange = [];
+                foreach (Vector2I coords in BattleManager.Get().TileMapLayer.GetUsedCells())
+                {
+                    if (ability.IsInRange(reachedCoords, coords))
+                    {
+                        coordsInRange.Add(coords);
+                    }
+                }
+                foreach (Vector2I targetedCoords in coordsInRange)
+                {
+                    // TODO make a better method which doesn't require culling after getting targets?
+                    List<Combatant> targets = ability.CombatantsInAreaOfEffect(targetedCoords);
+                    targets = ability.ValidatedTargets(this, targets);
+                    float utility = ability.Evaluate(this, targets);
+                    Decision decision = new(reachedCoords, ability, targets, utility);
+                    abilityUtilityMap[decision] = utility;
+                }
+            }
+        }
+
+        // Get utility for all walkable coords
+        Dictionary<Vector2I, float> movementUtilityMap = Brain.GetUtilityForReachableCoords(
+            sourceCoords, reachableCoords, BattleManager.Get().InfluenceMap, MyTeam);
+
+        // Find the highest X sums of utility for an (ability + target, coords) pair
+        // perform the highest one and post to message log, post the rest to message log?
+        PriorityQueue<Decision, float> maxHeap = new(Comparer<float>.Create((x, y) => y.CompareTo(x)));
+        foreach (Vector2I coords in reachableCoords)
+        {
+            float movementUtility = movementUtilityMap[coords];
+            float abilityUtility = abilityUtilityMap[];
+            float decisionUtility =
         }
     }
 
