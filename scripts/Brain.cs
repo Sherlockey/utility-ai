@@ -87,4 +87,9 @@ public partial class Brain : Node
 
         // return result;
     }
+
+    public SortedList<Decision, float> GetDecisionList(Combatant combatant)
+    {
+
+    }
 }

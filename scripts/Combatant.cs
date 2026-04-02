@@ -38,6 +38,9 @@ public partial class Combatant : Node2D
     public TurnState CurrentTurnState = TurnState.Waiting;
     public int BattleIndex;
 
+    private const float MovementUtilityWeight = 0.2f;
+    private const float AbilityUtilityWeight = 0.8f;
+
     [Export]
     private Node _abilitiesParent;
     [Export]
@@ -221,12 +224,13 @@ public partial class Combatant : Node2D
 
         // Find the highest X sums of utility for an (ability + target, coords) pair
         // perform the highest one and post to message log, post the rest to message log?
-        PriorityQueue<Decision, float> maxHeap = new(Comparer<float>.Create((x, y) => y.CompareTo(x)));
-        foreach (Vector2I coords in reachableCoords)
+        SortedList<Decision, float> decisionUtilityList = [];
+        foreach (Decision decision in abilityUtilityMap.Keys)
         {
+            Vector2I coords = decision.MoveLocation;
             float movementUtility = movementUtilityMap[coords];
-            float abilityUtility = abilityUtilityMap[];
-            float decisionUtility =
+            float abilityUtility = decision.Utility;
+            float decisionUtility = movementUtility * MovementWeight + abilityUtility * AbilityWeight;
         }
     }
 
