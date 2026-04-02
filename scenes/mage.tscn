@@ -10,10 +10,14 @@
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_kse8p"]
 [ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_trnrn"]
 [ext_resource type="Script" uid="uid://dx1lhy7fvxh1v" path="res://scripts/MoveToOppositionTerritory.cs" id="7_kse8p"]
+[ext_resource type="Script" uid="uid://d0ycr2wjeh3o" path="res://scripts/GreatestDamage.cs" id="8_1pdv6"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_66amf"]
 [ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_yunhw"]
+[ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_qtcmm"]
+[ext_resource type="Script" uid="uid://x5ps0g4axgho" path="res://scripts/TargetWeakest.cs" id="10_ut8cs"]
+[ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/AvoidFriendlyDamage.cs" id="11_ad11k"]
 
-[node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
+[node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("3_t2cfv")
 DisplayName = "Mage"
 MyTeam = 1
@@ -24,13 +28,15 @@ Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
 _turnStartTimer = NodePath("TurnStartTimer")
+_turnEndTimer = NodePath("TurnEndTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858591547]
 texture = ExtResource("2_ip8om")
 
-[node name="Brain" type="Node" parent="." unique_id=1060683676 node_paths=PackedStringArray("_movementUtilityParent")]
+[node name="Brain" type="Node" parent="." unique_id=1060683676 node_paths=PackedStringArray("_movementUtilityParent", "_abilityUtilityParent")]
 script = ExtResource("3_66amf")
 _movementUtilityParent = NodePath("MovementUtilityParent")
+_abilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=848439449]
 
@@ -51,14 +57,32 @@ script = ExtResource("6_kse8p")
 Range = 5
 Weight = 1.0
 
+[node name="AbilityUtilityParent" type="Node" parent="Brain" unique_id=458508898]
+
+[node name="GreatestDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=196078751]
+script = ExtResource("8_1pdv6")
+
+[node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1261523313]
+script = ExtResource("9_qtcmm")
+
+[node name="TargetWeakest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1350017796]
+script = ExtResource("10_ut8cs")
+
+[node name="AvoidFriendlyDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=567238498]
+script = ExtResource("11_ad11k")
+
 [node name="Abilities" type="Node" parent="." unique_id=226643063]
 
 [node name="Attack" type="Node" parent="Abilities" unique_id=1158664593]
 script = ExtResource("3_p0roq")
+DisplayName = "Attack"
+DisplayName = "Attack"
 _damagePercentNumerator = 33
 
 [node name="Cast" type="Node" parent="Abilities" unique_id=338080924]
 script = ExtResource("3_nc4w5")
+DisplayName = "Cast"
+DisplayName = "Cast"
 _areaOfEffect = 2
 _damagePercentNumerator = 67
 
@@ -77,5 +101,9 @@ Stats = NodePath("../Stats")
 _combatant = NodePath("..")
 
 [node name="TurnStartTimer" type="Timer" parent="." unique_id=1912961016]
+wait_time = 0.5
+one_shot = true
+
+[node name="TurnEndTimer" type="Timer" parent="." unique_id=1050207377]
 wait_time = 0.5
 one_shot = true

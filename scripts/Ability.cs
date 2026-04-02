@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public abstract partial class Ability : Node, IAbility
 {
     [Export]
+    public string DisplayName = "Ability";
+    [Export]
     protected int _areaOfEffect = 1;
     [Export]
     protected int _damagePercentNumerator = 100;
@@ -33,5 +35,10 @@ public abstract partial class Ability : Node, IAbility
     public virtual List<Combatant> ValidatedTargets(Combatant user, List<Combatant> targets)
     {
         return targets;
+    }
+
+    public virtual string GetDisplayName()
+    {
+        return DisplayName;
     }
 }

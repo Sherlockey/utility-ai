@@ -11,8 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_febxk"]
 [ext_resource type="Script" uid="uid://dx1lhy7fvxh1v" path="res://scripts/MoveToOppositionTerritory.cs" id="7_r6ks6"]
 [ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_6u81d"]
+[ext_resource type="Script" uid="uid://d0ycr2wjeh3o" path="res://scripts/GreatestDamage.cs" id="8_53s4e"]
+[ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_smhfw"]
+[ext_resource type="Script" uid="uid://x5ps0g4axgho" path="res://scripts/TargetWeakest.cs" id="10_4xoyy"]
+[ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/AvoidFriendlyDamage.cs" id="11_7vgv3"]
 
-[node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer")]
+[node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("1_x1fjo")
 DisplayName = "Scavbat"
 Brain = NodePath("Brain")
@@ -22,13 +26,15 @@ Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
 _turnStartTimer = NodePath("TurnStartTimer")
+_turnEndTimer = NodePath("TurnEndTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("1_qh7of")
 
-[node name="Brain" type="Node" parent="." unique_id=1441586602 node_paths=PackedStringArray("_movementUtilityParent")]
+[node name="Brain" type="Node" parent="." unique_id=1441586602 node_paths=PackedStringArray("_movementUtilityParent", "_abilityUtilityParent")]
 script = ExtResource("3_febxk")
 _movementUtilityParent = NodePath("MovementUtilityParent")
+_abilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=1739001256]
 
@@ -48,10 +54,26 @@ Weight = 0.3
 script = ExtResource("6_r6ks6")
 Weight = 1.0
 
+[node name="AbilityUtilityParent" type="Node" parent="Brain" unique_id=1283695543]
+
+[node name="GreatestDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1574433202]
+script = ExtResource("8_53s4e")
+
+[node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=563872594]
+script = ExtResource("9_smhfw")
+
+[node name="TargetWeakest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=137134903]
+script = ExtResource("10_4xoyy")
+
+[node name="AvoidFriendlyDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1731726491]
+script = ExtResource("11_7vgv3")
+
 [node name="Abilities" type="Node" parent="." unique_id=712162907]
 
 [node name="Attack" type="Node" parent="Abilities" unique_id=123415716]
 script = ExtResource("3_bhfd8")
+DisplayName = "Attack"
+DisplayName = "Attack"
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_82ri0")
@@ -69,5 +91,9 @@ Stats = NodePath("../Stats")
 _combatant = NodePath("..")
 
 [node name="TurnStartTimer" type="Timer" parent="." unique_id=1838003376]
+wait_time = 0.5
+one_shot = true
+
+[node name="TurnEndTimer" type="Timer" parent="." unique_id=1953074026]
 wait_time = 0.5
 one_shot = true

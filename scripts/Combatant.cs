@@ -2,7 +2,7 @@ using Godot;
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 public partial class Combatant : Node2D
 {
@@ -37,16 +37,16 @@ public partial class Combatant : Node2D
     public List<IAbility> Abilities = [];
     public TurnState CurrentTurnState = TurnState.Waiting;
     public int BattleIndex;
-
-    private const float MovementUtilityWeight = 0.2f;
-    private const float AbilityUtilityWeight = 0.8f;
+    public (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) DistPrevMaps = new();
 
     [Export]
     private Node _abilitiesParent;
     [Export]
     private Timer _turnStartTimer;
+    [Export]
+    private Timer _turnEndTimer;
 
-    private (Dictionary<Vector2I, int>, Dictionary<Vector2I, Vector2I>) _distPrevTuple = new();
+    private const int NumDecisions = 3;
 
     public override void _Ready()
     {
@@ -112,8 +112,10 @@ public partial class Combatant : Node2D
         }
     }
 
-    public async Task InitializeTurn()
+    public async void InitializeTurn()
     {
+        MessageLog.Get().Write("\n:: " + DisplayName + "'s turn start", false);
+
         // Set state
         Status.CurrentMovement = Stats.Movement;
         Status.AbilitiesRemaining = Stats.AbilitiesPerTurn;
@@ -121,16 +123,16 @@ public partial class Combatant : Node2D
 
         //Gather walkable cells
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
+        DistPrevMaps = Utils.WalkableCoordsDistAndPrev(currentCoords, Status.CurrentMovement, MyTeam);
 
         // Display walkable coords
         BattleManager battleManager = BattleManager.Get();
-        foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+        foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
         {
             battleManager.TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
         }
 
-        // For debugging purposes
+        // DEBUG
         if (BattleManager.Get().DebugManualControl == true)
         {
             return;
@@ -138,34 +140,54 @@ public partial class Combatant : Node2D
 
         // Delay
         _turnStartTimer.Start();
+        // TODO can this be placed after Brain.MakeDecisionList(this)?
         await ToSignal(_turnStartTimer, Timer.SignalName.Timeout);
 
-        // TODO: Gather scores for walkable coords
-        // TODO: Gather scores for abilities
+        // Ask Brain for an ability and target to apply that ability on
+        List<Decision> decisionList = Brain.MakeDecisionList(this);
+        Decision resultDecision = decisionList[0];
 
-        // Ask Brain for a move location
-        List<Vector2I> reachableCoords = [.. _distPrevTuple.Item1.Keys];
-        reachableCoords.Add(currentCoords);
-        Vector2I resultCoords = Brain.ChooseMoveLocation(
-            currentCoords, reachableCoords, BattleManager.Get().InfluenceMap, MyTeam);
-
-        // Move
-        if (resultCoords != currentCoords)
+        // Message log display top NumDecisions decisions
+        for (int i = 0; i < NumDecisions; i++)
         {
-            Movement.WalkTo(resultCoords, _distPrevTuple.Item2);
+            if (i < decisionList.Count)
+            {
+                // TODO add if statements for whether there is actually a movement or
+                // actually an ability used?
+                Decision decision = decisionList[i];
+                MessageLog.Get().Write("Decision " + (i + 1) + " with utility: " + decision.Utility.ToString("F2") + "\n- Move from: " + currentCoords + " to: " + decision.MoveLocation + ".\n- Use ability: " + decision.Ability.GetDisplayName() + ". \n- With target(s): " + TargetListToString(decision.Targets));
+            }
         }
 
-        // Ask Brain for an ability and target to apply that ability on
+        // Do movement over time
+        Vector2I resultCoords = resultDecision.MoveLocation;
+        if (resultCoords != currentCoords)
+        {
+            await Movement.WalkTo(resultCoords, DistPrevMaps.Item2);
+        }
 
+        // Use ability
+        if (resultDecision.Targets.Count > 0)
+        {
+            resultDecision.Ability.Apply(this, resultDecision.Targets);
+        }
+
+        // Delay
+        _turnEndTimer.Start();
+        await ToSignal(_turnEndTimer, Timer.SignalName.Timeout);
+
+        EndTurn();
     }
 
     public void EndTurn()
     {
         BattleManager battleManager = BattleManager.Get();
-        foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+        // Reset walkable background cells to regular background cells
+        foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
         {
             battleManager.TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
         }
+        // Reset state and notify that combatant's turn has ended
         if (CurrentTurnState == TurnState.Active)
         {
             Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
@@ -174,64 +196,23 @@ public partial class Combatant : Node2D
         }
     }
 
-    // TODO this should be in Brain
-    private void GetDecision()
+    private static string TargetListToString(List<Combatant> targets)
     {
-        //Gather walkable coords
-        Vector2I sourceCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-        _distPrevTuple = Utils.WalkableCoordsDistAndPrev(sourceCoords, Status.CurrentMovement, MyTeam);
-        List<Vector2I> reachableCoords = [.. _distPrevTuple.Item1.Keys];
-        reachableCoords.Add(sourceCoords);
-
-        // Display walkable coords
-        BattleManager battleManager = BattleManager.Get();
-        foreach (KeyValuePair<Vector2I, int> kvp in _distPrevTuple.Item1)
+        if (targets.Count == 0)
         {
-            battleManager.TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
+            return "none";
         }
 
-        // ZZZ dictionary should have keys of Vector2I coords and entries that hold PriorityQueues of
-        // Decisions which are sorted by max utility (max heap)
-        // Get utility for using each ability at each possible target coords within walkable coords
-        Dictionary<Decision, float> abilityUtilityMap = [];
-        foreach (Vector2I reachedCoords in reachableCoords)
+        string result = "";
+        for (int i = 0; i < targets.Count; i++)
         {
-            foreach (IAbility ability in Abilities)
+            result += targets[i].DisplayName;
+            if (i + 1 < targets.Count)
             {
-                List<Vector2I> coordsInRange = [];
-                foreach (Vector2I coords in BattleManager.Get().TileMapLayer.GetUsedCells())
-                {
-                    if (ability.IsInRange(reachedCoords, coords))
-                    {
-                        coordsInRange.Add(coords);
-                    }
-                }
-                foreach (Vector2I targetedCoords in coordsInRange)
-                {
-                    // TODO make a better method which doesn't require culling after getting targets?
-                    List<Combatant> targets = ability.CombatantsInAreaOfEffect(targetedCoords);
-                    targets = ability.ValidatedTargets(this, targets);
-                    float utility = ability.Evaluate(this, targets);
-                    Decision decision = new(reachedCoords, ability, targets, utility);
-                    abilityUtilityMap[decision] = utility;
-                }
+                result += ", ";
             }
         }
-
-        // Get utility for all walkable coords
-        Dictionary<Vector2I, float> movementUtilityMap = Brain.GetUtilityForReachableCoords(
-            sourceCoords, reachableCoords, BattleManager.Get().InfluenceMap, MyTeam);
-
-        // Find the highest X sums of utility for an (ability + target, coords) pair
-        // perform the highest one and post to message log, post the rest to message log?
-        SortedList<Decision, float> decisionUtilityList = [];
-        foreach (Decision decision in abilityUtilityMap.Keys)
-        {
-            Vector2I coords = decision.MoveLocation;
-            float movementUtility = movementUtilityMap[coords];
-            float abilityUtility = decision.Utility;
-            float decisionUtility = movementUtility * MovementWeight + abilityUtility * AbilityWeight;
-        }
+        return result;
     }
 
     private void OnStatusDied(object sender, Combatant combatant)

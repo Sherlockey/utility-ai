@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public interface IAbility
 {
-    public float Evaluate(Combatant, List<Combatant> targets);
-
     public void Apply(Combatant user, List<Combatant> targets);
 
     public bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords);
@@ -13,4 +11,6 @@ public interface IAbility
     public List<Combatant> CombatantsInAreaOfEffect(Vector2I startCoords);
 
     public List<Combatant> ValidatedTargets(Combatant user, List<Combatant> targets);
+
+    public string GetDisplayName();
 }
