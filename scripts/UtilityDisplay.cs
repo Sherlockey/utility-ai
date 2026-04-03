@@ -27,15 +27,15 @@ public partial class UtilityDisplay : PanelContainer
     [Export]
     private Slider _contestedTerritorySlider;
     [Export]
-    private Slider _keepRangeSlider;
+    private Slider _maintainRangeSlider;
     [Export]
     private Slider _greatestDamageSlider;
     [Export]
     private Slider _eliminateOppositionSlider;
     [Export]
-    private Slider _targetWeakestSlider;
+    private Slider _targetFrailestSlider;
     [Export]
-    private Slider _avoidFriendlyDamageSlider;
+    private Slider _targetDeadliestSlider;
 
     private Combatant _combatant = null;
     private int _currentCombatantIndex = 0;
@@ -51,11 +51,11 @@ public partial class UtilityDisplay : PanelContainer
         _friendlyTerritorySlider.DragEnded += OnFriendlyTerritorySliderDragEnded;
         _oppositionTerritorySlider.DragEnded += OnOppositionTerritorySliderDragEnded;
         _contestedTerritorySlider.DragEnded += OnContestedTerritorySliderDragEnded;
-        _keepRangeSlider.DragEnded += OnKeepRangeSliderDragEnded;
+        _maintainRangeSlider.DragEnded += OnMaintainRangeSliderDragEnded;
         _greatestDamageSlider.DragEnded += OnGreatestDamageSliderDragEnded;
         _eliminateOppositionSlider.DragEnded += OnEliminateOppositionSliderDragEnded;
-        _targetWeakestSlider.DragEnded += OnTargetWeakestSliderDragEnded;
-        _avoidFriendlyDamageSlider.DragEnded += OnAvoidFriendlyDamageSliderDragEnded;
+        _targetFrailestSlider.DragEnded += OnTargetFrailestSliderDragEnded;
+        _targetDeadliestSlider.DragEnded += OnTargetDeadliestSliderDragEnded;
     }
 
     public override void _Input(InputEvent @event)
@@ -92,10 +92,28 @@ public partial class UtilityDisplay : PanelContainer
                 }
                 else if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
-                    _keepRangeSlider.Value = rangeFromOpposition.Weight;
+                    _maintainRangeSlider.Value = rangeFromOpposition.Weight;
                     _rangeValue.Text = rangeFromOpposition.Range.ToString();
                 }
-                // TODO add the four values for Abilities
+            }
+            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            {
+                if (abilityUtility is GreatestDamage greatestDamage)
+                {
+                    _greatestDamageSlider.Value = greatestDamage.Weight;
+                }
+                else if (abilityUtility is EliminateOpposition eliminateOpposition)
+                {
+                    _eliminateOppositionSlider.Value = eliminateOpposition.Weight;
+                }
+                else if (abilityUtility is TargetFrailest targetFrailest)
+                {
+                    _targetFrailestSlider.Value = targetFrailest.Weight;
+                }
+                else if (abilityUtility is TargetDeadliest targetDeadliest)
+                {
+                    _targetDeadliestSlider.Value = targetDeadliest.Weight;
+                }
             }
         }
     }
@@ -158,7 +176,7 @@ public partial class UtilityDisplay : PanelContainer
 
     private void OnFriendlyTerritorySliderDragEnded(bool valueChanged)
     {
-        if (_combatant != null)
+        if (valueChanged && _combatant != null)
         {
             foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
             {
@@ -173,7 +191,7 @@ public partial class UtilityDisplay : PanelContainer
 
     private void OnOppositionTerritorySliderDragEnded(bool valueChanged)
     {
-        if (_combatant != null)
+        if (valueChanged && _combatant != null)
         {
             foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
             {
@@ -188,7 +206,7 @@ public partial class UtilityDisplay : PanelContainer
 
     private void OnContestedTerritorySliderDragEnded(bool valueChanged)
     {
-        if (_combatant != null)
+        if (valueChanged && _combatant != null)
         {
             foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
             {
@@ -201,15 +219,15 @@ public partial class UtilityDisplay : PanelContainer
         }
     }
 
-    private void OnKeepRangeSliderDragEnded(bool valueChanged)
+    private void OnMaintainRangeSliderDragEnded(bool valueChanged)
     {
-        if (_combatant != null)
+        if (valueChanged && _combatant != null)
         {
             foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
-                    rangeFromOpposition.Weight = (float)_keepRangeSlider.Value;
+                    rangeFromOpposition.Weight = (float)_maintainRangeSlider.Value;
                     break;
                 }
             }
@@ -218,21 +236,61 @@ public partial class UtilityDisplay : PanelContainer
 
     private void OnGreatestDamageSliderDragEnded(bool valueChanged)
     {
-
+        if (valueChanged && _combatant != null)
+        {
+            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            {
+                if (abilityUtility is GreatestDamage greatestDamage)
+                {
+                    greatestDamage.Weight = (float)_greatestDamageSlider.Value;
+                    break;
+                }
+            }
+        }
     }
 
     private void OnEliminateOppositionSliderDragEnded(bool valueChanged)
     {
-
+        if (valueChanged && _combatant != null)
+        {
+            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            {
+                if (abilityUtility is EliminateOpposition eliminateOpposition)
+                {
+                    eliminateOpposition.Weight = (float)_eliminateOppositionSlider.Value;
+                    break;
+                }
+            }
+        }
     }
 
-    private void OnTargetWeakestSliderDragEnded(bool valueChanged)
+    private void OnTargetFrailestSliderDragEnded(bool valueChanged)
     {
-
+        if (valueChanged && _combatant != null)
+        {
+            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            {
+                if (abilityUtility is TargetFrailest targetFrailest)
+                {
+                    targetFrailest.Weight = (float)_targetFrailestSlider.Value;
+                    break;
+                }
+            }
+        }
     }
 
-    private void OnAvoidFriendlyDamageSliderDragEnded(bool valueChanged)
+    private void OnTargetDeadliestSliderDragEnded(bool valueChanged)
     {
-
+        if (valueChanged && _combatant != null)
+        {
+            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            {
+                if (abilityUtility is TargetDeadliest targetDeadliest)
+                {
+                    targetDeadliest.Weight = (float)_targetDeadliestSlider.Value;
+                    break;
+                }
+            }
+        }
     }
 }

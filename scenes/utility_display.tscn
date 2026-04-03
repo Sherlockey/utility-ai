@@ -33,7 +33,7 @@ border_color = Color(1, 1, 1, 1)
 shadow_color = Color(0, 0, 0, 0)
 anti_aliasing = false
 
-[node name="UtilityDisplay" type="PanelContainer" unique_id=1614214764 node_paths=PackedStringArray("_name", "_rangeValue", "_portrait", "_combatantLeftButton", "_combatantRightButton", "_rangeLeftButton", "_rangeRightButton", "_friendlyTerritorySlider", "_oppositionTerritorySlider", "_contestedTerritorySlider", "_keepRangeSlider", "_greatestDamageSlider", "_eliminateOppositionSlider", "_targetWeakestSlider", "_avoidFriendlyDamageSlider")]
+[node name="UtilityDisplay" type="PanelContainer" unique_id=1614214764 node_paths=PackedStringArray("_name", "_rangeValue", "_portrait", "_combatantLeftButton", "_combatantRightButton", "_rangeLeftButton", "_rangeRightButton", "_friendlyTerritorySlider", "_oppositionTerritorySlider", "_contestedTerritorySlider", "_maintainRangeSlider", "_greatestDamageSlider", "_eliminateOppositionSlider", "_targetFrailestSlider", "_targetDeadliestSlider")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -57,11 +57,11 @@ _rangeRightButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBo
 _friendlyTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory/HSlider")
 _oppositionTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory/HSlider")
 _contestedTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory/HSlider")
-_keepRangeSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/HSlider")
+_maintainRangeSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/HSlider")
 _greatestDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage/HSlider")
 _eliminateOppositionSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition/HSlider")
-_targetWeakestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest/HSlider")
-_avoidFriendlyDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest/HSlider")
+_targetFrailestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest/HSlider")
+_targetDeadliestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest/HSlider")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=701959541]
 layout_mode = 2
