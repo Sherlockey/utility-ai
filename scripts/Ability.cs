@@ -44,7 +44,10 @@ public abstract partial class Ability : Node, IAbility
         return _displayName;
     }
 
-    public abstract int GetDamage(Combatant user);
+    public virtual int GetDamage(Combatant user)
+    {
+        return user.Stats.Attack * user.Stats.Attack * _damagePercentNumerator / 100;
+    }
 
     public virtual int GetDamagePercentNumerator()
     {

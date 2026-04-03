@@ -10,10 +10,9 @@ public partial class Slam : Ability
     public override void Apply(Combatant user, List<Combatant> targets)
     {
         MessageLog.Get().Write(user.DisplayName + " used Slam");
-        int damage = GetDamage(user);
         foreach (Combatant target in targets)
         {
-            target.Status.TakeDamage(damage * _damagePercentNumerator / 100);
+            target.Status.ResolveAttack(user, this);
         }
     }
 
@@ -38,10 +37,5 @@ public partial class Slam : Ability
             }
         }
         return combatants;
-    }
-
-    public override int GetDamage(Combatant user)
-    {
-        return user.Stats.Attack * user.Stats.Attack;
     }
 }

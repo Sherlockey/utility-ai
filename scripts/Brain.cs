@@ -104,7 +104,10 @@ public partial class Brain : Node
         return decisionUtilityList;
     }
 
-    private Dictionary<Vector2I, float> MakeMovementUtilityMap(Vector2I sourceCoords, List<Vector2I> reachableCoords, Dictionary<Vector2I, (int, int)> influenceMap, Combatant.Team sourceTeam)
+    private Dictionary<Vector2I, float> MakeMovementUtilityMap(
+        Vector2I sourceCoords, List<Vector2I> reachableCoords,
+        Dictionary<Vector2I, (int, int)> influenceMap,
+        Combatant.Team sourceTeam)
     {
         Dictionary<Vector2I, float> scoreMap = [];
 
