@@ -13,6 +13,11 @@ public partial class TargetFrailest : AbilityUtility
     {
         float utility = 0.0f;
 
+        if (targets.Count == 0)
+        {
+            return utility;
+        }
+
         int minHealth = int.MaxValue;
         int maxHealth = int.MinValue;
         foreach (Combatant combatant in BattleManager.Get().Combatants)

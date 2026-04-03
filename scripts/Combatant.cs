@@ -151,6 +151,7 @@ public partial class Combatant : Node2D
             {
                 // TODO add if statements for whether there is actually a movement or
                 // actually an ability used?
+                // TODO cut this down or handle it somewhere else. Maybe an event?
                 Decision decision = decisionList[i];
                 MessageLog.Get().Write("Decision " + (i + 1) + " with utility: " + decision.TotalUtility.ToString("F2") + "\n- Move from: " + currentCoords + " to: " + decision.MoveLocation + ".\n- Use ability: " + decision.Ability.GetDisplayName() + ". \n- With target(s): " + TargetListToString(decision.Targets));
             }

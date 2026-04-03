@@ -10,6 +10,11 @@ public partial class GreatestDamage : AbilityUtility
     {
         float utility = 0.0f;
 
+        if (targets.Count == 0)
+        {
+            return utility;
+        }
+
         // Get max possible damage for this ability which is maxPossibleTargets * GetDamage()
         // Additive Factorial / Triangular Number = n * (n-1) / 2
         int aoe = ability.GetAreaOfEffect();
@@ -28,9 +33,9 @@ public partial class GreatestDamage : AbilityUtility
                 continue;
             }
             int evasion = target.Status.CurrentEvasion;
-            int hitPercent = ability.GetHitPercentNumerator() + user.Status.CurrentAccuracy;
-            hitPercent = Mathf.Min(hitPercent, 100);
-            estimatedDamage += damage * hitPercent / 100;
+            int hitNumerator = ability.GetHitPercentNumerator() + user.Status.CurrentAccuracy;
+            hitNumerator = Mathf.Clamp(hitNumerator, 0, 100);
+            estimatedDamage += damage * hitNumerator / 100;
         }
 
         if (maxPossibleDamage != 0)

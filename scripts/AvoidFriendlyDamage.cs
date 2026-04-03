@@ -10,6 +10,11 @@ public partial class AvoidFriendlyDamage : AbilityUtility
     {
         float utility = 0.0f;
 
+        if (targets.Count == 0)
+        {
+            return utility;
+        }
+
         utility *= Weight;
         Debug.Assert(utility >= 0.0f && utility <= 1.0f);
         return utility;

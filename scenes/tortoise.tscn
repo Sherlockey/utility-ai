@@ -62,6 +62,7 @@ Weight = 1.0
 
 [node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=679037948]
 script = ExtResource("9_mkfyq")
+Weight = 0.25
 
 [node name="TargetFrailest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1352541022]
 script = ExtResource("10_6w4x0")
