@@ -78,7 +78,7 @@ public partial class RangeFromOpposition : MovementUtility
             }
             if (maxDifference - minDifference != 0)
             {
-                utility = ((float)(maxDifference - diff)) / (maxDifference - minDifference);
+                utility = (float)(maxDifference - diff) / (maxDifference - minDifference);
             }
         }
         utility *= Weight;

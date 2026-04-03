@@ -43,7 +43,7 @@ public partial class MoveToContestedTerritory : MovementUtility
             }
             else
             {
-                utility = ((float)score - minScore) / (maxScore - minScore);
+                utility = (float)(score - minScore) / (maxScore - minScore);
             }
         }
         utility *= Weight;

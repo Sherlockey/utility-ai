@@ -4,11 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class TargetFrailest : AbilityUtility
+public partial class TargetDeadliest : AbilityUtility
 {
-    // Get max health of every opposition; highest is least desirable, least is most desirable.
-    // Foreach target in targets get utility of making them the target.
-    // Sum those utilities. Divide by # of targets
     public override float Evaluate(IAbility ability, Combatant user, List<Combatant> targets)
     {
         float utility = 0.0f;
@@ -18,19 +15,20 @@ public partial class TargetFrailest : AbilityUtility
             return utility;
         }
 
-        int minHealth = int.MaxValue;
-        int maxHealth = int.MinValue;
+        int minInfluence = int.MaxValue;
+        int maxInfluence = int.MinValue;
         foreach (Combatant combatant in BattleManager.Get().Combatants)
         {
             if (combatant.MyTeam != user.MyTeam)
             {
-                if (combatant.Stats.Health < minHealth)
+                int influence = combatant.Status.GetInfluence();
+                if (influence < minInfluence)
                 {
-                    minHealth = combatant.Stats.Health;
+                    minInfluence = influence;
                 }
-                if (combatant.Stats.Health > maxHealth)
+                if (influence > maxInfluence)
                 {
-                    maxHealth = combatant.Stats.Health;
+                    maxInfluence = influence;
                 }
             }
         }
@@ -41,15 +39,12 @@ public partial class TargetFrailest : AbilityUtility
             {
                 continue;
             }
-            if (target.Stats.Health == minHealth)
+            int influence = target.Status.GetInfluence();
+            if (maxInfluence - minInfluence != 0)
             {
-                utility += 1.0f;
+                utility += (float)(influence - minInfluence) / (maxInfluence - minInfluence);
             }
-            else if (maxHealth - minHealth != 0.0f)
-            {
-                utility += (float)(maxHealth - target.Stats.Health) / (maxHealth - minHealth);
-            }
-            else // if maxHealth is the same as minHealth then all targets are equally good
+            else
             {
                 utility += 1.0f;
             }

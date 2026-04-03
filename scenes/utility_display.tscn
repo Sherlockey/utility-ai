@@ -61,7 +61,7 @@ _keepRangeSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBox
 _greatestDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage/HSlider")
 _eliminateOppositionSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition/HSlider")
 _targetWeakestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest/HSlider")
-_avoidFriendlyDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage/HSlider")
+_avoidFriendlyDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest/HSlider")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=701959541]
 layout_mode = 2
@@ -290,16 +290,16 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="AvoidFriendlyDamage" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1356444415]
+[node name="TargetDeadliest" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1356444415]
 custom_minimum_size = Vector2(135.945, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage" unique_id=1070039405]
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest" unique_id=1070039405]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
-text = "Avoid Friendly Damage"
+text = "Target Deadliest"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage" unique_id=965361940]
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest" unique_id=965361940]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
