@@ -7,7 +7,7 @@ public partial class Backstab : Ability
     [Export]
     private int _range = 1;
 
-    public override void Apply(Combatant user, List<Combatant> targets)
+    public override void Execute(Combatant user, List<Combatant> targets)
     {
         MessageLog.Get().Write(user.DisplayName + " used Backstab");
         foreach (Combatant target in targets)

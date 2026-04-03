@@ -1,7 +1,6 @@
 using Godot;
 
 using System;
-using System.Collections;
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,7 +55,7 @@ public partial class Brain : Node
         }
 
         // Get utility for using each ability at each possible target coords within walkable coords
-        List<Decision> abilityUtilityList = [];
+        List<AbilityDecision> abilityDecisionList = [];
         foreach (Vector2I reachedCoords in reachableCoords)
         {
             foreach (IAbility ability in combatant.Abilities)
@@ -75,8 +74,8 @@ public partial class Brain : Node
                     List<Combatant> targets = ability.CombatantsInAreaOfEffect(targetedCoords);
                     targets = ability.ValidatedTargets(combatant, targets);
                     float utility = EvaluateAbilityUtility(ability, combatant, targets);
-                    Decision decision = new(reachedCoords, ability, targets, utility);
-                    abilityUtilityList.Add(decision);
+                    AbilityDecision abilityDecision = new(reachedCoords, ability, targets, utility);
+                    abilityDecisionList.Add(abilityDecision);
                 }
             }
         }
@@ -87,7 +86,7 @@ public partial class Brain : Node
 
         // Sum utility for ability and movement into sorted decisionList
         List<Decision> decisionUtilityList = [];
-        foreach (Decision abilityDecision in abilityUtilityList)
+        foreach (AbilityDecision abilityDecision in abilityDecisionList)
         {
             Vector2I coords = abilityDecision.MoveLocation;
             float movementUtility = movementUtilityMap[coords] * MovementUtilityWeight;
@@ -96,11 +95,11 @@ public partial class Brain : Node
             Debug.Assert(decisionUtility >= 0.0f && decisionUtility <= 1.0f);
             Decision decision = new(
                 abilityDecision.MoveLocation, abilityDecision.Ability,
-                abilityDecision.Targets, decisionUtility);
+                abilityDecision.Targets, movementUtility, abilityDecision.Utility, decisionUtility);
             decisionUtilityList.Add(decision);
         }
 
-        decisionUtilityList.Sort((x, y) => y.Utility.CompareTo(x.Utility));
+        decisionUtilityList.Sort((x, y) => y.TotalUtility.CompareTo(x.TotalUtility));
         return decisionUtilityList;
     }
 
@@ -179,13 +178,5 @@ public partial class Brain : Node
         }
         Debug.Assert(utility >= 0.0f && utility <= 1.0f);
         return utility;
-    }
-
-    private class DecisionComparer : IComparer<Decision>
-    {
-        public int Compare(Decision decisionX, Decision decisionY)
-        {
-            return decisionX.Utility.CompareTo(decisionY.Utility);
-        }
     }
 }

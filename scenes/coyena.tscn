@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://d0ycr2wjeh3o" path="res://scripts/GreatestDamage.cs" id="8_04rle"]
 [ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_7ojdo"]
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_iapo4"]
-[ext_resource type="Script" uid="uid://x5ps0g4axgho" path="res://scripts/TargetWeakest.cs" id="10_58lyi"]
+[ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_04rle"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/AvoidFriendlyDamage.cs" id="11_i2ifj"]
 
 [node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
@@ -58,15 +58,19 @@ Weight = 1.0
 
 [node name="GreatestDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1941962661]
 script = ExtResource("8_04rle")
+Weight = 0.0
 
 [node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=149587710]
 script = ExtResource("9_iapo4")
+Weight = 0.0
 
-[node name="TargetWeakest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=724503529]
-script = ExtResource("10_58lyi")
+[node name="TargetFrailest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=724503529]
+script = ExtResource("10_04rle")
+Weight = 1.0
 
 [node name="AvoidFriendlyDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1551238201]
 script = ExtResource("11_i2ifj")
+Weight = 0.0
 
 [node name="Abilities" type="Node" parent="." unique_id=441879734]
 

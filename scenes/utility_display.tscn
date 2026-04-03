@@ -60,7 +60,7 @@ _contestedTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginConta
 _keepRangeSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/HSlider")
 _greatestDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage/HSlider")
 _eliminateOppositionSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition/HSlider")
-_targetWeakestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetWeakest/HSlider")
+_targetWeakestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest/HSlider")
 _avoidFriendlyDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/AvoidFriendlyDamage/HSlider")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=701959541]
@@ -272,16 +272,16 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="TargetWeakest" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1429255997]
+[node name="TargetFrailest" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1429255997]
 custom_minimum_size = Vector2(135.945, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetWeakest" unique_id=1320365102]
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest" unique_id=1320365102]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
-text = "Target Weakest"
+text = "Target Frailest"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetWeakest" unique_id=2018612049]
+[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest" unique_id=2018612049]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10

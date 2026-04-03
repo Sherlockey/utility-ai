@@ -101,7 +101,7 @@ public partial class Combatant : Node2D
                         targets = ability.ValidatedTargets(this, targets);
                         if (targets.Count > 0)
                         {
-                            ability.Apply(this, targets);
+                            ability.Execute(this, targets);
                             Status.AbilitiesRemaining -= 1;
                         }
                     }
@@ -152,7 +152,7 @@ public partial class Combatant : Node2D
                 // TODO add if statements for whether there is actually a movement or
                 // actually an ability used?
                 Decision decision = decisionList[i];
-                MessageLog.Get().Write("Decision " + (i + 1) + " with utility: " + decision.Utility.ToString("F2") + "\n- Move from: " + currentCoords + " to: " + decision.MoveLocation + ".\n- Use ability: " + decision.Ability.GetDisplayName() + ". \n- With target(s): " + TargetListToString(decision.Targets));
+                MessageLog.Get().Write("Decision " + (i + 1) + " with utility: " + decision.TotalUtility.ToString("F2") + "\n- Move from: " + currentCoords + " to: " + decision.MoveLocation + ".\n- Use ability: " + decision.Ability.GetDisplayName() + ". \n- With target(s): " + TargetListToString(decision.Targets));
             }
         }
 
@@ -164,9 +164,9 @@ public partial class Combatant : Node2D
         }
 
         // Use ability
-        if (resultDecision.Targets.Count > 0)
+        if (resultDecision.Targets.Count > 0 && resultDecision.AbilityUtility > 0.0f)
         {
-            resultDecision.Ability.Apply(this, resultDecision.Targets);
+            resultDecision.Ability.Execute(this, resultDecision.Targets);
         }
 
         // Delay

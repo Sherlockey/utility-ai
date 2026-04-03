@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public interface IAbility
 {
-    public void Apply(Combatant user, List<Combatant> targets);
+    public void Execute(Combatant user, List<Combatant> targets);
 
     public bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords);
 

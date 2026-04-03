@@ -10,7 +10,7 @@ public partial class Shoot : Ability
     [Export]
     private int _maxRange = 5;
 
-    public override void Apply(Combatant user, List<Combatant> targets)
+    public override void Execute(Combatant user, List<Combatant> targets)
     {
         MessageLog.Get().Write(user.DisplayName + " used Shoot");
         foreach (Combatant target in targets)

@@ -7,7 +7,7 @@ public partial class Cast : Ability
     [Export]
     private int _range = 4;
 
-    public override void Apply(Combatant user, List<Combatant> targets)
+    public override void Execute(Combatant user, List<Combatant> targets)
     {
         MessageLog.Get().Write(user.DisplayName + " used Cast");
         foreach (Combatant target in targets)

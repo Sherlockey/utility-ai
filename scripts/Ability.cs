@@ -13,7 +13,7 @@ public abstract partial class Ability : Node, IAbility
     [Export]
     protected int _damagePercentNumerator = 100;
 
-    public abstract void Apply(Combatant user, List<Combatant> targets);
+    public abstract void Execute(Combatant user, List<Combatant> targets);
 
     public abstract bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords);
 

@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_66amf"]
 [ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_yunhw"]
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_qtcmm"]
-[ext_resource type="Script" uid="uid://x5ps0g4axgho" path="res://scripts/TargetWeakest.cs" id="10_ut8cs"]
+[ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_1pdv6"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/AvoidFriendlyDamage.cs" id="11_ad11k"]
 
 [node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
@@ -67,9 +67,9 @@ Weight = 1.0
 script = ExtResource("9_qtcmm")
 Weight = 0.0
 
-[node name="TargetWeakest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1350017796]
-script = ExtResource("10_ut8cs")
-Weight = 0.0
+[node name="TargetFrailest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1350017796]
+script = ExtResource("10_1pdv6")
+Weight = 0.1
 
 [node name="AvoidFriendlyDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=567238498]
 script = ExtResource("11_ad11k")
