@@ -5,9 +5,11 @@ using System.Collections.Generic;
 public abstract partial class Ability : Node, IAbility
 {
     [Export]
-    public string DisplayName = "Ability";
+    protected string _displayName = "Ability";
     [Export]
     protected int _areaOfEffect = 1;
+    [Export]
+    protected int _hitPercentNumerator = 100;
     [Export]
     protected int _damagePercentNumerator = 100;
 
@@ -39,6 +41,23 @@ public abstract partial class Ability : Node, IAbility
 
     public virtual string GetDisplayName()
     {
-        return DisplayName;
+        return _displayName;
+    }
+
+    public abstract int GetDamage(Combatant user);
+
+    public virtual int GetDamagePercentNumerator()
+    {
+        return _damagePercentNumerator;
+    }
+
+    public virtual int GetHitPercentNumerator()
+    {
+        return _hitPercentNumerator;
+    }
+
+    public virtual int GetAreaOfEffect()
+    {
+        return _areaOfEffect;
     }
 }

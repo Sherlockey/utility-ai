@@ -4,17 +4,13 @@ using System.Collections.Generic;
 
 public partial class Slam : Ability
 {
-    // TODO this could be handled differently to avoid having two fields in inspector
-    [Export]
-    protected new int _areaOfEffect = 2;
-
     [Export]
     private int _range = 0;
 
     public override void Apply(Combatant user, List<Combatant> targets)
     {
         MessageLog.Get().Write(user.DisplayName + " used Slam");
-        int damage = user.Stats.Attack * user.Stats.Attack;
+        int damage = GetDamage(user);
         foreach (Combatant target in targets)
         {
             target.Status.TakeDamage(damage * _damagePercentNumerator / 100);
@@ -42,5 +38,10 @@ public partial class Slam : Ability
             }
         }
         return combatants;
+    }
+
+    public override int GetDamage(Combatant user)
+    {
+        return user.Stats.Attack * user.Stats.Attack;
     }
 }

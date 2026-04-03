@@ -13,4 +13,12 @@ public interface IAbility
     public List<Combatant> ValidatedTargets(Combatant user, List<Combatant> targets);
 
     public string GetDisplayName();
+
+    public int GetDamage(Combatant user);
+
+    public int GetDamagePercentNumerator();
+
+    public int GetHitPercentNumerator();
+
+    public int GetAreaOfEffect();
 }

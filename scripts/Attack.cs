@@ -10,7 +10,7 @@ public partial class Attack : Ability
     public override void Apply(Combatant user, List<Combatant> targets)
     {
         MessageLog.Get().Write(user.DisplayName + " used Attack");
-        int damage = GetDamageCalculation(user);
+        int damage = GetDamage(user);
         foreach (Combatant target in targets)
         {
             target.Status.TakeDamage(damage * _damagePercentNumerator / 100);
@@ -29,7 +29,7 @@ public partial class Attack : Ability
         return rangeSum <= _range;
     }
 
-    private int GetDamageCalculation(Combatant user)
+    public override int GetDamage(Combatant user)
     {
         return user.Stats.Attack * user.Stats.Attack;
     }

@@ -10,14 +10,18 @@ public partial class Status : Node
     [Export]
     public Stats Stats;
 
-    public int CurrentMovement { get; set; }
-    public int AccumulatedSpeed { get; set; } = 0;
-    public int CurrentHealth { get; set; }
-    public int AbilitiesRemaining { get; set; } = 0; // TODO @Incomplete
+    public int CurrentMovement;
+    public int AccumulatedSpeed = 0;
+    public int CurrentHealth;
+    public int CurrentAccuracy;
+    public int CurrentEvasion;
+    public int AbilitiesRemaining = 0; // TODO @Incomplete
 
     public override void _Ready()
     {
         CurrentHealth = Stats.Health;
+        CurrentAccuracy = Stats.Accuracy;
+        CurrentEvasion = Stats.Evasion;
     }
 
     public void TakeDamage(int damage)

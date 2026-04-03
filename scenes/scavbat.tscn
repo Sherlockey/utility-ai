@@ -72,8 +72,7 @@ script = ExtResource("11_7vgv3")
 
 [node name="Attack" type="Node" parent="Abilities" unique_id=123415716]
 script = ExtResource("3_bhfd8")
-DisplayName = "Attack"
-DisplayName = "Attack"
+_displayName = "Attack"
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_82ri0")
@@ -81,7 +80,8 @@ Health = 16
 Attack = 3
 Speed = 9
 Movement = 5
-Evasion = 10
+Accuracy = 5
+Evasion = 15
 
 [node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_febxk")

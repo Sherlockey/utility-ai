@@ -61,28 +61,30 @@ Weight = 1.0
 
 [node name="GreatestDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=196078751]
 script = ExtResource("8_1pdv6")
+Weight = 1.0
 
 [node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1261523313]
 script = ExtResource("9_qtcmm")
+Weight = 0.0
 
 [node name="TargetWeakest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1350017796]
 script = ExtResource("10_ut8cs")
+Weight = 0.0
 
 [node name="AvoidFriendlyDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=567238498]
 script = ExtResource("11_ad11k")
+Weight = 0.0
 
 [node name="Abilities" type="Node" parent="." unique_id=226643063]
 
 [node name="Attack" type="Node" parent="Abilities" unique_id=1158664593]
 script = ExtResource("3_p0roq")
-DisplayName = "Attack"
-DisplayName = "Attack"
+_displayName = "Attack"
 _damagePercentNumerator = 33
 
 [node name="Cast" type="Node" parent="Abilities" unique_id=338080924]
 script = ExtResource("3_nc4w5")
-DisplayName = "Cast"
-DisplayName = "Cast"
+_displayName = "Cast"
 _areaOfEffect = 2
 _damagePercentNumerator = 67
 

@@ -72,9 +72,8 @@ script = ExtResource("11_the55")
 
 [node name="Slam" type="Node" parent="Abilities" unique_id=1833231167]
 script = ExtResource("3_dy6v3")
-DisplayName = "Slam"
 _areaOfEffect = 2
-DisplayName = "Slam"
+_displayName = "Attack"
 _areaOfEffect = 2
 _damagePercentNumerator = 67
 
@@ -84,6 +83,7 @@ Health = 88
 Attack = 3
 Speed = 4
 Movement = 2
+Evasion = 20
 
 [node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_ysj3k")

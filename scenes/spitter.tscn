@@ -73,10 +73,9 @@ script = ExtResource("11_kt2yt")
 
 [node name="Shoot" type="Node" parent="Abilities" unique_id=1458379444]
 script = ExtResource("4_e1l7o")
-DisplayName = "Shoot"
 _minRange = 2
 _maxRange = 4
-DisplayName = "Shoot"
+DisplayName = "Attack"
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_2s38u")

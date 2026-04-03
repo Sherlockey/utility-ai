@@ -61,34 +61,36 @@ Weight = 1.0
 
 [node name="GreatestDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=7372257]
 script = ExtResource("8_hm2h7")
+Weight = 1.0
 
 [node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=34265212]
 script = ExtResource("9_k5x5t")
+Weight = 0.0
 
 [node name="TargetWeakest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1494147233]
 script = ExtResource("10_yut2o")
+Weight = 0.0
 
 [node name="AvoidFriendlyDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1108222105]
 script = ExtResource("11_n14b0")
+Weight = 0.0
 
 [node name="Abilities" type="Node" parent="." unique_id=1935953768]
 
 [node name="Attack" type="Node" parent="Abilities" unique_id=2028589579]
 script = ExtResource("3_8rvsd")
-DisplayName = "Attack"
-DisplayName = "Attack"
+_displayName = "Attack"
 _damagePercentNumerator = 50
 
 [node name="Shoot" type="Node" parent="Abilities" unique_id=57361179]
 script = ExtResource("3_n1kao")
-DisplayName = "Shoot"
-DisplayName = "Shoot"
+_displayName = "Shoot"
 
 [node name="Stats" type="Node" parent="." unique_id=566016318]
 script = ExtResource("3_1sbo7")
 Speed = 8
 Movement = 3
-Evasion = 10
+Accuracy = 5
 
 [node name="Status" type="Node" parent="." unique_id=114128546 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_8rvsd")

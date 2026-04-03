@@ -66,12 +66,10 @@ public partial class Combatant : Node2D
         {
             return;
         }
-
-        // TODO: add this back once combatants can end their own turns and use their own abilites
-        // if (BattleManager.Get().DebugManualControl == false)
-        // {
-        //     return;
-        // }
+        if (BattleManager.Get().DebugManualControl == false)
+        {
+            return;
+        }
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
@@ -132,7 +130,6 @@ public partial class Combatant : Node2D
             battleManager.TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
         }
 
-        // DEBUG
         if (BattleManager.Get().DebugManualControl == true)
         {
             return;

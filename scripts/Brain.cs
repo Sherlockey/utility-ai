@@ -165,6 +165,10 @@ public partial class Brain : Node
         {
             utility += abilityUtility.Evaluate(ability, user, targets);
             totalWeight += abilityUtility.Weight;
+            // TODO double check the logic here
+            float damageScalar = ability.GetDamagePercentNumerator() / 100.0f;
+            utility *= damageScalar;
+            totalWeight *= damageScalar;
         }
         if (totalWeight != 0.0f)
         {
