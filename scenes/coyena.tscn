@@ -91,9 +91,9 @@ Stats = NodePath("../Stats")
 _combatant = NodePath("..")
 
 [node name="TurnStartTimer" type="Timer" parent="." unique_id=2017106281]
-wait_time = 0.5
+wait_time = 0.75
 one_shot = true
 
 [node name="TurnEndTimer" type="Timer" parent="." unique_id=209539320]
-wait_time = 0.5
+wait_time = 0.75
 one_shot = true
