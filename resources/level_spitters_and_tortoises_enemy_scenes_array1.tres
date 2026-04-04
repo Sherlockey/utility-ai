@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SceneArray" format=3 uid="uid://ba4c8vwir5w0s"]
+
+[ext_resource type="PackedScene" uid="uid://bnvkat15ynblj" path="res://scenes/spitter.tscn" id="1_aqdq8"]
+[ext_resource type="PackedScene" uid="uid://nfxw0ngtofsh" path="res://scenes/tortoise.tscn" id="2_q12ep"]
+[ext_resource type="Script" uid="uid://bdi8er7wt0nim" path="res://scripts/SceneArray.cs" id="3_6qa7q"]
+
+[resource]
+script = ExtResource("3_6qa7q")
+Scenes = [ExtResource("1_aqdq8"), ExtResource("1_aqdq8"), ExtResource("2_q12ep"), ExtResource("2_q12ep")]
+metadata/_custom_type_script = "uid://bdi8er7wt0nim"

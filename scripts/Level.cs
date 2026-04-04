@@ -2,13 +2,17 @@ using Godot;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 public partial class Level : Node2D
 {
     public int Difficulty = 1;
 
     [Export]
-    private EnemyComposition _enemyComposition = EnemyComposition.RoundRobin;
+    private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
+    [Export]
+    private EnemyComposition _enemyComposition = EnemyComposition.Random;
     [Export]
     private TileMapLayer _tileMapLayer;
     [Export]
@@ -18,26 +22,37 @@ public partial class Level : Node2D
     [Export]
     private Marker2D[] _allyCombatantSpawnMarkers;
     [Export]
-    private Marker2D[] _enemyCombatantSpawnMarkers;
+    private Marker2D[] _enemyCombatantSpawnMarkers; // Do not use, only for initializing List
     [Export]
     private PackedScene _battleManagerScene;
     [Export]
     private PackedScene[] _allyCombatantScenes;
     [Export]
-    private PackedScene[] _enemyCombatantScenes;
+    private SceneArray[] _enemyCombatantScenesSets;
+    [Export]
+    private string[] _nextLevelPaths;
 
-    private const float EnemyScalePercent = 0.2f;
+    private const float EnemyScalePercent = 0.10f;
     private const string LevelOneScenePath = "res://scenes/level_one.tscn";
+    private const float EndOfGameDelay = 1.5f;
 
     private readonly Random _random = new();
 
+    private List<Marker2D> _enemySpawnMarkersList = [];
+
     private enum EnemyComposition
     {
-        RoundRobin, RandomSet, Random,
+        Random, Linear,
+    }
+
+    private enum EnemyPositioning
+    {
+        Random, Linear,
     }
 
     public override void _Ready()
     {
+        _enemySpawnMarkersList = [.. _enemyCombatantSpawnMarkers];
         InstantiateChildren();
     }
 
@@ -58,56 +73,58 @@ public partial class Level : Node2D
 
     private void AddAllyCombatants(BattleManager battleManager)
     {
-        for (int i = 0; i < _allyCombatantSpawnMarkers.Length; i++)
+        for (int i = 0; i < _allyCombatantScenes.Length; i++)
         {
-            if (_allyCombatantScenes.Length > 0)
-            {
-                int index = i % _allyCombatantScenes.Length;
-                Combatant combatant = _allyCombatantScenes[index].Instantiate<Combatant>();
-                AddChild(combatant);
-                combatant.Position = _allyCombatantSpawnMarkers[i].Position;
-                battleManager.Combatants.Add(combatant);
-            }
+            Combatant combatant = _allyCombatantScenes[i].Instantiate<Combatant>();
+            AddChild(combatant);
+            combatant.Position = _allyCombatantSpawnMarkers[i].Position;
+            battleManager.Combatants.Add(combatant);
         }
     }
 
     private void AddEnemyCombatants(BattleManager battleManager)
     {
-        if (_enemyComposition == EnemyComposition.RoundRobin)
+        if (_enemyCombatantScenesSets.Length == 0)
         {
-            for (int i = 0; i < _enemyCombatantSpawnMarkers.Length; i++)
-            {
-                if (_enemyCombatantScenes.Length > 0)
-                {
-                    int index = i % _enemyCombatantScenes.Length;
-                    Combatant combatant = _enemyCombatantScenes[index].Instantiate<Combatant>();
-                    float scaling = (Difficulty - 1) * EnemyScalePercent;
-                    combatant.Stats.ApplyScaling(scaling); // Ordering matters here w/ AddChild
-                    AddChild(combatant);
-                    combatant.Position = _enemyCombatantSpawnMarkers[i].Position;
-                    battleManager.Combatants.Add(combatant);
-                }
-            }
+            return;
         }
-        else if (_enemyComposition == EnemyComposition.RandomSet)
+
+        int sceneIndex = _random.Next(0, _enemyCombatantScenesSets.Length);
+        PackedScene[] scenesSet = _enemyCombatantScenesSets[sceneIndex].Scenes;
+        for (int i = 0; i < scenesSet.Length; i++)
         {
-            // TODO
-        }
-        else if (_enemyComposition == EnemyComposition.Random)
-        {
-            for (int i = 0; i < _enemyCombatantSpawnMarkers.Length; i++)
+            // Handle choosing combatant from scenesSet
+            int combatantIndex = i;
+            if (_enemyComposition == EnemyComposition.Random)
             {
-                if (_enemyCombatantScenes.Length > 0)
-                {
-                    int index = _random.Next(0, _enemyCombatantScenes.Length);
-                    Combatant combatant = _enemyCombatantScenes[index].Instantiate<Combatant>();
-                    float scaling = (Difficulty - 1) * EnemyScalePercent;
-                    combatant.Stats.ApplyScaling(scaling); // Ordering matters here  w/ AddChild
-                    AddChild(combatant);
-                    combatant.Position = _enemyCombatantSpawnMarkers[i].Position;
-                    battleManager.Combatants.Add(combatant);
-                }
+                combatantIndex = _random.Next(0, scenesSet.Length);
             }
+            else if (_enemyComposition == EnemyComposition.Linear)
+            {
+                combatantIndex = i;
+            }
+            Combatant combatant = scenesSet[combatantIndex].Instantiate<Combatant>();
+
+            // Handle scaling combatant based upon Level Difficulty
+            float scaling = (Difficulty - 1) * EnemyScalePercent;
+            combatant.Stats.ApplyScaling(scaling); // Ordering matters here  w/ AddChild
+
+            AddChild(combatant);
+
+            // Handle positioning combatant
+            int markerIndex = i % _enemySpawnMarkersList.Count;
+            if (_enemyPositioning == EnemyPositioning.Random)
+            {
+                markerIndex = _random.Next(0, _enemySpawnMarkersList.Count);
+                combatant.Position = _enemySpawnMarkersList[markerIndex].Position;
+            }
+            else if (_enemyPositioning == EnemyPositioning.Linear)
+            {
+                combatant.Position = _enemySpawnMarkersList[markerIndex].Position;
+            }
+            _enemySpawnMarkersList.RemoveAt(markerIndex);
+
+            battleManager.Combatants.Add(combatant);
         }
     }
 
@@ -115,22 +132,37 @@ public partial class Level : Node2D
     {
         if (isVictory)
         {
-            // TODO goto next level
-            await ToSignal(GetTree().CreateTimer(1.5f), Timer.SignalName.Timeout);
-            // TEMP
-            PackedScene nextLevelScene = GD.Load<PackedScene>(LevelOneScenePath);
-            Level nextLevel = nextLevelScene.Instantiate<Level>();
-            nextLevel.Difficulty = Difficulty + 1;
-            GetTree().Root.AddChild(nextLevel);
-            Free();
+            await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
+            Debug.Assert(_nextLevelPaths.Length > 0);
+            int index = 0;
+            string path = "";
+            for (int i = 0; i < _nextLevelPaths.Length; i++)
+            {
+                if (_nextLevelPaths[i] == GetTree().CurrentScene.SceneFilePath)
+                {
+                    index = (i + 1) % _nextLevelPaths.Length;
+                }
+            }
+            path = _nextLevelPaths[index];
+            if (path != "")
+            {
+                PackedScene nextLevelScene = GD.Load<PackedScene>(path);
+                Level nextLevel = nextLevelScene.Instantiate<Level>();
+                nextLevel.Difficulty = Difficulty + 1;
+                SceneTree sceneTree = GetTree();
+                sceneTree.Root.AddChild(nextLevel);
+                sceneTree.CurrentScene = nextLevel;
+                Free();
+            }
         }
         else
         {
-            // TODO restart game
-            await ToSignal(GetTree().CreateTimer(1.5f), Timer.SignalName.Timeout);
+            await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
             PackedScene levelOneScene = GD.Load<PackedScene>(LevelOneScenePath);
             Level levelOne = levelOneScene.Instantiate<Level>();
-            GetTree().Root.AddChild(levelOne);
+            SceneTree sceneTree = GetTree();
+            sceneTree.Root.AddChild(levelOne);
+            sceneTree.CurrentScene = levelOne;
             Free();
         }
     }

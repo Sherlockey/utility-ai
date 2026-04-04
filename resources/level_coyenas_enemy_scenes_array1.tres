@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SceneArray" format=3 uid="uid://c0nxqiwful8w5"]
+
+[ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="1_05l4b"]
+[ext_resource type="Script" uid="uid://bdi8er7wt0nim" path="res://scripts/SceneArray.cs" id="2_j02m1"]
+
+[resource]
+script = ExtResource("2_j02m1")
+Scenes = [ExtResource("1_05l4b"), ExtResource("1_05l4b"), ExtResource("1_05l4b"), ExtResource("1_05l4b")]
+metadata/_custom_type_script = "uid://bdi8er7wt0nim"

@@ -82,7 +82,7 @@ _damagePercentNumerator = 67
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_uljw3")
-Health = 88
+Health = 66
 Attack = 3
 Speed = 4
 Movement = 2

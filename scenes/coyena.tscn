@@ -81,6 +81,7 @@ _displayName = "Attack"
 [node name="Stats" type="Node" parent="." unique_id=1593060130]
 script = ExtResource("4_vbcjk")
 Health = 33
+Attack = 3
 Accuracy = 10
 
 [node name="Status" type="Node" parent="." unique_id=2083474519 node_paths=PackedStringArray("Stats")]
