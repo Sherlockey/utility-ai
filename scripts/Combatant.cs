@@ -46,7 +46,7 @@ public partial class Combatant : Node2D
     [Export]
     private Timer _turnEndTimer;
 
-    private const int NumDecisions = 3;
+    private const int NumDecisions = 0;
 
     public override void _Ready()
     {

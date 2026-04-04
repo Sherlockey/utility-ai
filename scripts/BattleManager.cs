@@ -34,6 +34,7 @@ public partial class BattleManager : Node2D
     [Export]
     private UtilityDisplay _utilityDisplay;
 
+    private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
 
@@ -173,6 +174,7 @@ public partial class BattleManager : Node2D
 
     private void BattleEnd(bool isVictory)
     {
+        _isBattleOver = true;
         if (isVictory)
         {
             // TODO UI elements here
@@ -310,12 +312,15 @@ public partial class BattleManager : Node2D
 
     private void OnCombatantTurnEnded(object sender, EventArgs e)
     {
-        Combatants.Sort(new Combatant.SortIterationsUntilTurn());
-        if (CheckIfACombatantHasTurn() == false)
+        if (!_isBattleOver)
         {
-            AdvanceTurnOrder();
+            Combatants.Sort(new Combatant.SortIterationsUntilTurn());
+            if (CheckIfACombatantHasTurn() == false)
+            {
+                AdvanceTurnOrder();
+            }
+            UpdateForNewCombatantTurn();
         }
-        UpdateForNewCombatantTurn();
     }
 
     private void OnStatusDamageTaken(object sender, Combatant c)

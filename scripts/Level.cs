@@ -6,27 +6,33 @@ using System.Collections.Generic;
 public partial class Level : Node2D
 {
     [Export]
+    private EnemyComposition _enemyComposition = EnemyComposition.RoundRobin;
+    [Export]
     private TileMapLayer _tileMapLayer;
     [Export]
     private DebugTileMapLayer _debugTileMapLayer;
     [Export]
     private Camera _camera;
     [Export]
-    private PackedScene[] _combatantScenes;
+    private Marker2D[] _allyCombatantSpawnMarkers;
+    [Export]
+    private Marker2D[] _enemyCombatantSpawnMarkers;
     [Export]
     private PackedScene _battleManagerScene;
+    [Export]
+    private PackedScene[] _allyCombatantScenes;
+    [Export]
+    private PackedScene[] _enemyCombatantScenes;
 
-    private readonly List<Marker2D> _combatantSpawnMarkers = [];
+    private Random _random = new();
+
+    private enum EnemyComposition
+    {
+        RoundRobin, RandomSet, Random,
+    }
 
     public override void _Ready()
     {
-        foreach (Node child in GetChildren())
-        {
-            if (child is Marker2D marker2D)
-            {
-                _combatantSpawnMarkers.Add(marker2D);
-            }
-        }
         InstantiateChildren();
     }
 
@@ -34,13 +40,8 @@ public partial class Level : Node2D
     {
         BattleManager battleManager = _battleManagerScene.Instantiate<BattleManager>();
         // Instantiate combatants and register them in battleManager
-        for (int i = 0; i < _combatantScenes.Length; i++)
-        {
-            Combatant combatant = _combatantScenes[i].Instantiate<Combatant>();
-            AddChild(combatant);
-            combatant.Position = _combatantSpawnMarkers[i].Position;
-            battleManager.Combatants.Add(combatant);
-        }
+        AddAllyCombatants(battleManager);
+        AddEnemyCombatants(battleManager);
         battleManager.TileMapLayer = _tileMapLayer;
         battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
@@ -50,16 +51,69 @@ public partial class Level : Node2D
         AddChild(battleManager);
     }
 
-    private void OnBattleManagerBattleEnded(object sender, bool isVictory)
+    private void AddAllyCombatants(BattleManager battleManager)
+    {
+        for (int i = 0; i < _allyCombatantSpawnMarkers.Length; i++)
+        {
+            if (_allyCombatantScenes.Length > 0)
+            {
+                int index = i % _allyCombatantScenes.Length;
+                Combatant combatant = _allyCombatantScenes[index].Instantiate<Combatant>();
+                AddChild(combatant);
+                combatant.Position = _allyCombatantSpawnMarkers[i].Position;
+                battleManager.Combatants.Add(combatant);
+            }
+        }
+    }
+
+    private void AddEnemyCombatants(BattleManager battleManager)
+    {
+        if (_enemyComposition == EnemyComposition.RoundRobin)
+        {
+            for (int i = 0; i < _enemyCombatantSpawnMarkers.Length; i++)
+            {
+                if (_enemyCombatantScenes.Length > 0)
+                {
+                    int index = i % _enemyCombatantScenes.Length;
+                    Combatant combatant = _enemyCombatantScenes[index].Instantiate<Combatant>();
+                    AddChild(combatant);
+                    combatant.Position = _enemyCombatantSpawnMarkers[i].Position;
+                    battleManager.Combatants.Add(combatant);
+                }
+            }
+        }
+        else if (_enemyComposition == EnemyComposition.RandomSet)
+        {
+
+        }
+        else if (_enemyComposition == EnemyComposition.Random)
+        {
+            for (int i = 0; i < _enemyCombatantSpawnMarkers.Length; i++)
+            {
+                if (_enemyCombatantScenes.Length > 0)
+                {
+                    int index = _random.Next(0, _enemyCombatantScenes.Length);
+                    Combatant combatant = _enemyCombatantScenes[index].Instantiate<Combatant>();
+                    AddChild(combatant);
+                    combatant.Position = _enemyCombatantSpawnMarkers[i].Position;
+                    battleManager.Combatants.Add(combatant);
+                }
+            }
+        }
+    }
+
+    private async void OnBattleManagerBattleEnded(object sender, bool isVictory)
     {
         if (isVictory)
         {
             // TODO goto next level
+            await ToSignal(GetTree().CreateTimer(1.5f), Timer.SignalName.Timeout);
             GetTree().ReloadCurrentScene();
         }
         else
         {
             // TODO restart game
+            await ToSignal(GetTree().CreateTimer(1.5f), Timer.SignalName.Timeout);
             GetTree().ReloadCurrentScene();
         }
     }
