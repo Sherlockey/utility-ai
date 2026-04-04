@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public partial class Level : Node2D
 {
+    public int Difficulty = 1;
+
     [Export]
     private EnemyComposition _enemyComposition = EnemyComposition.RoundRobin;
     [Export]
@@ -24,7 +26,10 @@ public partial class Level : Node2D
     [Export]
     private PackedScene[] _enemyCombatantScenes;
 
-    private Random _random = new();
+    private const float EnemyScalePercent = 0.2f;
+    private const string LevelOneScenePath = "res://scenes/level_one.tscn";
+
+    private readonly Random _random = new();
 
     private enum EnemyComposition
     {
@@ -76,6 +81,8 @@ public partial class Level : Node2D
                 {
                     int index = i % _enemyCombatantScenes.Length;
                     Combatant combatant = _enemyCombatantScenes[index].Instantiate<Combatant>();
+                    float scaling = (Difficulty - 1) * EnemyScalePercent;
+                    combatant.Stats.ApplyScaling(scaling); // Ordering matters here w/ AddChild
                     AddChild(combatant);
                     combatant.Position = _enemyCombatantSpawnMarkers[i].Position;
                     battleManager.Combatants.Add(combatant);
@@ -84,7 +91,7 @@ public partial class Level : Node2D
         }
         else if (_enemyComposition == EnemyComposition.RandomSet)
         {
-
+            // TODO
         }
         else if (_enemyComposition == EnemyComposition.Random)
         {
@@ -94,6 +101,8 @@ public partial class Level : Node2D
                 {
                     int index = _random.Next(0, _enemyCombatantScenes.Length);
                     Combatant combatant = _enemyCombatantScenes[index].Instantiate<Combatant>();
+                    float scaling = (Difficulty - 1) * EnemyScalePercent;
+                    combatant.Stats.ApplyScaling(scaling); // Ordering matters here  w/ AddChild
                     AddChild(combatant);
                     combatant.Position = _enemyCombatantSpawnMarkers[i].Position;
                     battleManager.Combatants.Add(combatant);
@@ -108,13 +117,21 @@ public partial class Level : Node2D
         {
             // TODO goto next level
             await ToSignal(GetTree().CreateTimer(1.5f), Timer.SignalName.Timeout);
-            GetTree().ReloadCurrentScene();
+            // TEMP
+            PackedScene nextLevelScene = GD.Load<PackedScene>(LevelOneScenePath);
+            Level nextLevel = nextLevelScene.Instantiate<Level>();
+            nextLevel.Difficulty = Difficulty + 1;
+            GetTree().Root.AddChild(nextLevel);
+            Free();
         }
         else
         {
             // TODO restart game
             await ToSignal(GetTree().CreateTimer(1.5f), Timer.SignalName.Timeout);
-            GetTree().ReloadCurrentScene();
+            PackedScene levelOneScene = GD.Load<PackedScene>(LevelOneScenePath);
+            Level levelOne = levelOneScene.Instantiate<Level>();
+            GetTree().Root.AddChild(levelOne);
+            Free();
         }
     }
 }

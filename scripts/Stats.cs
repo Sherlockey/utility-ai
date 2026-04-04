@@ -18,4 +18,13 @@ public partial class Stats : Node
     public int Evasion = 10;
     [Export]
     public int AbilitiesPerTurn = 1;
+
+    public void ApplyScaling(float percent)
+    {
+        Health = (int)(Health * (percent + 1));
+        Attack = (int)(Attack * (percent + 1));
+        Speed = (int)(Speed * (percent + 1));
+        Accuracy = (int)(Health * (percent + 1));
+        Evasion = (int)(Evasion * (percent + 1));
+    }
 }
