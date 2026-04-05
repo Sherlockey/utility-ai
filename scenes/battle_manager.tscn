@@ -60,10 +60,6 @@ metadata/_edit_lock_ = true
 [node name="UtilityDisplay" parent="HUD" unique_id=1614214764 instance=ExtResource("6_lhjl6")]
 
 [node name="LevelInfoPopup" parent="HUD" unique_id=1363666264 instance=ExtResource("7_h4tux")]
-offset_left = -38.0
-offset_top = 4.0
-offset_right = 38.0
-offset_bottom = 27.0
 
 [node name="StartPopup" parent="HUD" unique_id=1572340957 instance=ExtResource("8_wmbtu")]
 

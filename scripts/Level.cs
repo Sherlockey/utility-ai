@@ -67,7 +67,15 @@ public partial class Level : Node2D
         battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
-        battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (Difficulty + 1);
+        if (Difficulty + 1 > 1)
+        {
+            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (Difficulty + 1)
+                + "\nEnemies grow stronger...";
+        }
+        else
+        {
+            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (Difficulty + 1);
+        }
         battleManager.BattleEnded += OnBattleManagerBattleEnded;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
