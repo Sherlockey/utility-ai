@@ -13,6 +13,9 @@ public partial class BattleManager : Node2D
     [Export]
     public bool DebugManualControl = false;
 
+    [Export]
+    public LevelInfoPopup LevelInfoPopup { get; private set; }
+
     public List<Combatant> Combatants = []; // Initialized by Level
     public TileMapLayer TileMapLayer; // Initialized by Level
     public DebugTileMapLayer DebugTileMapLayer; // Initialized by Level
@@ -33,6 +36,10 @@ public partial class BattleManager : Node2D
     private StatusDisplay _targetedStatusDisplay;
     [Export]
     private UtilityDisplay _utilityDisplay;
+    [Export]
+    private TimeDisplay _timeDisplay;
+    [Export]
+    private StartPopup _startPopup;
 
     private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
@@ -50,6 +57,8 @@ public partial class BattleManager : Node2D
 
     public override void _Ready()
     {
+        _timeDisplay.XButtonPressed += _startPopup.OnTimeDisplayXButtonPressed;
+        _startPopup.TimeDisplay =
         DebugTileMapLayer.Initialize(TileMapLayer);
         InitializeInfluenceMap();
 

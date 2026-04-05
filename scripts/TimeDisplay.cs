@@ -4,6 +4,8 @@ using System;
 
 public partial class TimeDisplay : PanelContainer
 {
+    public event EventHandler XButtonPressed;
+
     [Export]
     private Button _pauseButton;
     [Export]
@@ -61,15 +63,18 @@ public partial class TimeDisplay : PanelContainer
     private void On1XButtonPressed()
     {
         Engine.TimeScale = 1.0;
+        XButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void On2XButtonPressed()
     {
         Engine.TimeScale = 2.0;
+        XButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void On3XButtonPressed()
     {
         Engine.TimeScale = 3.0;
+        XButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 }

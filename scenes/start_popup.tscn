@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://b4qxouqiasl5y"]
+
+[ext_resource type="Script" uid="uid://dos0x5ylypkd5" path="res://scripts/StartPopup.cs" id="1_qw0gm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h4tux"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.827451, 0.7058824, 0.2509804, 1)
+
+[node name="StartPopup" type="PanelContainer" unique_id=1572340957]
+offset_left = 34.0
+offset_top = 24.0
+offset_right = 138.0
+offset_bottom = 53.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_h4tux")
+script = ExtResource("1_qw0gm")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1799091675]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=857261974]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Press 1 or click time button to start"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

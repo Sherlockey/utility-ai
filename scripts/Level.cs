@@ -3,11 +3,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 public partial class Level : Node2D
 {
-    public int Difficulty = 1;
+    public int Difficulty = 0;
 
     [Export]
     private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
@@ -66,6 +65,7 @@ public partial class Level : Node2D
         battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
+        battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (Difficulty + 1);
         battleManager.BattleEnded += OnBattleManagerBattleEnded;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
@@ -106,7 +106,7 @@ public partial class Level : Node2D
             Combatant combatant = scenesSet[combatantIndex].Instantiate<Combatant>();
 
             // Handle scaling combatant based upon Level Difficulty
-            float scaling = (Difficulty - 1) * EnemyScalePercent;
+            float scaling = Difficulty * EnemyScalePercent;
             combatant.Stats.ApplyScaling(scaling); // Ordering matters here  w/ AddChild
 
             AddChild(combatant);
