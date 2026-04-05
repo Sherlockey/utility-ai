@@ -6,7 +6,7 @@ using System.Linq;
 
 public partial class BattleManager : Node2D
 {
-    public event EventHandler<bool> BattleEnded;
+    public event EventHandler<BattleEndInfo> BattleEnded;
 
     public const int TurnThreshold = 100;
 
@@ -41,6 +41,8 @@ public partial class BattleManager : Node2D
     [Export]
     private StartPopup _startPopup;
 
+    private readonly Dictionary<string, Dictionary<Type, MovementUtility>> _movementDict = [];
+    private readonly Dictionary<string, Dictionary<Type, AbilityUtility>> _abilityDict = [];
     private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
@@ -58,7 +60,8 @@ public partial class BattleManager : Node2D
     public override void _Ready()
     {
         _timeDisplay.XButtonPressed += _startPopup.OnTimeDisplayXButtonPressed;
-        _startPopup.TimeDisplay =
+        _startPopup.TimeDisplay = _timeDisplay;
+
         DebugTileMapLayer.Initialize(TileMapLayer);
         InitializeInfluenceMap();
 
@@ -81,9 +84,14 @@ public partial class BattleManager : Node2D
                 _utilityDisplay.Combatants.Add(combatant);
             }
         }
+
+        _utilityDisplay.MovementUpdated += OnUtilityDisplayMovementUpdated;
+        _utilityDisplay.AbilityUpdated += OnUtilityDisplayAbilityUpdated;
         _utilityDisplay.RefreshDisplay();
+
         string enemyString = enemyCount == 1 ? "enemy" : "enemies";
         MessageLog.Get().Write(enemyCount + " " + enemyString + " encountered!", true, false);
+
         AdvanceTurnOrder();
         UpdateForNewCombatantTurn();
     }
@@ -186,16 +194,14 @@ public partial class BattleManager : Node2D
         _isBattleOver = true;
         if (isVictory)
         {
-            // TODO UI elements here
             MessageLog.Get().Write("Victory!", true, false);
-            BattleEnded?.Invoke(this, isVictory);
         }
         else
         {
-            // TODO UI elements here
             MessageLog.Get().Write("Defeat!", true, false);
-            BattleEnded?.Invoke(this, isVictory);
         }
+        BattleEndInfo battleEndInfo = new(isVictory, _movementDict, _abilityDict);
+        BattleEnded?.Invoke(this, battleEndInfo);
     }
 
     // Returns null if there is no Combatant at mouse position
@@ -356,5 +362,23 @@ public partial class BattleManager : Node2D
         CheckBattleOver();
         _turnOrderDisplay.Update(Combatants);
         _utilityDisplay.Combatants.Remove(combatant);
+    }
+
+    private void OnUtilityDisplayMovementUpdated(object sender, (string, Type, MovementUtility) tuple)
+    {
+        if (!_movementDict.ContainsKey(tuple.Item1))
+        {
+            _movementDict[tuple.Item1] = [];
+        }
+        _movementDict[tuple.Item1][tuple.Item2] = tuple.Item3;
+    }
+
+    private void OnUtilityDisplayAbilityUpdated(object sender, (string, Type, AbilityUtility) tuple)
+    {
+        if (!_abilityDict.ContainsKey(tuple.Item1))
+        {
+            _abilityDict[tuple.Item1] = [];
+        }
+        _abilityDict[tuple.Item1][tuple.Item2] = tuple.Item3;
     }
 }

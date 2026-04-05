@@ -7,6 +7,8 @@ using System.Diagnostics;
 public partial class Level : Node2D
 {
     public int Difficulty = 0;
+    public Dictionary<string, Dictionary<Type, MovementUtility>> MovementDict = [];
+    public Dictionary<string, Dictionary<Type, AbilityUtility>> AbilityDict = [];
 
     [Export]
     private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
@@ -77,6 +79,7 @@ public partial class Level : Node2D
         {
             Combatant combatant = _allyCombatantScenes[i].Instantiate<Combatant>();
             AddChild(combatant);
+            UpdateUtility(combatant); // order matters here; must be after combatant in scene tree
             combatant.Position = _allyCombatantSpawnMarkers[i].Position;
             battleManager.Combatants.Add(combatant);
         }
@@ -128,14 +131,44 @@ public partial class Level : Node2D
         }
     }
 
-    private async void OnBattleManagerBattleEnded(object sender, bool isVictory)
+    private void UpdateUtility(Combatant combatant)
     {
-        if (isVictory)
+        // Movement
+        if (MovementDict.ContainsKey(combatant.DisplayName))
+        {
+            for (int i = 0; i < combatant.Brain.MovementUtilities.Count; i++)
+            {
+                MovementUtility movementUtility = combatant.Brain.MovementUtilities[i];
+                if (MovementDict[combatant.DisplayName].TryGetValue(movementUtility.GetType(),
+                    out MovementUtility savedUtility))
+                {
+                    combatant.Brain.MovementUtilities[i] = savedUtility;
+                }
+            }
+        }
+
+        // Ability
+        if (AbilityDict.ContainsKey(combatant.DisplayName))
+        {
+            for (int i = 0; i < combatant.Brain.AbilityUtilities.Count; i++)
+            {
+                AbilityUtility abilityUtility = combatant.Brain.AbilityUtilities[i];
+                if (AbilityDict[combatant.DisplayName].TryGetValue(abilityUtility.GetType(),
+                    out AbilityUtility savedUtility))
+                {
+                    combatant.Brain.AbilityUtilities[i] = savedUtility;
+                }
+            }
+        }
+    }
+
+    private async void OnBattleManagerBattleEnded(object sender, BattleEndInfo battleEndInfo)
+    {
+        if (battleEndInfo.IsVictory)
         {
             await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
             Debug.Assert(_nextLevelPaths.Length > 0);
             int index = 0;
-            string path = "";
             for (int i = 0; i < _nextLevelPaths.Length; i++)
             {
                 if (_nextLevelPaths[i] == GetTree().CurrentScene.SceneFilePath)
@@ -143,12 +176,14 @@ public partial class Level : Node2D
                     index = (i + 1) % _nextLevelPaths.Length;
                 }
             }
-            path = _nextLevelPaths[index];
+            string path = _nextLevelPaths[index];
             if (path != "")
             {
                 PackedScene nextLevelScene = GD.Load<PackedScene>(path);
                 Level nextLevel = nextLevelScene.Instantiate<Level>();
                 nextLevel.Difficulty = Difficulty + 1;
+                nextLevel.MovementDict = battleEndInfo.MovementDict;
+                nextLevel.AbilityDict = battleEndInfo.AbilityDict;
                 SceneTree sceneTree = GetTree();
                 sceneTree.Root.AddChild(nextLevel);
                 sceneTree.CurrentScene = nextLevel;
@@ -160,6 +195,8 @@ public partial class Level : Node2D
             await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
             PackedScene levelOneScene = GD.Load<PackedScene>(LevelOneScenePath);
             Level levelOne = levelOneScene.Instantiate<Level>();
+            levelOne.MovementDict = battleEndInfo.MovementDict;
+            levelOne.AbilityDict = battleEndInfo.AbilityDict;
             SceneTree sceneTree = GetTree();
             sceneTree.Root.AddChild(levelOne);
             sceneTree.CurrentScene = levelOne;

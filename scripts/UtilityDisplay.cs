@@ -1,9 +1,13 @@
 using Godot;
 
+using System;
 using System.Collections.Generic;
 
 public partial class UtilityDisplay : PanelContainer
 {
+    public event EventHandler<(string, Type, MovementUtility)> MovementUpdated;
+    public event EventHandler<(string, Type, AbilityUtility)> AbilityUpdated;
+
     public List<Combatant> Combatants = []; // updated by BattleManager
 
     [Export]
@@ -152,6 +156,7 @@ public partial class UtilityDisplay : PanelContainer
                         rangeFromOpposition.Range = 1;
                     }
                     _rangeValue.Text = rangeFromOpposition.Range.ToString();
+                    MovementUpdated?.Invoke(this, (_combatant.DisplayName, movementUtility.GetType(), movementUtility));
                     break;
                 }
             }
@@ -168,6 +173,7 @@ public partial class UtilityDisplay : PanelContainer
                 {
                     rangeFromOpposition.Range++;
                     _rangeValue.Text = rangeFromOpposition.Range.ToString();
+                    MovementUpdated?.Invoke(this, (_combatant.DisplayName, movementUtility.GetType(), movementUtility));
                     break;
                 }
             }
@@ -183,6 +189,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (movementUtility is MoveToFriendlyTerritory moveToFriendlyTerritory)
                 {
                     moveToFriendlyTerritory.Weight = (float)_friendlyTerritorySlider.Value;
+                    MovementUpdated?.Invoke(this, (_combatant.DisplayName, movementUtility.GetType(), movementUtility));
                     break;
                 }
             }
@@ -198,6 +205,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (movementUtility is MoveToOppositionTerritory moveToOppositionTerritory)
                 {
                     moveToOppositionTerritory.Weight = (float)_oppositionTerritorySlider.Value;
+                    MovementUpdated?.Invoke(this, (_combatant.DisplayName, movementUtility.GetType(), movementUtility));
                     break;
                 }
             }
@@ -213,6 +221,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (movementUtility is MoveToContestedTerritory moveToContestedTerritory)
                 {
                     moveToContestedTerritory.Weight = (float)_contestedTerritorySlider.Value;
+                    MovementUpdated?.Invoke(this, (_combatant.DisplayName, movementUtility.GetType(), movementUtility));
                     break;
                 }
             }
@@ -228,6 +237,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
                     rangeFromOpposition.Weight = (float)_maintainRangeSlider.Value;
+                    MovementUpdated?.Invoke(this, (_combatant.DisplayName, movementUtility.GetType(), movementUtility));
                     break;
                 }
             }
@@ -243,6 +253,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (abilityUtility is GreatestDamage greatestDamage)
                 {
                     greatestDamage.Weight = (float)_greatestDamageSlider.Value;
+                    AbilityUpdated?.Invoke(this, (_combatant.DisplayName, abilityUtility.GetType(), abilityUtility));
                     break;
                 }
             }
@@ -258,6 +269,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (abilityUtility is EliminateOpposition eliminateOpposition)
                 {
                     eliminateOpposition.Weight = (float)_eliminateOppositionSlider.Value;
+                    AbilityUpdated?.Invoke(this, (_combatant.DisplayName, abilityUtility.GetType(), abilityUtility));
                     break;
                 }
             }
@@ -273,6 +285,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (abilityUtility is TargetFrailest targetFrailest)
                 {
                     targetFrailest.Weight = (float)_targetFrailestSlider.Value;
+                    AbilityUpdated?.Invoke(this, (_combatant.DisplayName, abilityUtility.GetType(), abilityUtility));
                     break;
                 }
             }
@@ -288,6 +301,7 @@ public partial class UtilityDisplay : PanelContainer
                 if (abilityUtility is TargetDeadliest targetDeadliest)
                 {
                     targetDeadliest.Weight = (float)_targetDeadliestSlider.Value;
+                    AbilityUpdated?.Invoke(this, (_combatant.DisplayName, abilityUtility.GetType(), abilityUtility));
                     break;
                 }
             }
