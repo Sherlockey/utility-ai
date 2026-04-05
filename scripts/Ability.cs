@@ -1,6 +1,7 @@
 using Godot;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public abstract partial class Ability : Node, IAbility
 {
@@ -62,5 +63,51 @@ public abstract partial class Ability : Node, IAbility
     public virtual int GetAreaOfEffect()
     {
         return _areaOfEffect;
+    }
+
+    protected virtual async Task AnimateExecute(Combatant user, List<Combatant> targets)
+    {
+        if (targets.Count == 0)
+        {
+            return;
+        }
+
+        // Determine direction to animate towards
+        Vector2I userCoords = BattleManager.Get().TileMapLayer.LocalToMap(user.Position);
+        int x = 0;
+        int y = 0;
+        foreach (Combatant target in targets)
+        {
+            Vector2I targetCoords = BattleManager.Get().TileMapLayer.LocalToMap(target.Position);
+            x += targetCoords.X - userCoords.X;
+            y += targetCoords.Y - userCoords.Y;
+        }
+        x = Mathf.Clamp(x, -1, 1);
+        y = Mathf.Clamp(y, -1, 1);
+
+        if (x == 0 && y == 0)
+        {
+            Vector2I targetCoords = BattleManager.Get().TileMapLayer.LocalToMap(targets[0].Position);
+            x = targetCoords.X - userCoords.X;
+            y = targetCoords.Y - userCoords.Y;
+            x = Mathf.Clamp(x, -1, 1);
+            y = Mathf.Clamp(y, -1, 1);
+            Tween useTween = GetTree().CreateTween();
+            useTween.TweenProperty(user.Sprite2D, "offset", new Vector2(2.0f * x, 2.0f * y), 0.05);
+            await ToSignal(useTween, Tween.SignalName.Finished);
+        }
+        else
+        {
+            Tween useTween = GetTree().CreateTween();
+            useTween.TweenProperty(user.Sprite2D, "offset", new Vector2(2.0f * x, 2.0f * y), 0.05);
+            await ToSignal(useTween, Tween.SignalName.Finished);
+        }
+    }
+
+    protected virtual async Task AnimateReset(Combatant user)
+    {
+        Tween resetTween = GetTree().CreateTween();
+        resetTween.TweenProperty(user.Sprite2D, "offset", Vector2.Zero, 0.1);
+        await ToSignal(resetTween, Tween.SignalName.Finished);
     }
 }

@@ -7,13 +7,15 @@ public partial class Backstab : Ability
     [Export]
     private int _range = 1;
 
-    public override void Execute(Combatant user, List<Combatant> targets)
+    public override async void Execute(Combatant user, List<Combatant> targets)
     {
-        MessageLog.Get().Write(user.DisplayName + " used Backstab");
+        MessageLog.Get().Write(user.DisplayName + " uses Backstab");
+        await AnimateExecute(user, targets);
         foreach (Combatant target in targets)
         {
             target.Status.ResolveAttack(user, this);
         }
+        await AnimateReset(user);
     }
 
     public override bool IsInRange(Vector2I startTileCoords, Vector2I endTileCoords)
