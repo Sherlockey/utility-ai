@@ -2,7 +2,7 @@
 
 [ext_resource type="LabelSettings" uid="uid://dwgjamwg3c3r2" path="res://resources/message_log_label_settings.tres" id="1_f155f"]
 
-[node name="MessageLogEntry" type="Label" unique_id=826179947]
+[node name="LogEntry" type="Label" unique_id=826179947]
 custom_minimum_size = Vector2(1, 0)
 theme_override_font_sizes/font_size = 6
 text = ":: Knight dealt 111 damage to Coyena"

@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://bg03pt4noq0bk"]
+
+[ext_resource type="Script" uid="uid://7py0680kcqtd" path="res://scripts/DecisionLog.cs" id="1_iw652"]
+[ext_resource type="PackedScene" uid="uid://dlaigeh8c2jmh" path="res://scenes/log_entry.tscn" id="2_5u6nb"]
+[ext_resource type="LabelSettings" uid="uid://dwgjamwg3c3r2" path="res://resources/message_log_label_settings.tres" id="3_48hme"]
+[ext_resource type="Theme" uid="uid://dkcr404nlgkw1" path="res://resources/default_theme.tres" id="4_6icac"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iw652"]
+bg_color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="DecisionLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox", "_scrollContainer")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.5
+offset_top = -57.0
+offset_right = 104.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_iw652")
+script = ExtResource("1_iw652")
+_messagesVBox = NodePath("VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox")
+_scrollContainer = NodePath("VBoxContainer/ScrollContainer")
+_logEntryScene = ExtResource("2_5u6nb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1000347149]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HeaderColorRect" type="ColorRect" parent="VBoxContainer" unique_id=90545215]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+color = Color(0.32941177, 0.08235294, 0.27058825, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HeaderColorRect" unique_id=181549595]
+layout_mode = 0
+offset_right = 101.0
+offset_bottom = 10.0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Title" type="Label" parent="VBoxContainer/HeaderColorRect/MarginContainer" unique_id=1599654828]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Decision Log"
+label_settings = ExtResource("3_48hme")
+
+[node name="Line" type="ColorRect" parent="VBoxContainer" unique_id=58380789]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1634871107]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme = ExtResource("4_6icac")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ScrollContainer" unique_id=1101655945]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 1
+
+[node name="MessagesVBox" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/MarginContainer" unique_id=1358326613]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="LogEntry" parent="VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=826179947 instance=ExtResource("2_5u6nb")]
+layout_mode = 2
+text = "--Fighter--"
+
+[node name="LogEntry2" parent="VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=358052444 instance=ExtResource("2_5u6nb")]
+layout_mode = 2
+text = "-Fighter-"
+
+[node name="LogEntry3" parent="VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=786867155 instance=ExtResource("2_5u6nb")]
+layout_mode = 2
+text = "-Fighter-"
+
+[node name="LogEntry4" parent="VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox" unique_id=2065981045 instance=ExtResource("2_5u6nb")]
+layout_mode = 2
+text = "- With target(s): 12345678, 12345678, 12345678, 12345678."

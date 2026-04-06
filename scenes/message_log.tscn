@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://5f0b60lrw5b3"]
 
 [ext_resource type="LabelSettings" uid="uid://dwgjamwg3c3r2" path="res://resources/message_log_label_settings.tres" id="1_p1cxw"]
-[ext_resource type="Script" uid="uid://cy11rmjpdy4t7" path="res://scripts/MessageLog.cs" id="1_vb6bw"]
+[ext_resource type="Script" uid="uid://cwr1kxel8866j" path="res://scripts/MessageLog.cs" id="1_vb6bw"]
 [ext_resource type="Theme" uid="uid://dkcr404nlgkw1" path="res://resources/default_theme.tres" id="2_vb6bw"]
-[ext_resource type="PackedScene" uid="uid://dlaigeh8c2jmh" path="res://scenes/message_log_entry.tscn" id="4_cwqgj"]
+[ext_resource type="PackedScene" uid="uid://dlaigeh8c2jmh" path="res://scenes/log_entry.tscn" id="4_cwqgj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8w533"]
 
-[node name="MessageLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox", "_scrollContainer", "_timer")]
+[node name="MessageLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox", "_scrollContainer")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -18,8 +18,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_8w533")
 script = ExtResource("1_vb6bw")
 _messagesVBox = NodePath("MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer/MarginContainer/MessagesVBox")
 _scrollContainer = NodePath("MarginContainer/MarginContainer/BackgroundColorRect/VBoxContainer/ScrollContainer")
-_timer = NodePath("")
-_messageLogEntryScene = ExtResource("4_cwqgj")
+_logEntryScene = ExtResource("4_cwqgj")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1051581845]
 layout_mode = 2

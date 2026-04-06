@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://btyibevo6oji3" path="res://scenes/level_info_popup.tscn" id="7_h4tux"]
 [ext_resource type="PackedScene" uid="uid://b4qxouqiasl5y" path="res://scenes/start_popup.tscn" id="8_wmbtu"]
 [ext_resource type="PackedScene" uid="uid://o31nsemxvr6g" path="res://scenes/coords_display.tscn" id="9_mc2mu"]
+[ext_resource type="PackedScene" uid="uid://bg03pt4noq0bk" path="res://scenes/decision_log.tscn" id="10_aqm64"]
 
 [node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("AbilitySFXPlayer", "LevelInfoPopup", "_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay", "_utilityDisplay", "_timeDisplay", "_startPopup")]
 script = ExtResource("1_3jpuh")
@@ -66,6 +67,11 @@ metadata/_edit_lock_ = true
 [node name="StartPopup" parent="HUD" unique_id=1572340957 instance=ExtResource("8_wmbtu")]
 
 [node name="CoordsDisplay" parent="HUD" unique_id=1839045996 instance=ExtResource("9_mc2mu")]
+
+[node name="DecisionLog" parent="HUD" unique_id=1071658618 instance=ExtResource("10_aqm64")]
+visible = false
+offset_top = -61.0
+offset_bottom = -4.0
 
 [node name="AbilitySFXPlayer" type="AudioStreamPlayer" parent="." unique_id=688578947]
 max_polyphony = 2
