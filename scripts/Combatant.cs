@@ -116,9 +116,6 @@ public partial class Combatant : Node2D
 
     public void InitializeTurn()
     {
-        Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-        GD.Print("name: " + Name + " my coords: " + myCoords);
-
         MessageLog.Get().Write("\n:: " + DisplayName + "'s turn start", false);
 
         // Set state

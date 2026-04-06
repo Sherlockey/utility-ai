@@ -297,6 +297,7 @@ public partial class BattleManager : Node2D
         Combatant c = Combatants.First();
         _activeCombatant = c;
         Camera.Position = c.Position;
+        Camera.Target = c;
         _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
             c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
             c.Stats.Movement.ToString());
