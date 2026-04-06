@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dficfwsp1ohtj"]
+
+[ext_resource type="Script" uid="uid://di4ou7dbi4fvf" path="res://scripts/Cast.cs" id="1_vm6cb"]
+[ext_resource type="AudioStream" uid="uid://bklgg2bh2wq2o" path="res://third-party/sfx/crossbow-arrow1.mp3" id="2_ibr6v"]
+[ext_resource type="AudioStream" uid="uid://cxrhtifkf6myn" path="res://third-party/sfx/crossbow-arrow2.mp3" id="3_1q322"]
+
+[node name="Cast" type="Node" unique_id=641446840]
+script = ExtResource("1_vm6cb")
+_displayName = "Cast"
+_areaOfEffect = 2
+_damagePercentNumerator = 67
+_audioStreams = Array[AudioStream]([ExtResource("2_ibr6v"), ExtResource("3_1q322")])

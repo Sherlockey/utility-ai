@@ -10,8 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://b4qxouqiasl5y" path="res://scenes/start_popup.tscn" id="8_wmbtu"]
 [ext_resource type="PackedScene" uid="uid://o31nsemxvr6g" path="res://scenes/coords_display.tscn" id="9_mc2mu"]
 
-[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("LevelInfoPopup", "_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay", "_utilityDisplay", "_timeDisplay", "_startPopup")]
+[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("AbilitySFXPlayer", "LevelInfoPopup", "_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay", "_utilityDisplay", "_timeDisplay", "_startPopup")]
 script = ExtResource("1_3jpuh")
+AbilitySFXPlayer = NodePath("AbilitySFXPlayer")
 LevelInfoPopup = NodePath("HUD/LevelInfoPopup")
 _turnOrderDisplay = NodePath("HUD/TurnOrderDisplay")
 _activeStatusDisplay = NodePath("HUD/ActiveStatusDisplay")
@@ -65,5 +66,9 @@ metadata/_edit_lock_ = true
 [node name="StartPopup" parent="HUD" unique_id=1572340957 instance=ExtResource("8_wmbtu")]
 
 [node name="CoordsDisplay" parent="HUD" unique_id=1839045996 instance=ExtResource("9_mc2mu")]
+
+[node name="AbilitySFXPlayer" type="AudioStreamPlayer" parent="." unique_id=688578947]
+max_polyphony = 2
+bus = &"SFX"
 
 [editable path="HUD/TurnOrderDisplay"]

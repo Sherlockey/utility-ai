@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dqgtu2c44wigh" path="res://assets/scavbat.png" id="1_qh7of"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_x1fjo"]
-[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_bhfd8"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_febxk"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_82ri0"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_febxk"]
@@ -15,6 +14,7 @@
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_smhfw"]
 [ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_53s4e"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_7vgv3"]
+[ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_53s4e"]
 
 [node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("1_x1fjo")
@@ -74,9 +74,7 @@ Weight = 1.0
 
 [node name="Abilities" type="Node" parent="." unique_id=712162907]
 
-[node name="Attack" type="Node" parent="Abilities" unique_id=123415716]
-script = ExtResource("3_bhfd8")
-_displayName = "Attack"
+[node name="Attack" parent="Abilities" unique_id=593800219 instance=ExtResource("12_53s4e")]
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_82ri0")

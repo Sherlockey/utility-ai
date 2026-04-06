@@ -3,9 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="2_qxgmm"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_01nm4"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_mvyd6"]
-[ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_swm0g"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_0dyjn"]
-[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_5fsgc"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_swm0g"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_4ok4f"]
 [ext_resource type="Script" uid="uid://dx1lhy7fvxh1v" path="res://scripts/MoveToOppositionTerritory.cs" id="7_4ok4f"]
@@ -16,6 +14,8 @@
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_06ia3"]
 [ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_06ia3"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_8ko4r"]
+[ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_06ia3"]
+[ext_resource type="PackedScene" uid="uid://cj40e4dpbqtps" path="res://scenes/slam.tscn" id="13_8a0iq"]
 
 [node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("3_01nm4")
@@ -73,15 +73,9 @@ script = ExtResource("11_8ko4r")
 
 [node name="Abilities" type="Node" parent="." unique_id=1014024241]
 
-[node name="Attack" type="Node" parent="Abilities" unique_id=10511072]
-script = ExtResource("5_5fsgc")
-_displayName = "Attack"
+[node name="Attack" parent="Abilities" unique_id=593800219 instance=ExtResource("12_06ia3")]
 
-[node name="Slam" type="Node" parent="Abilities" unique_id=1213089474]
-script = ExtResource("3_swm0g")
-_displayName = "Slam"
-_areaOfEffect = 2
-_damagePercentNumerator = 67
+[node name="Slam" parent="Abilities" unique_id=1340811528 instance=ExtResource("13_8a0iq")]
 
 [node name="Stats" type="Node" parent="." unique_id=1034357615]
 script = ExtResource("4_0dyjn")

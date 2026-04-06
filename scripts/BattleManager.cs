@@ -13,7 +13,8 @@ public partial class BattleManager : Node2D
 
     [Export]
     public TeamControl MyTeamControl = TeamControl.None;
-
+    [Export]
+    public AudioStreamPlayer AbilitySFXPlayer { get; private set; }
     [Export]
     public LevelInfoPopup LevelInfoPopup { get; private set; }
 

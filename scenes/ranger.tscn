@@ -3,8 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dcmnv8gh6nhl8" path="res://assets/ranger.png" id="2_uxtlj"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="3_1sbo7"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_8k012"]
-[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_8rvsd"]
-[ext_resource type="Script" uid="uid://dl7ds1b3f8u67" path="res://scripts/Shoot.cs" id="3_n1kao"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_qmbqj"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_8rvsd"]
 [ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_hitb0"]
@@ -16,6 +14,8 @@
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_k5x5t"]
 [ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_hm2h7"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_n14b0"]
+[ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_hm2h7"]
+[ext_resource type="PackedScene" uid="uid://nhgqb10tsdkw" path="res://scenes/shoot.tscn" id="13_hm2h7"]
 
 [node name="Ranger" type="Node2D" unique_id=323418471 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("3_8k012")
@@ -76,14 +76,10 @@ script = ExtResource("11_n14b0")
 
 [node name="Abilities" type="Node" parent="." unique_id=1935953768]
 
-[node name="Attack" type="Node" parent="Abilities" unique_id=2028589579]
-script = ExtResource("3_8rvsd")
-_displayName = "Attack"
+[node name="Attack" parent="Abilities" unique_id=593800219 instance=ExtResource("12_hm2h7")]
 _damagePercentNumerator = 50
 
-[node name="Shoot" type="Node" parent="Abilities" unique_id=57361179]
-script = ExtResource("3_n1kao")
-_displayName = "Shoot"
+[node name="Shoot" parent="Abilities" unique_id=98257036 instance=ExtResource("13_hm2h7")]
 
 [node name="Stats" type="Node" parent="." unique_id=566016318]
 script = ExtResource("3_1sbo7")

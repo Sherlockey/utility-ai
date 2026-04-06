@@ -4,8 +4,6 @@
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_38ety"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_ql5yn"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="3_tlqsq"]
-[ext_resource type="Script" uid="uid://xr73l7sufil2" path="res://scripts/Backstab.cs" id="4_1bj3w"]
-[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="5_eelhu"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="6_1bj3w"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_sfxrq"]
 [ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_siwl3"]
@@ -16,6 +14,8 @@
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_6d7ge"]
 [ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_amrqo"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_sxd4w"]
+[ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_amrqo"]
+[ext_resource type="PackedScene" uid="uid://d0mdolblqr3tq" path="res://scenes/backstab.tscn" id="13_amrqo"]
 
 [node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("3_38ety")
@@ -76,14 +76,9 @@ Weight = 1.0
 
 [node name="Abilities" type="Node" parent="." unique_id=520496865]
 
-[node name="Attack" type="Node" parent="Abilities" unique_id=1057367636]
-script = ExtResource("5_eelhu")
-_displayName = "Attack"
+[node name="Attack" parent="Abilities" unique_id=593800219 instance=ExtResource("12_amrqo")]
 
-[node name="Backstab" type="Node" parent="Abilities" unique_id=1420777587]
-script = ExtResource("4_1bj3w")
-_displayName = "Backstab"
-_damagePercentNumerator = 150
+[node name="Backstab" parent="Abilities" unique_id=1496070857 instance=ExtResource("13_amrqo")]
 
 [node name="Stats" type="Node" parent="." unique_id=212706154]
 script = ExtResource("3_tlqsq")

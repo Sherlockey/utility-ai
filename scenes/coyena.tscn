@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_4rdcq"]
 [ext_resource type="Texture2D" uid="uid://c1hn5uf1sayrs" path="res://assets/coyena.png" id="2_4rdcq"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_hqykf"]
-[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="3_tvq8u"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_vbcjk"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_hqykf"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_eri5s"]
@@ -15,6 +14,7 @@
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_iapo4"]
 [ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_04rle"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_i2ifj"]
+[ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_04rle"]
 
 [node name="Coyena" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("1_4rdcq")
@@ -74,9 +74,7 @@ Weight = 0.0
 
 [node name="Abilities" type="Node" parent="." unique_id=441879734]
 
-[node name="Attack" type="Node" parent="Abilities" unique_id=1222719526]
-script = ExtResource("3_tvq8u")
-_displayName = "Attack"
+[node name="Attack" parent="Abilities" unique_id=593800219 instance=ExtResource("12_04rle")]
 
 [node name="Stats" type="Node" parent="." unique_id=1593060130]
 script = ExtResource("4_vbcjk")

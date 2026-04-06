@@ -14,6 +14,7 @@ public partial class Shoot : Ability
     {
         MessageLog.Get().Write(user.DisplayName + " uses Shoot");
         await AnimateExecute(user, targets);
+        PlaySFX();
         foreach (Combatant target in targets)
         {
             target.Status.ResolveAttack(user, this);

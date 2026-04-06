@@ -17,10 +17,15 @@ public partial class Status : Node
     public int CurrentEvasion;
     public int AbilitiesRemaining = 0; // TODO @Incomplete
 
+    private string _evadeAudioStreamPath = "res://third-party/sfx/punch-air.mp3";
+    private AudioStream _evadeAudioStream = null;
+
     private readonly Random _random = new();
 
     public override void _Ready()
     {
+        _evadeAudioStream = GD.Load<AudioStream>(_evadeAudioStreamPath);
+
         CurrentHealth = Stats.Health;
         CurrentAccuracy = Stats.Accuracy;
         CurrentEvasion = Stats.Evasion;
@@ -43,6 +48,13 @@ public partial class Status : Node
         {
             if (Owner is Combatant defender)
             {
+                if (_evadeAudioStream != null)
+                {
+                    BattleManager battleManager = BattleManager.Get();
+                    battleManager.AbilitySFXPlayer.Stream = _evadeAudioStream;
+                    battleManager.AbilitySFXPlayer.Play();
+                }
+
                 MessageLog.Get().Write(defender.DisplayName + " evaded");
             }
         }

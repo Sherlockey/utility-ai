@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://clk4bumlb2a47"]
+
+[ext_resource type="Script" uid="uid://conklts86h1h0" path="res://scripts/Attack.cs" id="1_nursx"]
+[ext_resource type="AudioStream" uid="uid://dkxpanf33ac4s" path="res://third-party/sfx/hit1.mp3" id="2_m0rgg"]
+[ext_resource type="AudioStream" uid="uid://o4n8k7i65x2p" path="res://third-party/sfx/hit2.mp3" id="3_2shtu"]
+[ext_resource type="AudioStream" uid="uid://dgl0lyq2sqqcp" path="res://third-party/sfx/impact1.mp3" id="4_40vx7"]
+[ext_resource type="AudioStream" uid="uid://tany7ijdkut3" path="res://third-party/sfx/impact2.mp3" id="5_skmhp"]
+[ext_resource type="AudioStream" uid="uid://cahlglxb0x2c8" path="res://third-party/sfx/impact3.mp3" id="6_j1mqd"]
+
+[node name="Attack" type="Node" unique_id=593800219]
+script = ExtResource("1_nursx")
+_displayName = "Attack"
+_audioStreams = Array[AudioStream]([ExtResource("2_m0rgg"), ExtResource("3_2shtu"), ExtResource("4_40vx7"), ExtResource("5_skmhp"), ExtResource("6_j1mqd")])

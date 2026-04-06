@@ -11,6 +11,7 @@ public partial class Slam : Ability
     {
         MessageLog.Get().Write(user.DisplayName + " uses Slam");
         await AnimateExecute(user, targets);
+        PlaySFX();
         foreach (Combatant target in targets)
         {
             target.Status.ResolveAttack(user, this);

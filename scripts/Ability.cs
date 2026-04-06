@@ -1,5 +1,7 @@
 using Godot;
 
+using System;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +15,10 @@ public abstract partial class Ability : Node, IAbility
     protected int _hitPercentNumerator = 100;
     [Export]
     protected int _damagePercentNumerator = 100;
+    [Export]
+    protected AudioStream[] _audioStreams;
+
+    protected Random _random = new();
 
     public abstract void Execute(Combatant user, List<Combatant> targets);
 
@@ -63,6 +69,18 @@ public abstract partial class Ability : Node, IAbility
     public virtual int GetAreaOfEffect()
     {
         return _areaOfEffect;
+    }
+
+    protected virtual void PlaySFX()
+    {
+        if (_audioStreams.Length == 0)
+        {
+            return;
+        }
+        int index = _random.Next(0, _audioStreams.Length);
+        BattleManager battleManager = BattleManager.Get();
+        battleManager.AbilitySFXPlayer.Stream = _audioStreams[index];
+        battleManager.AbilitySFXPlayer.Play();
     }
 
     protected virtual async Task AnimateExecute(Combatant user, List<Combatant> targets)

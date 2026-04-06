@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cj40e4dpbqtps"]
+
+[ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="1_a23qu"]
+[ext_resource type="AudioStream" uid="uid://bqbxcebs71c0e" path="res://third-party/sfx/punch1.mp3" id="3_6rhmc"]
+
+[node name="Slam" type="Node" unique_id=1340811528]
+script = ExtResource("1_a23qu")
+_displayName = "Slam"
+_areaOfEffect = 2
+_damagePercentNumerator = 67
+_audioStreams = Array[AudioStream]([ExtResource("3_6rhmc")])

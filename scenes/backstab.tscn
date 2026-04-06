@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://d0mdolblqr3tq"]
+
+[ext_resource type="Script" uid="uid://xr73l7sufil2" path="res://scripts/Backstab.cs" id="1_jqdbm"]
+[ext_resource type="AudioStream" uid="uid://dnw7bh05m7eve" path="res://third-party/sfx/slash.mp3" id="2_yj1hh"]
+
+[node name="Backstab" type="Node" unique_id=1496070857]
+script = ExtResource("1_jqdbm")
+_displayName = "Backstab"
+_damagePercentNumerator = 150
+_audioStreams = Array[AudioStream]([ExtResource("2_yj1hh")])

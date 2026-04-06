@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://nhgqb10tsdkw"]
+
+[ext_resource type="Script" uid="uid://dl7ds1b3f8u67" path="res://scripts/Shoot.cs" id="1_wt6h8"]
+[ext_resource type="AudioStream" uid="uid://c8rsgk0n1cnyi" path="res://third-party/sfx/arrow1.mp3" id="2_2gog3"]
+[ext_resource type="AudioStream" uid="uid://cql4nfhq8ogwu" path="res://third-party/sfx/arrow2.mp3" id="3_xxayy"]
+[ext_resource type="AudioStream" uid="uid://c0p0fpsyib6vy" path="res://third-party/sfx/arrow3.mp3" id="4_xr30f"]
+
+[node name="Shoot" type="Node" unique_id=98257036]
+script = ExtResource("1_wt6h8")
+_displayName = "Shoot"
+_audioStreams = Array[AudioStream]([ExtResource("2_2gog3"), ExtResource("3_xxayy"), ExtResource("4_xr30f")])

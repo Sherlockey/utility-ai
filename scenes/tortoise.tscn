@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="1_dy6v3"]
 [ext_resource type="Texture2D" uid="uid://bfodky0s8mfmp" path="res://assets/tortoise.png" id="2_dy6v3"]
-[ext_resource type="Script" uid="uid://duclu0kj4jugj" path="res://scripts/Slam.cs" id="3_dy6v3"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_eq88a"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_uljw3"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_ysj3k"]
@@ -15,6 +14,7 @@
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_mkfyq"]
 [ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_6w4x0"]
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_the55"]
+[ext_resource type="PackedScene" uid="uid://cj40e4dpbqtps" path="res://scenes/slam.tscn" id="12_6w4x0"]
 
 [node name="Tortoise" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
 script = ExtResource("1_dy6v3")
@@ -74,11 +74,7 @@ Weight = 0.1
 
 [node name="Abilities" type="Node" parent="." unique_id=712162907]
 
-[node name="Slam" type="Node" parent="Abilities" unique_id=1833231167]
-script = ExtResource("3_dy6v3")
-_displayName = "Attack"
-_areaOfEffect = 2
-_damagePercentNumerator = 67
+[node name="Slam" parent="Abilities" unique_id=1340811528 instance=ExtResource("12_6w4x0")]
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_uljw3")
