@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://co4skyjg8hlov"]
+
+[ext_resource type="Script" uid="uid://cjf5h8nt1vhe8" path="res://scripts/LevelMusicPlayer.cs" id="1_yls51"]
+[ext_resource type="AudioStream" uid="uid://bqdaotm4vn3i7" path="res://third-party/music/A Chapel.wav" id="2_e18fj"]
+[ext_resource type="AudioStream" uid="uid://bs2lgscaejd6f" path="res://third-party/music/Apoplexy.wav" id="3_1b71y"]
+[ext_resource type="AudioStream" uid="uid://djtujc64svo7l" path="res://third-party/music/Desert Land.wav" id="4_20lyt"]
+[ext_resource type="AudioStream" uid="uid://ddxi2070qsgvm" path="res://third-party/music/Random Waltz.wav" id="5_6jte3"]
+
+[node name="LevelMusicPlayer" type="Node" unique_id=1602766656 node_paths=PackedStringArray("_audioStreamPlayer")]
+script = ExtResource("1_yls51")
+_audioStreamPlayer = NodePath("AudioStreamPlayer")
+_audioStreams = Array[AudioStream]([ExtResource("2_e18fj"), ExtResource("3_1b71y"), ExtResource("4_20lyt"), ExtResource("5_6jte3")])
+_index = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1995395626]
+bus = &"BGM"

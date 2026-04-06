@@ -11,9 +11,14 @@
 [ext_resource type="Script" uid="uid://3mah4xcj6u2j" path="res://scripts/DebugTileMapLayer.cs" id="12_nsq70"]
 [ext_resource type="Texture2D" uid="uid://dk4vgbaepjcpx" path="res://assets/background.png" id="13_rnkfl"]
 [ext_resource type="Texture2D" uid="uid://c8uh00uq3csjg" path="res://assets/cave-walls.png" id="14_ubi46"]
+[ext_resource type="PackedScene" uid="uid://co4skyjg8hlov" path="res://scenes/level_music_player.tscn" id="15_dv7nr"]
 [ext_resource type="Texture2D" uid="uid://cye3n1gn57244" path="res://assets/water.png" id="15_ihnt8"]
 [ext_resource type="Texture2D" uid="uid://dksadfqk4rkie" path="res://assets/background-walkable.png" id="16_dgysm"]
+[ext_resource type="AudioStream" uid="uid://bqdaotm4vn3i7" path="res://third-party/music/A Chapel.wav" id="16_unjau"]
 [ext_resource type="Script" uid="uid://irh32ljwfg3p" path="res://scripts/Camera.cs" id="17_3s2d1"]
+[ext_resource type="AudioStream" uid="uid://bs2lgscaejd6f" path="res://third-party/music/Apoplexy.wav" id="17_itxlw"]
+[ext_resource type="AudioStream" uid="uid://djtujc64svo7l" path="res://third-party/music/Desert Land.wav" id="18_rqtnr"]
+[ext_resource type="AudioStream" uid="uid://ddxi2070qsgvm" path="res://third-party/music/Random Waltz.wav" id="19_vfeen"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bakr3"]
 texture = ExtResource("11_qu0ip")
@@ -332,3 +337,7 @@ position = Vector2(328, 300)
 
 [node name="EnemyMarker2D4" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1348065202]
 position = Vector2(344, 300)
+
+[node name="LevelMusicPlayer" parent="." unique_id=1602766656 instance=ExtResource("15_dv7nr")]
+_audioStreams = Array[AudioStream]([ExtResource("19_vfeen"), ExtResource("18_rqtnr"), ExtResource("16_unjau"), ExtResource("17_itxlw")])
+_index = 0

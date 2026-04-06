@@ -15,6 +15,11 @@
 [ext_resource type="Texture2D" uid="uid://cye3n1gn57244" path="res://assets/water.png" id="13_butox"]
 [ext_resource type="Texture2D" uid="uid://dksadfqk4rkie" path="res://assets/background-walkable.png" id="14_tbtap"]
 [ext_resource type="Script" uid="uid://irh32ljwfg3p" path="res://scripts/Camera.cs" id="15_w48pw"]
+[ext_resource type="PackedScene" uid="uid://co4skyjg8hlov" path="res://scenes/level_music_player.tscn" id="16_wp2g7"]
+[ext_resource type="AudioStream" uid="uid://ddxi2070qsgvm" path="res://third-party/music/Random Waltz.wav" id="17_14qh7"]
+[ext_resource type="AudioStream" uid="uid://djtujc64svo7l" path="res://third-party/music/Desert Land.wav" id="18_n71cp"]
+[ext_resource type="AudioStream" uid="uid://bqdaotm4vn3i7" path="res://third-party/music/A Chapel.wav" id="19_ds1we"]
+[ext_resource type="AudioStream" uid="uid://bs2lgscaejd6f" path="res://third-party/music/Apoplexy.wav" id="20_apr4v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bakr3"]
 texture = ExtResource("9_ds1we")
@@ -355,3 +360,7 @@ position = Vector2(312, 156)
 
 [node name="EnemyMarker2D12" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1128356956]
 position = Vector2(344, 204)
+
+[node name="LevelMusicPlayer" parent="." unique_id=1602766656 instance=ExtResource("16_wp2g7")]
+_audioStreams = Array[AudioStream]([ExtResource("17_14qh7"), ExtResource("18_n71cp"), ExtResource("19_ds1we"), ExtResource("20_apr4v")])
+_index = 1

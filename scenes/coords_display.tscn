@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://o31nsemxvr6g"]
+
+[ext_resource type="Script" uid="uid://bcxtqjf1b65nn" path="res://scripts/CoordsDisplay.cs" id="1_lkl1a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc2mu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[node name="CoordsDisplay" type="PanelContainer" unique_id=1839045996 node_paths=PackedStringArray("_coordsLabel")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = 39.0
+offset_right = -4.0
+offset_bottom = 54.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_mc2mu")
+script = ExtResource("1_lkl1a")
+_coordsLabel = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=563202892]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=1353341483]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 8
+text = "X: 12 Y: 99"
+horizontal_alignment = 2
+vertical_alignment = 1
