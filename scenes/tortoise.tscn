@@ -52,7 +52,7 @@ Weight = 0.8
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=13783717]
 script = ExtResource("6_au625")
-Weight = 0.8
+Weight = 1.0
 
 [node name="AbilityUtilityParent" type="Node" parent="Brain" unique_id=735852819]
 
