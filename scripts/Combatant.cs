@@ -65,9 +65,30 @@ public partial class Combatant : Node2D
         {
             return;
         }
-        if (BattleManager.Get().DebugManualControl == false)
+        switch (BattleManager.Get().MyTeamControl)
         {
-            return;
+            case BattleManager.TeamControl.None:
+                return;
+            case BattleManager.TeamControl.Ally:
+                if (MyTeam == Team.Ally)
+                {
+                    break;
+                }
+                else
+                {
+                    return;
+                }
+            case BattleManager.TeamControl.Enemy:
+                if (MyTeam == Team.Enemy)
+                {
+                    break;
+                }
+                else
+                {
+                    return;
+                }
+            case BattleManager.TeamControl.All:
+                break;
         }
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
@@ -81,35 +102,19 @@ public partial class Combatant : Node2D
                 EndTurn();
             }
 
-            if (keyEvent.Keycode == Key.T)
+            if (keyEvent.Keycode == Key.Q)
             {
-                // Don't do anything if combatant doesn't have any AbilitiesRemaining
-                if (Status.AbilitiesRemaining <= 0)
-                {
-                    return;
-                }
-                // TODO this is temporary for testing
-                Vector2 mousePos = GetGlobalMousePosition();
-                Vector2I selectedCoords = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
-                Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
-                foreach (IAbility ability in Abilities)
-                {
-                    if (ability.IsInRange(myCoords, selectedCoords))
-                    {
-                        List<Combatant> targets = ability.CombatantsInAreaOfEffect(selectedCoords);
-                        targets = ability.ValidatedTargets(this, targets);
-                        if (targets.Count > 0)
-                        {
-                            ability.Execute(this, targets);
-                            Status.AbilitiesRemaining -= 1;
-                        }
-                    }
-                }
+                TryUseAbility(0);
+            }
+
+            if (keyEvent.Keycode == Key.E)
+            {
+                TryUseAbility(1);
             }
         }
     }
 
-    public async void InitializeTurn()
+    public void InitializeTurn()
     {
         MessageLog.Get().Write("\n:: " + DisplayName + "'s turn start", false);
 
@@ -129,10 +134,55 @@ public partial class Combatant : Node2D
             battleManager.TileMapLayer.SetCell(kvp.Key, 4, new(0, 0), 0);
         }
 
-        if (BattleManager.Get().DebugManualControl == true)
+        switch (BattleManager.Get().MyTeamControl)
         {
-            return;
+            case BattleManager.TeamControl.None:
+                break;
+            case BattleManager.TeamControl.Ally:
+                if (MyTeam == Team.Ally)
+                {
+                    return;
+                }
+                else
+                {
+                    break;
+                }
+            case BattleManager.TeamControl.Enemy:
+                if (MyTeam == Team.Enemy)
+                {
+                    return;
+                }
+                else
+                {
+                    break;
+                }
+            case BattleManager.TeamControl.All:
+                return;
         }
+
+        DoTurn();
+    }
+
+    public void EndTurn()
+    {
+        BattleManager battleManager = BattleManager.Get();
+        // Reset walkable background cells to regular background cells
+        foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
+        {
+            battleManager.TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
+        }
+        // Reset state and notify that combatant's turn has ended
+        if (CurrentTurnState == TurnState.Active)
+        {
+            Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
+            CurrentTurnState = TurnState.Waiting;
+            TurnEnded?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private async void DoTurn()
+    {
+        Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
 
         // Delay
         _turnStartTimer.Start();
@@ -176,20 +226,31 @@ public partial class Combatant : Node2D
         EndTurn();
     }
 
-    public void EndTurn()
+    private void TryUseAbility(int abilityIndex)
     {
-        BattleManager battleManager = BattleManager.Get();
-        // Reset walkable background cells to regular background cells
-        foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
+        // Don't do anything if combatant doesn't have any AbilitiesRemaining
+        if (Status.AbilitiesRemaining <= 0)
         {
-            battleManager.TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
+            return;
         }
-        // Reset state and notify that combatant's turn has ended
-        if (CurrentTurnState == TurnState.Active)
+        if (Abilities.Count < abilityIndex + 1)
         {
-            Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
-            CurrentTurnState = TurnState.Waiting;
-            TurnEnded?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        Vector2 mousePos = GetGlobalMousePosition();
+        Vector2I selectedCoords = BattleManager.Get().TileMapLayer.LocalToMap(mousePos);
+        Vector2I myCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
+        IAbility ability = Abilities[abilityIndex];
+        if (ability.IsInRange(myCoords, selectedCoords))
+        {
+            List<Combatant> targets = ability.CombatantsInAreaOfEffect(selectedCoords);
+            targets = ability.ValidatedTargets(this, targets);
+            if (targets.Count > 0)
+            {
+                ability.Execute(this, targets);
+                Status.AbilitiesRemaining -= 1;
+            }
         }
     }
 
@@ -262,5 +323,39 @@ public partial class Combatant : Node2D
             iterations++;
         }
         return iterations;
+    }
+
+    public void OnBattleManagerTeamControlChanged(object sender, BattleManager.TeamControl teamControl)
+    {
+        if (CurrentTurnState == TurnState.Waiting)
+        {
+            return;
+        }
+        switch (teamControl)
+        {
+            case BattleManager.TeamControl.None:
+                break;
+            case BattleManager.TeamControl.Ally:
+                if (MyTeam == Team.Ally)
+                {
+                    return;
+                }
+                else
+                {
+                    break;
+                }
+            case BattleManager.TeamControl.Enemy:
+                if (MyTeam == Team.Enemy)
+                {
+                    return;
+                }
+                else
+                {
+                    break;
+                }
+            case BattleManager.TeamControl.All:
+                return;
+        }
+        DoTurn();
     }
 }

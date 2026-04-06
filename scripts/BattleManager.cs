@@ -7,11 +7,12 @@ using System.Linq;
 public partial class BattleManager : Node2D
 {
     public event EventHandler<BattleEndInfo> BattleEnded;
+    public event EventHandler<TeamControl> TeamControlChanged;
 
     public const int TurnThreshold = 100;
 
     [Export]
-    public bool DebugManualControl = false;
+    public TeamControl MyTeamControl = TeamControl.None;
 
     [Export]
     public LevelInfoPopup LevelInfoPopup { get; private set; }
@@ -47,6 +48,11 @@ public partial class BattleManager : Node2D
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
 
+    public enum TeamControl
+    {
+        None, Ally, Enemy, All,
+    }
+
     public BattleManager()
     {
         s_battleManager = this;
@@ -75,6 +81,7 @@ public partial class BattleManager : Node2D
             combatant.Status.Died += OnStatusDied;
             combatant.BattleIndex = i;
             combatant.Movement.Moved += Camera.OnCombatantMoved;
+            TeamControlChanged += combatant.OnBattleManagerTeamControlChanged;
             if (combatant.MyTeam == Combatant.Team.Enemy)
             {
                 enemyCount++;
@@ -110,9 +117,41 @@ public partial class BattleManager : Node2D
             {
                 RefreshDebugDisplays();
             }
-            if (keyEvent.Keycode == Key.M)
+            if (keyEvent.Keycode == Key.Z)
             {
-                DebugManualControl = !DebugManualControl;
+                if (MyTeamControl != TeamControl.None)
+                {
+                    MyTeamControl = TeamControl.None;
+                    MessageLog.Get().Write("Team control changed to: " + MyTeamControl.ToString());
+                    TeamControlChanged?.Invoke(this, MyTeamControl);
+                }
+            }
+            if (keyEvent.Keycode == Key.X)
+            {
+                if (MyTeamControl != TeamControl.Ally)
+                {
+                    MyTeamControl = TeamControl.Ally;
+                    MessageLog.Get().Write("Team control changed to: " + MyTeamControl.ToString());
+                    TeamControlChanged?.Invoke(this, MyTeamControl);
+                }
+            }
+            if (keyEvent.Keycode == Key.C)
+            {
+                if (MyTeamControl != TeamControl.Enemy)
+                {
+                    MyTeamControl = TeamControl.Enemy;
+                    MessageLog.Get().Write("Team control changed to: " + MyTeamControl.ToString());
+                    TeamControlChanged?.Invoke(this, MyTeamControl);
+                }
+            }
+            if (keyEvent.Keycode == Key.V)
+            {
+                if (MyTeamControl != TeamControl.All)
+                {
+                    MyTeamControl = TeamControl.All;
+                    MessageLog.Get().Write("Team control changed to: " + MyTeamControl.ToString());
+                    TeamControlChanged?.Invoke(this, MyTeamControl);
+                }
             }
         }
     }

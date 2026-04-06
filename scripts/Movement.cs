@@ -21,9 +21,30 @@ public partial class Movement : Node
         {
             return;
         }
-        if (BattleManager.Get().DebugManualControl == false)
+        switch (BattleManager.Get().MyTeamControl)
         {
-            return;
+            case BattleManager.TeamControl.None:
+                return;
+            case BattleManager.TeamControl.Ally:
+                if (_combatant.MyTeam == Combatant.Team.Ally)
+                {
+                    break;
+                }
+                else
+                {
+                    return;
+                }
+            case BattleManager.TeamControl.Enemy:
+                if (_combatant.MyTeam == Combatant.Team.Enemy)
+                {
+                    break;
+                }
+                else
+                {
+                    return;
+                }
+            case BattleManager.TeamControl.All:
+                break;
         }
 
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
