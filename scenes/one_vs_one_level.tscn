@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bty2hr1mqb301" path="res://scripts/Level.cs" id="1_ciufd"]
 [ext_resource type="PackedScene" uid="uid://claadvfxus2xj" path="res://scenes/fighter.tscn" id="2_qb21p"]
+[ext_resource type="Script" uid="uid://bdi8er7wt0nim" path="res://scripts/SceneArray.cs" id="5_4wgo7"]
 [ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="6_7fycn"]
 [ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="10_afp1p"]
 [ext_resource type="Texture2D" uid="uid://de137iwa1lsho" path="res://assets/white-tile.png" id="11_i6rf1"]
@@ -11,6 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://cye3n1gn57244" path="res://assets/water.png" id="15_qfbyw"]
 [ext_resource type="Texture2D" uid="uid://dksadfqk4rkie" path="res://assets/background-walkable.png" id="16_b2l1v"]
 [ext_resource type="Script" uid="uid://irh32ljwfg3p" path="res://scripts/Camera.cs" id="17_2xm1n"]
+
+[sub_resource type="Resource" id="Resource_lqfbo"]
+script = ExtResource("5_4wgo7")
+Scenes = [ExtResource("6_7fycn")]
+metadata/_custom_type_script = "uid://bdi8er7wt0nim"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bakr3"]
 texture = ExtResource("11_i6rf1")
@@ -274,13 +280,16 @@ sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
 sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
-[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera")]
+[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers")]
 script = ExtResource("1_ciufd")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
 _camera = NodePath("Camera2D")
-_combatantScenes = Array[PackedScene]([ExtResource("2_qb21p"), ExtResource("6_7fycn")])
+_allyCombatantSpawnMarkers = [NodePath("Marker2D")]
+_enemyCombatantSpawnMarkers = [NodePath("Marker2D2")]
 _battleManagerScene = ExtResource("10_afp1p")
+_allyCombatantScenes = Array[PackedScene]([ExtResource("2_qb21p")])
+_enemyCombatantScenesSets = Array[Object]([SubResource("Resource_lqfbo")])
 
 [node name="DebugTileMapLayer" type="TileMapLayer" parent="." unique_id=311799121]
 visible = false
