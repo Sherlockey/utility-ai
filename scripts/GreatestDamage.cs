@@ -14,6 +14,7 @@ public partial class GreatestDamage : AbilityUtilityFunction
         {
             int evasion = target.Status.CurrentEvasion;
             int hitNumerator = ability.GetHitPercentNumerator() + user.Status.CurrentAccuracy;
+            hitNumerator -= evasion;
             hitNumerator = Mathf.Clamp(hitNumerator, 0, 100);
 
             if (target.MyTeam == user.MyTeam)

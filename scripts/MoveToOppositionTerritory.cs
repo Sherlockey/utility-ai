@@ -16,9 +16,21 @@ public partial class MoveToOppositionTerritory : MovementUtilityFunction
         int maxEnemyDifference = int.MinValue;
         foreach (Vector2I coords in influenceMap.Keys)
         {
-            int enemyInfluence = influenceMap[coords].Item1;
-            int allyInfluence = influenceMap[coords].Item2;
-            int difference = enemyInfluence - allyInfluence;
+            int oppositionInfluence = 0;
+            int friendlyInfluence = 0;
+            if (sourceTeam == Combatant.Team.Enemy)
+            {
+                oppositionInfluence = influenceMap[coords].Item2;
+                friendlyInfluence = influenceMap[coords].Item1;
+            }
+            else if (sourceTeam == Combatant.Team.Ally)
+            {
+                oppositionInfluence = influenceMap[coords].Item1;
+                friendlyInfluence = influenceMap[coords].Item2;
+            }
+
+            int difference = oppositionInfluence - friendlyInfluence;
+
             if (difference < minEnemyDifference)
             {
                 minEnemyDifference = difference;
@@ -28,17 +40,24 @@ public partial class MoveToOppositionTerritory : MovementUtilityFunction
                 maxEnemyDifference = difference;
             }
         }
-        int diff = influenceMap[evaluatedCoords].Item1 - influenceMap[evaluatedCoords].Item2;
-        if (minEnemyDifference < 0)
+
+        int oppositionInfl = 0;
+        int friendlyInfl = 0;
+        if (sourceTeam == Combatant.Team.Enemy)
         {
-            int amountToShift = Mathf.Abs(minEnemyDifference);
-            minEnemyDifference += amountToShift;
-            maxEnemyDifference += amountToShift;
-            diff += amountToShift;
-            if (maxEnemyDifference - minEnemyDifference != 0)
-            {
-                utility = (float)(diff - minEnemyDifference) / (maxEnemyDifference - minEnemyDifference);
-            }
+            oppositionInfl = influenceMap[evaluatedCoords].Item2;
+            friendlyInfl = influenceMap[evaluatedCoords].Item1;
+        }
+        else if (sourceTeam == Combatant.Team.Ally)
+        {
+            oppositionInfl = influenceMap[evaluatedCoords].Item1;
+            friendlyInfl = influenceMap[evaluatedCoords].Item2;
+        }
+
+        int diff = oppositionInfl - friendlyInfl;
+        if (maxEnemyDifference - minEnemyDifference != 0)
+        {
+            utility = (float)(diff - minEnemyDifference) / (maxEnemyDifference - minEnemyDifference);
         }
         utility *= Weight;
         Debug.Assert(utility >= 0.0f && utility <= 1.0f);

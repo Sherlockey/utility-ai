@@ -10,9 +10,12 @@ public partial class Brain : Node
     public List<MovementUtilityFunction> MovementUtilities { get; private set; } = [];
     public List<AbilityUtilityFunction> AbilityUtilities { get; private set; } = [];
 
+    // TODO this can be enforced with @tool that has a setter and notify_property_list_changed()
     // NOTE: The pair of utility weights must add up to 1.0
-    private static readonly float MovementUtilityWeight = 0.2f;
-    private static readonly float AbilityUtilityWeight = 1.0f - MovementUtilityWeight;
+    [Export(PropertyHint.Range, "0.0, 1.0")]
+    private float _movementUtilityWeight = 0.2f;
+    [Export(PropertyHint.Range, "0.0, 1.0")]
+    private float _abilityUtilityWeight = 0.8f;
 
     [Export]
     private Node _movementUtilityParent;
@@ -160,8 +163,8 @@ public partial class Brain : Node
         for (int i = 0; i < decisions.Count; i++)
         {
             Vector2I coords = decisions[i].MoveLocation;
-            float movementUtility = movementUtilityMap[coords] * MovementUtilityWeight;
-            float abilityUtility = decisions[i].AbilityUtility * AbilityUtilityWeight;
+            float movementUtility = movementUtilityMap[coords] * _movementUtilityWeight;
+            float abilityUtility = decisions[i].AbilityUtility * _abilityUtilityWeight;
             float totalUtility = movementUtility + abilityUtility;
             Debug.Assert(totalUtility >= 0.0f && totalUtility <= 1.0f);
 
@@ -205,8 +208,9 @@ public partial class Brain : Node
         DebugTileMapLayer debugTileMapLayer = BattleManager.Get().DebugTileMapLayer;
         foreach (Vector2I coords in scoreMap.Keys)
         {
-            byte green = (byte)Mathf.RoundToInt(scoreMap[coords] * 255.0f);
-            Color color = Color.Color8(0, green, 0);
+            int green = Mathf.RoundToInt(scoreMap[coords] * 255.0f);
+            Mathf.Max(green, byte.MaxValue);
+            Color color = Color.Color8(0, (byte)green, 0);
             debugTileMapLayer.SetCellModulate(coords, color);
         }
 
