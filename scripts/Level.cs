@@ -7,8 +7,8 @@ using System.Diagnostics;
 public partial class Level : Node2D
 {
     public int Difficulty = 0;
-    public Dictionary<string, Dictionary<Type, MovementUtility>> MovementDict = [];
-    public Dictionary<string, Dictionary<Type, AbilityUtility>> AbilityDict = [];
+    public Dictionary<string, Dictionary<Type, MovementUtilityFunction>> MovementDict = [];
+    public Dictionary<string, Dictionary<Type, AbilityUtilityFunction>> AbilityDict = [];
 
     [Export]
     private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
@@ -146,9 +146,9 @@ public partial class Level : Node2D
         {
             for (int i = 0; i < combatant.Brain.MovementUtilities.Count; i++)
             {
-                MovementUtility movementUtility = combatant.Brain.MovementUtilities[i];
+                MovementUtilityFunction movementUtility = combatant.Brain.MovementUtilities[i];
                 if (MovementDict[combatant.DisplayName].TryGetValue(movementUtility.GetType(),
-                    out MovementUtility savedUtility))
+                    out MovementUtilityFunction savedUtility))
                 {
                     combatant.Brain.MovementUtilities[i] = savedUtility;
                 }
@@ -160,9 +160,9 @@ public partial class Level : Node2D
         {
             for (int i = 0; i < combatant.Brain.AbilityUtilities.Count; i++)
             {
-                AbilityUtility abilityUtility = combatant.Brain.AbilityUtilities[i];
+                AbilityUtilityFunction abilityUtility = combatant.Brain.AbilityUtilities[i];
                 if (AbilityDict[combatant.DisplayName].TryGetValue(abilityUtility.GetType(),
-                    out AbilityUtility savedUtility))
+                    out AbilityUtilityFunction savedUtility))
                 {
                     combatant.Brain.AbilityUtilities[i] = savedUtility;
                 }

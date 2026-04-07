@@ -2,7 +2,7 @@ using Godot;
 
 using System.Collections.Generic;
 
-public partial class TargetDeadliest : AbilityUtility
+public partial class TargetDeadliest : AbilityUtilityFunction
 {
     public override int CalculateValue(IAbility ability, Combatant user, List<Combatant> targets)
     {

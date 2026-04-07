@@ -3,9 +3,9 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class MoveToEnemyTerritory : MovementUtility
+public partial class MoveToEnemyTerritory : MovementUtilityFunction
 {
-    public override float Evaluate(
+    public override float CalculateUtility(
         Vector2I evaluatedCoords,
         Dictionary<Vector2I, (int, int)> influenceMap,
         Combatant.Team sourceTeam)

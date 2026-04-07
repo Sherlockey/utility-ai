@@ -14,6 +14,7 @@ border_width_bottom = 1
 border_color = Color(0.9647059, 0.9372549, 0.8, 1)
 
 [node name="DecisionLog" type="PanelContainer" unique_id=861706622 node_paths=PackedStringArray("_messagesVBox", "_scrollContainer")]
+process_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

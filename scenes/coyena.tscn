@@ -44,11 +44,10 @@ Weight = 0.1
 
 [node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1793238613]
 script = ExtResource("7_eri5s")
-Weight = 0.7
+Weight = 0.35
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=60866711]
 script = ExtResource("8_7ojdo")
-Weight = 1.0
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=1071103457]
 script = ExtResource("6_eri5s")

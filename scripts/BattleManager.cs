@@ -43,8 +43,8 @@ public partial class BattleManager : Node2D
     [Export]
     private StartPopup _startPopup;
 
-    private readonly Dictionary<string, Dictionary<Type, MovementUtility>> _movementDict = [];
-    private readonly Dictionary<string, Dictionary<Type, AbilityUtility>> _abilityDict = [];
+    private readonly Dictionary<string, Dictionary<Type, MovementUtilityFunction>> _movementDict = [];
+    private readonly Dictionary<string, Dictionary<Type, AbilityUtilityFunction>> _abilityDict = [];
     private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
@@ -405,7 +405,7 @@ public partial class BattleManager : Node2D
         _utilityDisplay.Combatants.Remove(combatant);
     }
 
-    private void OnUtilityDisplayMovementUpdated(object sender, (string, Type, MovementUtility) tuple)
+    private void OnUtilityDisplayMovementUpdated(object sender, (string, Type, MovementUtilityFunction) tuple)
     {
         if (!_movementDict.ContainsKey(tuple.Item1))
         {
@@ -414,7 +414,7 @@ public partial class BattleManager : Node2D
         _movementDict[tuple.Item1][tuple.Item2] = tuple.Item3;
     }
 
-    private void OnUtilityDisplayAbilityUpdated(object sender, (string, Type, AbilityUtility) tuple)
+    private void OnUtilityDisplayAbilityUpdated(object sender, (string, Type, AbilityUtilityFunction) tuple)
     {
         if (!_abilityDict.ContainsKey(tuple.Item1))
         {

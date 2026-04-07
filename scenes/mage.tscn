@@ -42,11 +42,11 @@ _abilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1411542430]
 script = ExtResource("6_trnrn")
-Weight = 1.0
+Weight = 0.7
 
 [node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=381027973]
 script = ExtResource("7_kse8p")
-Weight = 0.0
+Weight = 0.1
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=2060634571]
 script = ExtResource("8_yunhw")
@@ -54,7 +54,7 @@ Weight = 0.0
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=2136273143]
 script = ExtResource("6_kse8p")
-Range = 5
+Range = 4
 Weight = 1.0
 
 [node name="AbilityUtilityParent" type="Node" parent="Brain" unique_id=458508898]

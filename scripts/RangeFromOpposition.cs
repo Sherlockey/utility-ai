@@ -3,14 +3,14 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class RangeFromOpposition : MovementUtility
+public partial class RangeFromOpposition : MovementUtilityFunction
 {
     [Export(PropertyHint.Range, "0, 2147483647")]
     public int Range = 1;
 
     private const int BoostAmount = -5;
 
-    public override float Evaluate(
+    public override float CalculateUtility(
         Vector2I evaluatedCoords,
         Dictionary<Vector2I, (int, int)> influenceMap,
         Combatant.Team sourceTeam)

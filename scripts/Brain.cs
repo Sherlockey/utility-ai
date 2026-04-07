@@ -7,8 +7,8 @@ using System.Diagnostics;
 
 public partial class Brain : Node
 {
-    public List<MovementUtility> MovementUtilities { get; private set; } = [];
-    public List<AbilityUtility> AbilityUtilities { get; private set; } = [];
+    public List<MovementUtilityFunction> MovementUtilities { get; private set; } = [];
+    public List<AbilityUtilityFunction> AbilityUtilities { get; private set; } = [];
 
     // NOTE: The pair of utility weights must add up to 1.0
     private static readonly float MovementUtilityWeight = 0.2f;
@@ -23,14 +23,14 @@ public partial class Brain : Node
     {
         foreach (Node node in _movementUtilityParent.GetChildren())
         {
-            if (node is MovementUtility movementUtility)
+            if (node is MovementUtilityFunction movementUtility)
             {
                 MovementUtilities.Add(movementUtility);
             }
         }
         foreach (Node node in _abilityUtilityParent.GetChildren())
         {
-            if (node is AbilityUtility abilityUtility)
+            if (node is AbilityUtilityFunction abilityUtility)
             {
                 AbilityUtilities.Add(abilityUtility);
             }
@@ -40,6 +40,8 @@ public partial class Brain : Node
     // Returns a list of decisions that have been sorted by highest utility
     public List<Decision> MakeDecisionList(Combatant combatant)
     {
+        List<Decision> decisions = [];
+
         // TODO this is repeated work in Combatant.InitializeTurn() and here
         //Gather walkable coords
         Vector2I sourceCoords = BattleManager.Get().TileMapLayer.LocalToMap(combatant.Position);
@@ -60,36 +62,8 @@ public partial class Brain : Node
         Dictionary<Vector2I, float> movementUtilityMap = MakeMovementUtilityMap(
             sourceCoords, reachableCoords, BattleManager.Get().InfluenceMap, combatant.MyTeam);
 
-        // Get utility for using each ability at each possible target coords within walkable coords
-        // V1
-        // List<AbilityDecision> abilityDecisionList = [];
-        // foreach (Vector2I reachedCoords in reachableCoords)
-        // {
-        //     foreach (IAbility ability in combatant.Abilities)
-        //     {
-        //         List<Vector2I> coordsInRange = [];
-        //         foreach (Vector2I coords in BattleManager.Get().TileMapLayer.GetUsedCells())
-        //         {
-        //             if (ability.IsInRange(reachedCoords, coords))
-        //             {
-        //                 coordsInRange.Add(coords);
-        //             }
-        //         }
-        //         foreach (Vector2I targetedCoords in coordsInRange)
-        //         {
-        //             // TODO make a better method which doesn't require culling after getting targets?
-        //             List<Combatant> targets = ability.CombatantsInAreaOfEffect(targetedCoords);
-        //             targets = ability.ValidatedTargets(combatant, targets);
-        //             float utility = EvaluateAbilityUtility(ability, combatant, targets);
-        //             AbilityDecision abilityDecision = new(reachedCoords, ability, targets, utility);
-        //             abilityDecisionList.Add(abilityDecision);
-        //         }
-        //     }
-        // }
-
-        // V2
-        Dictionary<AbilityUtility, (int, int)> functionValueMinMax = []; // Item1 = min, Item2 = max
-        List<DecisionValue> decisionValues = [];
+        // Item1 = min, Item2 = max
+        Dictionary<AbilityUtilityFunction, (int, int)> functionValueMinMax = [];
         foreach (Vector2I reachedCoords in reachableCoords)
         {
             foreach (IAbility ability in combatant.Abilities)
@@ -106,72 +80,98 @@ public partial class Brain : Node
                 {
                     List<Combatant> targets = ability.CombatantsInAreaOfEffect(targetedCoords);
                     targets = ability.ValidatedTargets(combatant, targets);
-                    foreach (AbilityUtility abilityUtility in AbilityUtilities)
+                    Decision decision = new(reachedCoords, ability, targets, [], 0.0f, 0.0f, 0.0f);
+                    decisions.Add(decision);
+                    foreach (AbilityUtilityFunction auf in AbilityUtilities)
                     {
-                        int value = abilityUtility.CalculateValue(ability, combatant, targets);
-                        DecisionValue entry =
-                            new(abilityUtility, reachedCoords, ability, targets, value);
-                        decisionValues.Add(entry);
+                        int value = auf.CalculateValue(ability, combatant, targets);
+                        decision.FunctionValueUtilityDict[auf] = (value, 0.0f);
 
-                        if (!functionValueMinMax.ContainsKey(abilityUtility))
+                        if (!functionValueMinMax.ContainsKey(auf))
                         {
-                            functionValueMinMax[abilityUtility] = (value, value);
+                            functionValueMinMax[auf] = (value, value);
                         }
-                        if (value < functionValueMinMax[abilityUtility].Item1)
+                        if (value < functionValueMinMax[auf].Item1)
                         {
-                            functionValueMinMax[abilityUtility] =
-                                (value, functionValueMinMax[abilityUtility].Item2);
+                            functionValueMinMax[auf] =
+                                (value, functionValueMinMax[auf].Item2);
                         }
-                        if (value > functionValueMinMax[abilityUtility].Item2)
+                        if (value > functionValueMinMax[auf].Item2)
                         {
-                            functionValueMinMax[abilityUtility] =
-                                (functionValueMinMax[abilityUtility].Item1, value);
+                            functionValueMinMax[auf] =
+                                (functionValueMinMax[auf].Item1, value);
                         }
                     }
                 }
             }
         }
 
-        // TODO this only looks at the highest utility score from any one utilityFunction,
-        // need to sum them all for each decision and divide according to totalWeight
-
-        // foreach AbilityUtility, score the utility of using that abiliity by comparing the
-        // min and max values for any entry versus the actual value of that entry
-        List<AbilityDecision> abilityDecisionList = [];
-        foreach (DecisionValue dv in decisionValues)
+        // Every decision needs to have its values evaluated and given a utility based upon every abilityUtility
+        foreach (Decision decision in decisions)
         {
-            int min = functionValueMinMax[dv.AbilityUtility].Item1;
-            int max = functionValueMinMax[dv.AbilityUtility].Item2;
-            float utility;
-            if (max <= 0)
+            foreach (AbilityUtilityFunction auf in decision.FunctionValueUtilityDict.Keys)
             {
-                utility = 0.0f;
+                int min = functionValueMinMax[auf].Item1;
+                int max = functionValueMinMax[auf].Item2;
+                int value = decision.FunctionValueUtilityDict[auf].Item1;
+                float utility;
+                if (max <= 0 || value <= 0)
+                {
+                    utility = 0.0f;
+                }
+                else
+                {
+                    utility = auf.CalculateUtility(min, max, value);
+                }
+                decision.FunctionValueUtilityDict[auf] = (value, utility);
             }
-            else
+        }
+
+        // Every decision needs to have its final abilityUtility evaluated by adding every score in functionValueUtilityDict and dividing by the totalWeight in the system
+        for (int i = 0; i < decisions.Count; i++)
+        {
+            float decisionTotalWeight = 0.0f;
+            float decisionAbilityUtility = 0.0f;
+            foreach (KeyValuePair<AbilityUtilityFunction, (int, float)> kvp in
+                decisions[i].FunctionValueUtilityDict)
             {
-                utility = dv.AbilityUtility.Evaluate(min, max, dv.Value);
+                decisionAbilityUtility += kvp.Value.Item2;
+                decisionTotalWeight += kvp.Key.Weight;
             }
-            AbilityDecision abilityDecision = new(dv.MoveLocation, dv.Ability, dv.Targets, utility);
-            abilityDecisionList.Add(abilityDecision);
+            if (decisionTotalWeight != 0.0f)
+            {
+                decisionAbilityUtility /= decisionTotalWeight;
+            }
+            Debug.Assert(decisionAbilityUtility >= 0.0f && decisionAbilityUtility <= 1.0f);
+            Decision temp = decisions[i];
+            temp.AbilityUtility = decisionAbilityUtility;
+            decisions[i] = temp;
+        }
+
+        // Every decision needs to have its movement utility injected based upon each MoveLocation
+        for (int i = 0; i < decisions.Count; i++)
+        {
+            Decision temp = decisions[i];
+            temp.MovementUtility = movementUtilityMap[temp.MoveLocation];
+            decisions[i] = temp;
         }
 
         // Sum utility for ability and movement into sorted decisionList
-        List<Decision> decisionUtilityList = [];
-        foreach (AbilityDecision abilityDecision in abilityDecisionList)
+        for (int i = 0; i < decisions.Count; i++)
         {
-            Vector2I coords = abilityDecision.MoveLocation;
+            Vector2I coords = decisions[i].MoveLocation;
             float movementUtility = movementUtilityMap[coords] * MovementUtilityWeight;
-            float abilityUtility = abilityDecision.Utility * AbilityUtilityWeight;
-            float decisionUtility = movementUtility + abilityUtility;
-            Debug.Assert(decisionUtility >= 0.0f && decisionUtility <= 1.0f);
-            Decision decision = new(
-                abilityDecision.MoveLocation, abilityDecision.Ability,
-                abilityDecision.Targets, movementUtility, abilityDecision.Utility, decisionUtility);
-            decisionUtilityList.Add(decision);
+            float abilityUtility = decisions[i].AbilityUtility * AbilityUtilityWeight;
+            float totalUtility = movementUtility + abilityUtility;
+            Debug.Assert(totalUtility >= 0.0f && totalUtility <= 1.0f);
+
+            Decision temp = decisions[i];
+            temp.TotalUtility = totalUtility;
+            decisions[i] = temp;
         }
 
-        decisionUtilityList.Sort((x, y) => y.TotalUtility.CompareTo(x.TotalUtility));
-        return decisionUtilityList;
+        decisions.Sort((x, y) => y.TotalUtility.CompareTo(x.TotalUtility));
+        return decisions;
     }
 
     private Dictionary<Vector2I, float> MakeMovementUtilityMap(
@@ -184,21 +184,21 @@ public partial class Brain : Node
         // Calculate utility for all reachableCoords
         foreach (Vector2I coords in reachableCoords)
         {
-            float totalScore = 0.0f;
+            float totalUtility = 0.0f;
             float totalWeight = 0.0f;
-            foreach (MovementUtility movementUtility in MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in MovementUtilities)
             {
-                float score = movementUtility.Evaluate(coords, influenceMap, sourceTeam);
-                totalScore += score;
+                float score = movementUtility.CalculateUtility(coords, influenceMap, sourceTeam);
+                totalUtility += score;
                 totalWeight += movementUtility.Weight;
             }
             // Assign
             if (totalWeight != 0.0f)
             {
-                totalScore /= totalWeight;
+                totalUtility /= totalWeight;
             }
-            Debug.Assert(totalScore >= 0.0f && totalScore <= 1.0f);
-            scoreMap[coords] = totalScore;
+            Debug.Assert(totalUtility >= 0.0f && totalUtility <= 1.0f);
+            scoreMap[coords] = totalUtility;
         }
 
         // DEBUG Draw map to debug
@@ -212,34 +212,4 @@ public partial class Brain : Node
 
         return scoreMap;
     }
-
-    private struct DecisionValue(AbilityUtility abilityUtility, Vector2I moveLocation, IAbility ability, List<Combatant> targets, int value)
-    {
-        public AbilityUtility AbilityUtility { get; private set; } = abilityUtility;
-        public Vector2I MoveLocation { get; private set; } = moveLocation;
-        public IAbility Ability { get; private set; } = ability;
-        public List<Combatant> Targets { get; private set; } = targets;
-        public int Value { get; private set; } = value;
-    }
-
-    // private float EvaluateAbilityUtility(IAbility ability, Combatant user, List<Combatant> targets)
-    // {
-    //     float utility = 0.0f;
-    //     float totalWeight = 0.0f;
-    //     foreach (AbilityUtility abilityUtility in AbilityUtilities)
-    //     {
-    //         utility += abilityUtility.Evaluate(ability, user, targets);
-    //         totalWeight += abilityUtility.Weight;
-    //         // TODO double check the logic here
-    //         float damageScalar = ability.GetDamagePercentNumerator() / 100.0f;
-    //         utility *= damageScalar;
-    //         totalWeight *= damageScalar;
-    //     }
-    //     if (totalWeight != 0.0f)
-    //     {
-    //         utility /= totalWeight;
-    //     }
-    //     Debug.Assert(utility >= 0.0f && utility <= 1.0f);
-    //     return utility;
-    // }
 }

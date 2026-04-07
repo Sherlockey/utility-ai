@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public partial class UtilityDisplay : PanelContainer
 {
-    public event EventHandler<(string, Type, MovementUtility)> MovementUpdated;
-    public event EventHandler<(string, Type, AbilityUtility)> AbilityUpdated;
+    public event EventHandler<(string, Type, MovementUtilityFunction)> MovementUpdated;
+    public event EventHandler<(string, Type, AbilityUtilityFunction)> AbilityUpdated;
 
     public List<Combatant> Combatants = []; // updated by BattleManager
 
@@ -80,7 +80,7 @@ public partial class UtilityDisplay : PanelContainer
         _portrait.Texture = _combatant.Sprite2D.Texture;
         if (_combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is MoveToFriendlyTerritory moveToFriendlyTerritory)
                 {
@@ -100,7 +100,7 @@ public partial class UtilityDisplay : PanelContainer
                     _rangeValue.Text = rangeFromOpposition.Range.ToString();
                 }
             }
-            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            foreach (AbilityUtilityFunction abilityUtility in _combatant.Brain.AbilityUtilities)
             {
                 if (abilityUtility is GreatestDamage greatestDamage)
                 {
@@ -146,7 +146,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (_combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
@@ -167,7 +167,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (_combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
@@ -184,7 +184,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is MoveToFriendlyTerritory moveToFriendlyTerritory)
                 {
@@ -200,7 +200,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is MoveToOppositionTerritory moveToOppositionTerritory)
                 {
@@ -216,7 +216,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is MoveToContestedTerritory moveToContestedTerritory)
                 {
@@ -232,7 +232,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (MovementUtility movementUtility in _combatant.Brain.MovementUtilities)
+            foreach (MovementUtilityFunction movementUtility in _combatant.Brain.MovementUtilities)
             {
                 if (movementUtility is RangeFromOpposition rangeFromOpposition)
                 {
@@ -248,7 +248,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            foreach (AbilityUtilityFunction abilityUtility in _combatant.Brain.AbilityUtilities)
             {
                 if (abilityUtility is GreatestDamage greatestDamage)
                 {
@@ -264,7 +264,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            foreach (AbilityUtilityFunction abilityUtility in _combatant.Brain.AbilityUtilities)
             {
                 if (abilityUtility is EliminateOpposition eliminateOpposition)
                 {
@@ -280,7 +280,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            foreach (AbilityUtilityFunction abilityUtility in _combatant.Brain.AbilityUtilities)
             {
                 if (abilityUtility is TargetFrailest targetFrailest)
                 {
@@ -296,7 +296,7 @@ public partial class UtilityDisplay : PanelContainer
     {
         if (valueChanged && _combatant != null)
         {
-            foreach (AbilityUtility abilityUtility in _combatant.Brain.AbilityUtilities)
+            foreach (AbilityUtilityFunction abilityUtility in _combatant.Brain.AbilityUtilities)
             {
                 if (abilityUtility is TargetDeadliest targetDeadliest)
                 {

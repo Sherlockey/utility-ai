@@ -3,14 +3,14 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public abstract partial class AbilityUtility : Node
+public abstract partial class AbilityUtilityFunction : Node
 {
     [Export(PropertyHint.Range, "0.0, 1.0")]
     public float Weight = 0.5f;
 
     public abstract int CalculateValue(IAbility ability, Combatant user, List<Combatant> targets);
 
-    public virtual float Evaluate(int min, int max, int value)
+    public virtual float CalculateUtility(int min, int max, int value)
     {
         float utility = 0.0f;
 

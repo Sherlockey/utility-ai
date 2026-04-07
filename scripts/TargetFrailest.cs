@@ -3,7 +3,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class TargetFrailest : AbilityUtility
+public partial class TargetFrailest : AbilityUtilityFunction
 {
     public override int CalculateValue(IAbility ability, Combatant user, List<Combatant> targets)
     {

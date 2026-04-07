@@ -2,7 +2,7 @@ using Godot;
 
 using System.Collections.Generic;
 
-public partial class GreatestDamage : AbilityUtility
+public partial class GreatestDamage : AbilityUtilityFunction
 {
     // Calculate the simulated damage this usage of ability will do.
     public override int CalculateValue(IAbility ability, Combatant user, List<Combatant> targets)

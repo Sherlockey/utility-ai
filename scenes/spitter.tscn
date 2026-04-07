@@ -40,11 +40,11 @@ _abilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=350548197]
 script = ExtResource("6_aps7v")
-Weight = 1.0
+Weight = 0.7
 
 [node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1770101257]
 script = ExtResource("7_gxmne")
-Weight = 0.1
+Weight = 0.2
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=166361637]
 script = ExtResource("8_0rp0l")

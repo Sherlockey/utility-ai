@@ -3,7 +3,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class EliminateOpposition : AbilityUtility
+public partial class EliminateOpposition : AbilityUtilityFunction
 {
     private const int EliminationBoostAmount = 50; // euivalent of half of a target's current health
 
