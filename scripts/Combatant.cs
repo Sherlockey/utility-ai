@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public partial class Combatant : Node2D
 {
+    public event EventHandler TurnEnded;
+
     public enum Team
     {
         Enemy,
@@ -15,8 +17,6 @@ public partial class Combatant : Node2D
         Active,
         Waiting,
     }
-
-    public event EventHandler TurnEnded;
 
     [Export]
     public string DisplayName = "";
@@ -163,23 +163,6 @@ public partial class Combatant : Node2D
         DoTurn();
     }
 
-    public void EndTurn()
-    {
-        BattleManager battleManager = BattleManager.Get();
-        // Reset walkable background cells to regular background cells
-        foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
-        {
-            battleManager.TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
-        }
-        // Reset state and notify that combatant's turn has ended
-        if (CurrentTurnState == TurnState.Active)
-        {
-            Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
-            CurrentTurnState = TurnState.Waiting;
-            TurnEnded?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
     private async void DoTurn()
     {
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
@@ -203,7 +186,11 @@ public partial class Combatant : Node2D
                 // TODO cut this down or handle it somewhere else. Maybe an event?
                 DecisionLog.Get().Write("--" + DisplayName + "--", false, false);
                 Decision decision = decisionList[i];
-                DecisionLog.Get().Write("Decision " + (i + 1) + " with utility: " + decision.TotalUtility.ToString("F2") + "\n- Move from: " + currentCoords + " to: " + decision.MoveLocation + ".\n- Use ability: " + decision.Ability.GetDisplayName() + ". \n- With target(s): " + TargetListToString(decision.Targets));
+                DecisionLog.Get().Write("Decision " + (i + 1) + " with utility: " +
+                    decision.TotalUtility.ToString("F2") + "\n- Move from: " +
+                    currentCoords + " to: " + decision.MoveLocation + ".\n- Use ability: " +
+                    decision.Ability.GetDisplayName() + ". \n- With target(s): " +
+                    TargetListToString(decision.Targets));
             }
         }
 
@@ -217,6 +204,7 @@ public partial class Combatant : Node2D
         // Use ability
         if (resultDecision.Targets.Count > 0 && resultDecision.AbilityUtility > 0.0f)
         {
+            // TODO could make execute a Task and await it to delay longer
             resultDecision.Ability.Execute(this, resultDecision.Targets);
         }
 
@@ -225,6 +213,23 @@ public partial class Combatant : Node2D
         await ToSignal(_turnEndTimer, Timer.SignalName.Timeout);
 
         EndTurn();
+    }
+
+    public void EndTurn()
+    {
+        BattleManager battleManager = BattleManager.Get();
+        // Reset walkable background cells to regular background cells
+        foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
+        {
+            battleManager.TileMapLayer.SetCell(kvp.Key, 0, new(0, 0), 0);
+        }
+        // Reset state and notify that combatant's turn has ended
+        if (CurrentTurnState == TurnState.Active)
+        {
+            Status.AccumulatedSpeed %= BattleManager.TurnThreshold;
+            CurrentTurnState = TurnState.Waiting;
+            TurnEnded?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void TryUseAbility(int abilityIndex)
