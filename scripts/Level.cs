@@ -7,8 +7,8 @@ using System.Diagnostics;
 public partial class Level : Node2D
 {
     public int Difficulty = 0;
-    public Dictionary<string, Dictionary<Type, MovementUtilityFunction>> MovementDict = [];
-    public Dictionary<string, Dictionary<Type, AbilityUtilityFunction>> AbilityDict = [];
+    // public Dictionary<string, Dictionary<Type, MovementUtilityFunction>> MovementDict = [];
+    // public Dictionary<string, Dictionary<Type, AbilityUtilityFunction>> AbilityDict = [];
 
     [Export]
     private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
@@ -27,7 +27,7 @@ public partial class Level : Node2D
     [Export]
     private PackedScene _battleManagerScene;
     [Export]
-    private PackedScene[] _allyCombatantScenes;
+    private Node _partyParent;
     [Export]
     private SceneArray[] _enemyCombatantScenesSets;
     [Export]
@@ -83,11 +83,12 @@ public partial class Level : Node2D
 
     private void AddAllyCombatants(BattleManager battleManager)
     {
-        for (int i = 0; i < _allyCombatantScenes.Length; i++)
+        List<Combatant> party = Game.Instance.Party;
+        for (int i = 0; i < party.Count; i++)
         {
-            Combatant combatant = _allyCombatantScenes[i].Instantiate<Combatant>();
-            AddChild(combatant);
-            UpdateUtility(combatant); // order matters here; must be after combatant in scene tree
+            Combatant combatant = party[i];
+            _partyParent.AddChild(combatant);
+            // UpdateUtility(combatant); // order matters here; must be after combatant in scene tree
             combatant.Position = _allyCombatantSpawnMarkers[i].Position;
             battleManager.Combatants.Add(combatant);
         }
@@ -139,42 +140,46 @@ public partial class Level : Node2D
         }
     }
 
-    private void UpdateUtility(Combatant combatant)
-    {
-        // Movement
-        if (MovementDict.ContainsKey(combatant.DisplayName))
-        {
-            for (int i = 0; i < combatant.Brain.MovementUtilities.Count; i++)
-            {
-                MovementUtilityFunction movementUtility = combatant.Brain.MovementUtilities[i];
-                if (MovementDict[combatant.DisplayName].TryGetValue(movementUtility.GetType(),
-                    out MovementUtilityFunction savedUtility))
-                {
-                    combatant.Brain.MovementUtilities[i] = savedUtility;
-                }
-            }
-        }
+    // private void UpdateUtility(Combatant combatant)
+    // {
+    //     // Movement
+    //     if (MovementDict.ContainsKey(combatant.DisplayName))
+    //     {
+    //         for (int i = 0; i < combatant.Brain.MovementUtilities.Count; i++)
+    //         {
+    //             MovementUtilityFunction movementUtility = combatant.Brain.MovementUtilities[i];
+    //             if (MovementDict[combatant.DisplayName].TryGetValue(movementUtility.GetType(),
+    //                 out MovementUtilityFunction savedUtility))
+    //             {
+    //                 combatant.Brain.MovementUtilities[i] = savedUtility;
+    //             }
+    //         }
+    //     }
 
-        // Ability
-        if (AbilityDict.ContainsKey(combatant.DisplayName))
-        {
-            for (int i = 0; i < combatant.Brain.AbilityUtilities.Count; i++)
-            {
-                AbilityUtilityFunction abilityUtility = combatant.Brain.AbilityUtilities[i];
-                if (AbilityDict[combatant.DisplayName].TryGetValue(abilityUtility.GetType(),
-                    out AbilityUtilityFunction savedUtility))
-                {
-                    combatant.Brain.AbilityUtilities[i] = savedUtility;
-                }
-            }
-        }
-    }
+    //     // Ability
+    //     if (AbilityDict.ContainsKey(combatant.DisplayName))
+    //     {
+    //         for (int i = 0; i < combatant.Brain.AbilityUtilities.Count; i++)
+    //         {
+    //             AbilityUtilityFunction abilityUtility = combatant.Brain.AbilityUtilities[i];
+    //             if (AbilityDict[combatant.DisplayName].TryGetValue(abilityUtility.GetType(),
+    //                 out AbilityUtilityFunction savedUtility))
+    //             {
+    //                 combatant.Brain.AbilityUtilities[i] = savedUtility;
+    //             }
+    //         }
+    //     }
+    // }
 
     private async void OnBattleManagerBattleEnded(object sender, BattleEndInfo battleEndInfo)
     {
         if (battleEndInfo.IsVictory)
         {
             await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
+            foreach (Node child in _partyParent.GetChildren())
+            {
+                _partyParent.RemoveChild(child);
+            }
             Debug.Assert(_nextLevelPaths.Length > 0);
             int index = 0;
             for (int i = 0; i < _nextLevelPaths.Length; i++)
@@ -190,8 +195,8 @@ public partial class Level : Node2D
                 PackedScene nextLevelScene = GD.Load<PackedScene>(path);
                 Level nextLevel = nextLevelScene.Instantiate<Level>();
                 nextLevel.Difficulty = Difficulty + 1;
-                nextLevel.MovementDict = battleEndInfo.MovementDict;
-                nextLevel.AbilityDict = battleEndInfo.AbilityDict;
+                // nextLevel.MovementDict = battleEndInfo.MovementDict;
+                // nextLevel.AbilityDict = battleEndInfo.AbilityDict;
                 SceneTree sceneTree = GetTree();
                 sceneTree.Root.AddChild(nextLevel);
                 sceneTree.CurrentScene = nextLevel;
@@ -201,10 +206,14 @@ public partial class Level : Node2D
         else
         {
             await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
+            foreach (Node child in _partyParent.GetChildren())
+            {
+                _partyParent.RemoveChild(child);
+            }
             PackedScene levelOneScene = GD.Load<PackedScene>(LevelOneScenePath);
             Level levelOne = levelOneScene.Instantiate<Level>();
-            levelOne.MovementDict = battleEndInfo.MovementDict;
-            levelOne.AbilityDict = battleEndInfo.AbilityDict;
+            // levelOne.MovementDict = battleEndInfo.MovementDict;
+            // levelOne.AbilityDict = battleEndInfo.AbilityDict;
             SceneTree sceneTree = GetTree();
             sceneTree.Root.AddChild(levelOne);
             sceneTree.CurrentScene = levelOne;

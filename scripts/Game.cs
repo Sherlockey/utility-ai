@@ -13,7 +13,7 @@ public partial class Game : Node
     private PackedScene _overworldScene;
 
     private Node _currentScene;
-    private readonly List<Combatant> _party = [];
+    public List<Combatant> Party { get; private set; } = [];
 
     public Game()
     {
@@ -33,7 +33,7 @@ public partial class Game : Node
         foreach (PackedScene combatantScene in _defaultParty.Scenes)
         {
             Combatant combatant = combatantScene.Instantiate<Combatant>();
-            _party.Add(combatant);
+            Party.Add(combatant);
         }
 
         Overworld overworld = _overworldScene.Instantiate<Overworld>();

@@ -26,9 +26,17 @@ public partial class Status : Node
     {
         _evadeAudioStream = GD.Load<AudioStream>(_evadeAudioStreamPath);
 
+        ResetForNewBattle();
+    }
+
+    public void ResetForNewBattle()
+    {
+        CurrentMovement = Stats.Movement;
+        AccumulatedSpeed = 0;
         CurrentHealth = Stats.Health;
         CurrentAccuracy = Stats.Accuracy;
         CurrentEvasion = Stats.Evasion;
+        AbilitiesRemaining = 0;
     }
 
     public void ResolveAttack(Combatant attacker, Ability ability)
@@ -78,7 +86,6 @@ public partial class Status : Node
                 CurrentHealth = 0;
                 Died?.Invoke(this, combatant);
                 MessageLog.Get().Write(combatant.DisplayName + " was knocked out");
-                combatant.QueueFree();
             }
             else
             {

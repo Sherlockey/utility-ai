@@ -2,10 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bty2hr1mqb301" path="res://scripts/Level.cs" id="1_6gm3b"]
 [ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="2_6wsyn"]
-[ext_resource type="PackedScene" uid="uid://c14k3sjlmyhd4" path="res://scenes/knight.tscn" id="3_rgegp"]
-[ext_resource type="PackedScene" uid="uid://claadvfxus2xj" path="res://scenes/fighter.tscn" id="4_phuuy"]
-[ext_resource type="PackedScene" uid="uid://dpr25f23d8n2w" path="res://scenes/ranger.tscn" id="5_q0wmc"]
-[ext_resource type="PackedScene" uid="uid://y73gjhbhogfx" path="res://scenes/mage.tscn" id="6_wp2g7"]
 [ext_resource type="Resource" uid="uid://b2kvf3pvj0a0v" path="res://resources/level_scavbats_enemy_scenes_array1.tres" id="7_rgegp"]
 [ext_resource type="Resource" uid="uid://bciod2ob2umtc" path="res://resources/level_scavbats_enemy_scenes_array2.tres" id="8_6gm3b"]
 [ext_resource type="Texture2D" uid="uid://de137iwa1lsho" path="res://assets/white-tile.png" id="9_ds1we"]
@@ -283,7 +279,7 @@ sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
 sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
-[node name="LevelScavbats" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers")]
+[node name="LevelScavbats" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers", "_partyParent")]
 script = ExtResource("1_6gm3b")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
@@ -291,7 +287,7 @@ _camera = NodePath("Camera2D")
 _allyCombatantSpawnMarkers = [NodePath("AllySpawnMarkers/AllyMarker2D"), NodePath("AllySpawnMarkers/AllyMarker2D2"), NodePath("AllySpawnMarkers/AllyMarker2D3"), NodePath("AllySpawnMarkers/AllyMarker2D4")]
 _enemyCombatantSpawnMarkers = [NodePath("EnemySpawnMarkers/EnemyMarker2D"), NodePath("EnemySpawnMarkers/EnemyMarker2D2"), NodePath("EnemySpawnMarkers/EnemyMarker2D3"), NodePath("EnemySpawnMarkers/EnemyMarker2D4"), NodePath("EnemySpawnMarkers/EnemyMarker2D5"), NodePath("EnemySpawnMarkers/EnemyMarker2D6"), NodePath("EnemySpawnMarkers/EnemyMarker2D7"), NodePath("EnemySpawnMarkers/EnemyMarker2D8"), NodePath("EnemySpawnMarkers/EnemyMarker2D9"), NodePath("EnemySpawnMarkers/EnemyMarker2D10"), NodePath("EnemySpawnMarkers/EnemyMarker2D11"), NodePath("EnemySpawnMarkers/EnemyMarker2D12")]
 _battleManagerScene = ExtResource("2_6wsyn")
-_allyCombatantScenes = Array[PackedScene]([ExtResource("3_rgegp"), ExtResource("4_phuuy"), ExtResource("5_q0wmc"), ExtResource("6_wp2g7")])
+_partyParent = NodePath("PartyParent")
 _enemyCombatantScenesSets = Array[Object]([ExtResource("7_rgegp"), ExtResource("8_6gm3b")])
 _nextLevelPaths = PackedStringArray("res://scenes/level_scavbats.tscn", "res://scenes/level_coyenas.tscn", "res://scenes/level_spitters_and_tortoises.tscn")
 
@@ -360,6 +356,8 @@ position = Vector2(312, 156)
 
 [node name="EnemyMarker2D12" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1128356956]
 position = Vector2(344, 204)
+
+[node name="PartyParent" type="Node" parent="." unique_id=2030914181]
 
 [node name="LevelMusicPlayer" parent="." unique_id=1602766656 instance=ExtResource("16_wp2g7")]
 _audioStreams = Array[AudioStream]([ExtResource("17_14qh7"), ExtResource("18_n71cp"), ExtResource("19_ds1we"), ExtResource("20_apr4v")])

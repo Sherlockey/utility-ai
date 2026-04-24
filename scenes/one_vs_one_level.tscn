@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://bcqxey0v88gt5"]
 
 [ext_resource type="Script" uid="uid://bty2hr1mqb301" path="res://scripts/Level.cs" id="1_ciufd"]
-[ext_resource type="PackedScene" uid="uid://claadvfxus2xj" path="res://scenes/fighter.tscn" id="2_qb21p"]
 [ext_resource type="Script" uid="uid://bdi8er7wt0nim" path="res://scripts/SceneArray.cs" id="5_4wgo7"]
 [ext_resource type="PackedScene" uid="uid://obt76w5hp6jv" path="res://scenes/coyena.tscn" id="6_7fycn"]
 [ext_resource type="PackedScene" uid="uid://d3ed2p0p74yy4" path="res://scenes/battle_manager.tscn" id="10_afp1p"]
@@ -280,7 +279,7 @@ sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
 sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
-[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers")]
+[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers", "_partyParent")]
 script = ExtResource("1_ciufd")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
@@ -288,7 +287,7 @@ _camera = NodePath("Camera2D")
 _allyCombatantSpawnMarkers = [NodePath("Marker2D")]
 _enemyCombatantSpawnMarkers = [NodePath("Marker2D2")]
 _battleManagerScene = ExtResource("10_afp1p")
-_allyCombatantScenes = Array[PackedScene]([ExtResource("2_qb21p")])
+_partyParent = NodePath("PartyParent")
 _enemyCombatantScenesSets = Array[Object]([SubResource("Resource_lqfbo")])
 
 [node name="DebugTileMapLayer" type="TileMapLayer" parent="." unique_id=311799121]
@@ -310,3 +309,5 @@ position = Vector2(344, 300)
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1068788131]
 position = Vector2(320, 180)
 script = ExtResource("17_2xm1n")
+
+[node name="PartyParent" type="Node" parent="." unique_id=929432641]

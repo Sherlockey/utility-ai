@@ -241,6 +241,10 @@ public partial class BattleManager : Node2D
             MessageLog.Get().Write("Defeat!", true, false);
         }
         BattleEndInfo battleEndInfo = new(isVictory, _movementDict, _abilityDict);
+        // foreach (Combatant combatant in Combatants)
+        // {
+        //     combatant.Reparent(Game.Instance);
+        // }
         BattleEnded?.Invoke(this, battleEndInfo);
     }
 

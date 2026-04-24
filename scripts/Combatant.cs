@@ -114,6 +114,13 @@ public partial class Combatant : Node2D
         }
     }
 
+    public void ResetForNewBattle()
+    {
+        Visible = true;
+        ProcessMode = ProcessModeEnum.Inherit;
+        Status.ResetForNewBattle();
+    }
+
     public void InitializeTurn()
     {
         MessageLog.Get().Write("\n:: " + DisplayName + "'s turn start", false);
@@ -285,6 +292,8 @@ public partial class Combatant : Node2D
         {
             EndTurn();
         }
+        Visible = false;
+        ProcessMode = ProcessModeEnum.Disabled;
     }
 
     // Sorts by descending order of accumlated speed.
