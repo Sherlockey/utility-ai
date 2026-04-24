@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://chr1phm66hwnn"]
+
+[ext_resource type="Script" uid="uid://c2xm5oab38j3l" path="res://scripts/EmbarkDisplay.cs" id="1_j5lje"]
+[ext_resource type="PackedScene" uid="uid://dkwtmkqp6x8nb" path="res://scenes/level_one.tscn" id="2_t5fsb"]
+
+[node name="EmbarkDisplay" type="PanelContainer" unique_id=1492275132 node_paths=PackedStringArray("_noButton", "_yesButton")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.5
+offset_top = -33.0
+offset_right = 72.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j5lje")
+_selectedLevel = ExtResource("2_t5fsb")
+_noButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer/NoButton")
+_yesButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer/YesButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2003621366]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1103319075]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1988088802]
+layout_mode = 2
+text = "Ready to Embark?"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=802475119]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="NoButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1381305986]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "No"
+
+[node name="YesButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=95742277]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "Yes"

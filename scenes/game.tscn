@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://f1cbue3ru2ej"]
+
+[ext_resource type="Script" uid="uid://bb4xhq1n7xc0w" path="res://scripts/Game.cs" id="1_uwrxv"]
+[ext_resource type="Resource" uid="uid://uuqjwoavaybh" path="res://resources/default_party.tres" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://bol5jvnytt83c" path="res://scenes/overworld.tscn" id="3_lnu2h"]
+
+[node name="Game" type="Node" unique_id=1272752021]
+script = ExtResource("1_uwrxv")
+_defaultParty = ExtResource("2_yqjtg")
+_overworldScene = ExtResource("3_lnu2h")

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bol5jvnytt83c"]
+
+[ext_resource type="Script" uid="uid://bggx671pt1yvq" path="res://scripts/Overworld.cs" id="1_16ktt"]
+[ext_resource type="PackedScene" uid="uid://c7gxn4pfygi4i" path="res://scenes/menu_display.tscn" id="1_m1b5j"]
+
+[node name="Overworld" type="Control" unique_id=2111373453 node_paths=PackedStringArray("MenuDisplay")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_16ktt")
+MenuDisplay = NodePath("MenuDisplay")
+
+[node name="MenuDisplay" parent="." unique_id=1864102373 instance=ExtResource("1_m1b5j")]
+layout_mode = 1

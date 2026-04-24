@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneArray" format=3 uid="uid://uuqjwoavaybh"]
+
+[ext_resource type="PackedScene" uid="uid://c14k3sjlmyhd4" path="res://scenes/knight.tscn" id="1_cmoaf"]
+[ext_resource type="PackedScene" uid="uid://claadvfxus2xj" path="res://scenes/fighter.tscn" id="2_mh8bw"]
+[ext_resource type="PackedScene" uid="uid://dpr25f23d8n2w" path="res://scenes/ranger.tscn" id="3_ln78r"]
+[ext_resource type="PackedScene" uid="uid://y73gjhbhogfx" path="res://scenes/mage.tscn" id="4_kbjps"]
+[ext_resource type="Script" uid="uid://bdi8er7wt0nim" path="res://scripts/SceneArray.cs" id="5_rqn4u"]
+
+[resource]
+script = ExtResource("5_rqn4u")
+Scenes = [ExtResource("1_cmoaf"), ExtResource("2_mh8bw"), ExtResource("3_ln78r"), ExtResource("4_kbjps")]
