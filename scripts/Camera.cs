@@ -5,16 +5,6 @@ using System;
 // Camera Position at the start of a turn is set by the BattleManager in UpdateForNewCombatantTurn()
 public partial class Camera : Camera2D
 {
-    // public Node2D Target { get; set; }
-
-    // public override void _Process(double delta)
-    // {
-    //     if (Target != null)
-    //     {
-    //         Position = Target.Position;
-    //     }
-    // }
-
     [Export]
     private float _moveRate = 16.0f;
 

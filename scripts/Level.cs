@@ -7,8 +7,6 @@ using System.Diagnostics;
 public partial class Level : Node2D
 {
     public int Difficulty = 0;
-    // public Dictionary<string, Dictionary<Type, MovementUtilityFunction>> MovementDict = [];
-    // public Dictionary<string, Dictionary<Type, AbilityUtilityFunction>> AbilityDict = [];
 
     [Export]
     private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
@@ -171,9 +169,9 @@ public partial class Level : Node2D
     //     }
     // }
 
-    private async void OnBattleManagerBattleEnded(object sender, BattleEndInfo battleEndInfo)
+    private async void OnBattleManagerBattleEnded(object sender, bool isVictory)
     {
-        if (battleEndInfo.IsVictory)
+        if (isVictory)
         {
             await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
             foreach (Node child in _partyParent.GetChildren())
@@ -195,8 +193,6 @@ public partial class Level : Node2D
                 PackedScene nextLevelScene = GD.Load<PackedScene>(path);
                 Level nextLevel = nextLevelScene.Instantiate<Level>();
                 nextLevel.Difficulty = Difficulty + 1;
-                // nextLevel.MovementDict = battleEndInfo.MovementDict;
-                // nextLevel.AbilityDict = battleEndInfo.AbilityDict;
                 SceneTree sceneTree = GetTree();
                 sceneTree.Root.AddChild(nextLevel);
                 sceneTree.CurrentScene = nextLevel;
@@ -212,8 +208,6 @@ public partial class Level : Node2D
             }
             PackedScene levelOneScene = GD.Load<PackedScene>(LevelOneScenePath);
             Level levelOne = levelOneScene.Instantiate<Level>();
-            // levelOne.MovementDict = battleEndInfo.MovementDict;
-            // levelOne.AbilityDict = battleEndInfo.AbilityDict;
             SceneTree sceneTree = GetTree();
             sceneTree.Root.AddChild(levelOne);
             sceneTree.CurrentScene = levelOne;

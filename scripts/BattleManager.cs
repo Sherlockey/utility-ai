@@ -6,7 +6,7 @@ using System.Linq;
 
 public partial class BattleManager : Node2D
 {
-    public event EventHandler<BattleEndInfo> BattleEnded;
+    public event EventHandler<bool> BattleEnded;
     public event EventHandler<TeamControl> TeamControlChanged;
 
     public const int TurnThreshold = 100;
@@ -43,8 +43,6 @@ public partial class BattleManager : Node2D
     [Export]
     private StartPopup _startPopup;
 
-    private readonly Dictionary<string, Dictionary<Type, MovementUtilityFunction>> _movementDict = [];
-    private readonly Dictionary<string, Dictionary<Type, AbilityUtilityFunction>> _abilityDict = [];
     private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
@@ -77,12 +75,14 @@ public partial class BattleManager : Node2D
         for (int i = 0; i < Combatants.Count; i++)
         {
             Combatant combatant = Combatants[i];
+            combatant.BattleIndex = i;
+
             combatant.TurnEnded += OnCombatantTurnEnded;
             combatant.Status.DamageTaken += OnStatusDamageTaken;
             combatant.Status.Died += OnStatusDied;
-            combatant.BattleIndex = i;
             combatant.Movement.Moved += Camera.OnCombatantMoved;
             TeamControlChanged += combatant.OnBattleManagerTeamControlChanged;
+
             if (combatant.MyTeam == Combatant.Team.Enemy)
             {
                 enemyCount++;
@@ -93,8 +93,6 @@ public partial class BattleManager : Node2D
             }
         }
 
-        _utilityDisplay.MovementUpdated += OnUtilityDisplayMovementUpdated;
-        _utilityDisplay.AbilityUpdated += OnUtilityDisplayAbilityUpdated;
         _utilityDisplay.RefreshDisplay();
 
         string enemyString = enemyCount == 1 ? "enemy" : "enemies";
@@ -232,6 +230,15 @@ public partial class BattleManager : Node2D
     private void BattleEnd(bool isVictory)
     {
         _isBattleOver = true;
+
+        foreach (Combatant combatant in Combatants)
+        {
+            combatant.TurnEnded -= OnCombatantTurnEnded;
+            combatant.Status.DamageTaken -= OnStatusDamageTaken;
+            combatant.Status.Died -= OnStatusDied;
+            combatant.Movement.Moved -= Camera.OnCombatantMoved;
+        }
+
         if (isVictory)
         {
             MessageLog.Get().Write("Victory!", true, false);
@@ -240,12 +247,7 @@ public partial class BattleManager : Node2D
         {
             MessageLog.Get().Write("Defeat!", true, false);
         }
-        BattleEndInfo battleEndInfo = new(isVictory, _movementDict, _abilityDict);
-        // foreach (Combatant combatant in Combatants)
-        // {
-        //     combatant.Reparent(Game.Instance);
-        // }
-        BattleEnded?.Invoke(this, battleEndInfo);
+        BattleEnded?.Invoke(this, isVictory);
     }
 
     // Returns null if there is no Combatant at mouse position
@@ -407,23 +409,5 @@ public partial class BattleManager : Node2D
         CheckBattleOver();
         _turnOrderDisplay.Update(Combatants);
         _utilityDisplay.Combatants.Remove(combatant);
-    }
-
-    private void OnUtilityDisplayMovementUpdated(object sender, (string, Type, MovementUtilityFunction) tuple)
-    {
-        if (!_movementDict.ContainsKey(tuple.Item1))
-        {
-            _movementDict[tuple.Item1] = [];
-        }
-        _movementDict[tuple.Item1][tuple.Item2] = tuple.Item3;
-    }
-
-    private void OnUtilityDisplayAbilityUpdated(object sender, (string, Type, AbilityUtilityFunction) tuple)
-    {
-        if (!_abilityDict.ContainsKey(tuple.Item1))
-        {
-            _abilityDict[tuple.Item1] = [];
-        }
-        _abilityDict[tuple.Item1][tuple.Item2] = tuple.Item3;
     }
 }

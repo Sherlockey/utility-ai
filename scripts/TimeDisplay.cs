@@ -68,13 +68,13 @@ public partial class TimeDisplay : PanelContainer
 
     private void On2XButtonPressed()
     {
-        Engine.TimeScale = 2.0;
+        Engine.TimeScale = 3.0;
         XButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 
     private void On3XButtonPressed()
     {
-        Engine.TimeScale = 3.0;
+        Engine.TimeScale = 6.0;
         XButtonPressed?.Invoke(this, EventArgs.Empty);
     }
 }

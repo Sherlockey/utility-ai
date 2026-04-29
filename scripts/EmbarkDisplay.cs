@@ -7,24 +7,59 @@ public partial class EmbarkDisplay : PanelContainer
     public event EventHandler Closed;
 
     [Export]
-    private PackedScene _selectedLevel; // TODO add level selecting?
+    private PackedScene _levelOneScene;
     [Export]
-    private Button _noButton;
+    private PackedScene _levelTwoScene;
     [Export]
-    private Button _yesButton;
+    private PackedScene _levelThreeScene;
+    [Export]
+    private PackedScene _levelFourScene;
+    [Export]
+    private Button _levelOneButton;
+    [Export]
+    private Button _levelTwoButton;
+    [Export]
+    private Button _levelThreeButton;
+    [Export]
+    private Button _levelFourButton;
+    [Export]
+    private Button _backButton;
 
     public override void _Ready()
     {
-        _yesButton.Pressed += OnYesButtonPressed;
-        _noButton.Pressed += OnNoButtonPressed;
+        _levelOneButton.Pressed += OnLevelOneButtonPressed;
+        _levelTwoButton.Pressed += OnLevelTwoButtonPressed;
+        _levelThreeButton.Pressed += OnLevelThreeButtonPressed;
+        _levelFourButton.Pressed += OnLevelFourButtonPressed;
+        _backButton.Pressed += OnBackButtonPressed;
     }
 
-    private void OnYesButtonPressed()
+    private void OnLevelOneButtonPressed()
     {
-        Game.Instance.ChangeSceneToLevel(_selectedLevel);
+        ChangeSceneToLevel(_levelOneScene);
     }
 
-    private void OnNoButtonPressed()
+    private void OnLevelTwoButtonPressed()
+    {
+        ChangeSceneToLevel(_levelTwoScene);
+    }
+
+    private void OnLevelThreeButtonPressed()
+    {
+        ChangeSceneToLevel(_levelThreeScene);
+    }
+
+    private void OnLevelFourButtonPressed()
+    {
+        ChangeSceneToLevel(_levelFourScene);
+    }
+
+    private static void ChangeSceneToLevel(PackedScene levelScene)
+    {
+        Game.Instance.ChangeSceneToLevel(levelScene);
+    }
+
+    private void OnBackButtonPressed()
     {
         Visible = false;
         Closed?.Invoke(this, EventArgs.Empty);
