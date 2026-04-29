@@ -5,6 +5,9 @@ using System;
 public partial class Stats : Node
 {
     [Export]
+    public int BaseLevel = 1;
+
+    [Export]
     private int _baseHealth = 44;
     [Export]
     private int _baseAttack = 4;
@@ -18,8 +21,6 @@ public partial class Stats : Node
     private int _baseEvasion = 10;
     [Export]
     private int _baseAbilitiesPerTurn = 1;
-    [Export]
-    private int _baseLevel = 1;
     [Export]
     private int _baseExperiencePoints = 0;
     [Export]
@@ -54,14 +55,14 @@ public partial class Stats : Node
 
     public override void _Ready()
     {
-        Health = (int)(_baseHealth + _healthPerLevelScalar * (_baseLevel - 1));
-        Attack = (int)(_baseAttack + _attackPerLevelScalar * (_baseLevel - 1));
-        Speed = (int)(_baseSpeed + _speedPerLevelScalar * (_baseLevel - 1));
-        Movement = (int)(_baseMovement + _movementPerLevelScalar * (_baseLevel - 1));
-        Accuracy = (int)(_baseAccuracy + _accuracyPerLevelScalar * (_baseLevel - 1));
-        Evasion = (int)(_baseEvasion + _evasionPerLevelScalar * (_baseLevel - 1));
+        Health = (int)(_baseHealth + _baseHealth * _healthPerLevelScalar * (BaseLevel - 1));
+        Attack = (int)(_baseAttack + _baseAttack * _attackPerLevelScalar * (BaseLevel - 1));
+        Speed = (int)(_baseSpeed + _baseSpeed * _speedPerLevelScalar * (BaseLevel - 1));
+        Movement = (int)(_baseMovement + _baseMovement * _movementPerLevelScalar * (BaseLevel - 1));
+        Accuracy = (int)(_baseAccuracy + _baseAccuracy * _accuracyPerLevelScalar * (BaseLevel - 1));
+        Evasion = (int)(_baseEvasion + _baseEvasion * _evasionPerLevelScalar * (BaseLevel - 1));
         AbilitiesPerTurn = _baseAbilitiesPerTurn;
-        Level = _baseLevel;
+        Level = BaseLevel;
         ExperiencePoints = _baseExperiencePoints;
         KnowledgePoints = _baseKnowledgePoints;
     }
@@ -76,14 +77,14 @@ public partial class Stats : Node
         }
     }
 
-    private void ApplyLevelUp()
+    public void ApplyLevelUp()
     {
         Level++;
-        Health = (int)(_baseHealth + _healthPerLevelScalar * (_baseLevel - 1));
-        Attack = (int)(_baseAttack + _attackPerLevelScalar * (_baseLevel - 1));
-        Speed = (int)(_baseSpeed + _speedPerLevelScalar * (_baseLevel - 1));
-        Movement = (int)(_baseMovement + _movementPerLevelScalar * (_baseLevel - 1));
-        Accuracy = (int)(_baseAccuracy + _accuracyPerLevelScalar * (_baseLevel - 1));
-        Evasion = (int)(_baseEvasion + _evasionPerLevelScalar * (_baseLevel - 1));
+        Health = (int)(_baseHealth + _baseHealth * _healthPerLevelScalar * (BaseLevel - 1));
+        Attack = (int)(_baseAttack + _baseAttack * _attackPerLevelScalar * (BaseLevel - 1));
+        Speed = (int)(_baseSpeed + _baseSpeed * _speedPerLevelScalar * (BaseLevel - 1));
+        Movement = (int)(_baseMovement + _baseMovement * _movementPerLevelScalar * (BaseLevel - 1));
+        Accuracy = (int)(_baseAccuracy + _baseAccuracy * _accuracyPerLevelScalar * (BaseLevel - 1));
+        Evasion = (int)(_baseEvasion + _baseEvasion * _evasionPerLevelScalar * (BaseLevel - 1));
     }
 }

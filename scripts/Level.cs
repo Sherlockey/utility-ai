@@ -58,15 +58,6 @@ public partial class Level : Node2D
         battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
-        if (_enemyLevel + 1 > 1)
-        {
-            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (_enemyLevel + 1)
-                + "\nEnemies grow stronger...";
-        }
-        else
-        {
-            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (_enemyLevel + 1);
-        }
         battleManager.BattleEnded += OnBattleManagerBattleEnded;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
@@ -131,7 +122,7 @@ public partial class Level : Node2D
                 combatantIndex = i;
             }
             Combatant combatant = scenesSet[combatantIndex].Instantiate<Combatant>();
-
+            combatant.Stats.BaseLevel = _enemyLevel;
             AddChild(combatant);
 
             // Handle positioning combatant
