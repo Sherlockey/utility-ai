@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_1pdv6"]
 [ext_resource type="PackedScene" uid="uid://dficfwsp1ohtj" path="res://scenes/cast.tscn" id="13_1pdv6"]
 
-[node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
+[node name="Mage" type="Node2D" unique_id=890104998 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent")]
 script = ExtResource("3_t2cfv")
 DisplayName = "Mage"
 MyTeam = 1
@@ -27,8 +27,6 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("")
-_turnEndTimer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858591547]
 texture = ExtResource("2_ip8om")
@@ -83,10 +81,10 @@ _damagePercentNumerator = 50
 
 [node name="Stats" type="Node" parent="." unique_id=625439113]
 script = ExtResource("3_yb71v")
-Health = 33
-Attack = 5
-Speed = 8
-Movement = 3
+_baseHealth = 33
+_baseAttack = 5
+_baseSpeed = 8
+_baseMovement = 3
 
 [node name="Status" type="Node" parent="." unique_id=950911490 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_p0roq")

@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_amrqo"]
 [ext_resource type="PackedScene" uid="uid://d0mdolblqr3tq" path="res://scenes/backstab.tscn" id="13_amrqo"]
 
-[node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
+[node name="Fighter" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent")]
 script = ExtResource("3_38ety")
 DisplayName = "Fighter"
 MyTeam = 1
@@ -27,8 +27,6 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("")
-_turnEndTimer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
 texture = ExtResource("2_umvcx")
@@ -82,9 +80,9 @@ Weight = 0.05
 
 [node name="Stats" type="Node" parent="." unique_id=212706154]
 script = ExtResource("3_tlqsq")
-Speed = 9
-Accuracy = 10
-Evasion = 15
+_baseSpeed = 9
+_baseAccuracy = 10
+_baseEvasion = 15
 
 [node name="Status" type="Node" parent="." unique_id=163598366 node_paths=PackedStringArray("Stats")]
 script = ExtResource("6_1bj3w")

@@ -11,11 +11,11 @@ public partial class Status : Node
     public Stats Stats;
 
     public int CurrentMovement;
-    public int AccumulatedSpeed = 0;
+    public int AccumulatedSpeed;
     public int CurrentHealth = 1;
     public int CurrentAccuracy;
     public int CurrentEvasion;
-    public int AbilitiesRemaining = 0; // TODO @Incomplete
+    public int AbilitiesRemaining; // TODO @Incomplete
 
     [Export]
     private double _hitDuration = 0.025;
@@ -36,12 +36,12 @@ public partial class Status : Node
 
     public void ResetForNewBattle()
     {
-        CurrentMovement = Stats.Movement;
-        AccumulatedSpeed = 0;
         CurrentHealth = Stats.Health;
+        AccumulatedSpeed = 0;
+        CurrentMovement = Stats.Movement;
         CurrentAccuracy = Stats.Accuracy;
         CurrentEvasion = Stats.Evasion;
-        AbilitiesRemaining = 0;
+        AbilitiesRemaining = Stats.AbilitiesPerTurn;
     }
 
     public void ResolveAttack(Combatant attacker, Ability ability)

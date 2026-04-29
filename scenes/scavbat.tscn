@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_7vgv3"]
 [ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_53s4e"]
 
-[node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
+[node name="Scavbat" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent")]
 script = ExtResource("1_x1fjo")
 DisplayName = "Scavbat"
 Brain = NodePath("Brain")
@@ -24,8 +24,6 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("")
-_turnEndTimer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("1_qh7of")
@@ -73,12 +71,12 @@ Weight = 1.0
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_82ri0")
-Health = 16
-Attack = 3
-Speed = 9
-Movement = 5
-Accuracy = 5
-Evasion = 15
+_baseHealth = 16
+_baseAttack = 3
+_baseSpeed = 9
+_baseMovement = 5
+_baseAccuracy = 5
+_baseEvasion = 15
 
 [node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_febxk")

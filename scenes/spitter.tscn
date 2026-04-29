@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_kt2yt"]
 [ext_resource type="PackedScene" uid="uid://nhgqb10tsdkw" path="res://scenes/shoot.tscn" id="12_a5khg"]
 
-[node name="Spitter" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
+[node name="Spitter" type="Node2D" unique_id=12279118 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent")]
 script = ExtResource("1_xdvmd")
 DisplayName = "Spitter"
 Brain = NodePath("Brain")
@@ -25,8 +25,6 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("")
-_turnEndTimer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("2_xdvmd")
@@ -76,8 +74,8 @@ script = ExtResource("11_kt2yt")
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_2s38u")
-Health = 16
-Movement = 3
+_baseHealth = 16
+_baseMovement = 3
 
 [node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_3q8e4")

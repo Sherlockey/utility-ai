@@ -79,10 +79,12 @@ Weight = 0.75
 
 [node name="Stats" type="Node" parent="." unique_id=1034357615]
 script = ExtResource("4_0dyjn")
-Health = 55
-Attack = 3
-Speed = 7
-Evasion = 20
+_baseHealth = 55
+_baseAttack = 3
+_baseSpeed = 7
+_baseEvasion = 20
+_healthPerLevelScalar = 0.3
+_attackPerLevelScalar = 0.15
 
 [node name="Status" type="Node" parent="." unique_id=1594083040 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_swm0g")

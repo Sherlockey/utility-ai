@@ -132,10 +132,6 @@ public partial class Level : Node2D
             }
             Combatant combatant = scenesSet[combatantIndex].Instantiate<Combatant>();
 
-            // Handle scaling enemy combatant
-            float scaling = (_enemyLevel - 1) * EnemyScalePercent;
-            combatant.Stats.ApplyScaling(scaling); // Ordering matters here  w/ AddChild
-
             AddChild(combatant);
 
             // Handle positioning combatant
