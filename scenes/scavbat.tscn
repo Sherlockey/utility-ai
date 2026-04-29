@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="6_qfa7m"]
 [ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_r6ks6"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="7_febxk"]
-[ext_resource type="Script" uid="uid://dx1lhy7fvxh1v" path="res://scripts/MoveToOppositionTerritory.cs" id="7_r6ks6"]
 [ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_6u81d"]
 [ext_resource type="Script" uid="uid://d0ycr2wjeh3o" path="res://scripts/GreatestDamage.cs" id="8_53s4e"]
 [ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_smhfw"]
@@ -25,8 +24,8 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("TurnStartTimer")
-_turnEndTimer = NodePath("TurnEndTimer")
+_turnStartTimer = NodePath("")
+_turnEndTimer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("1_qh7of")
@@ -41,9 +40,6 @@ _abilityUtilityParent = NodePath("AbilityUtilityParent")
 [node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=748765186]
 script = ExtResource("6_qfa7m")
 Weight = 0.05
-
-[node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1614580049]
-script = ExtResource("7_r6ks6")
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=414860290]
 script = ExtResource("8_6u81d")
@@ -90,11 +86,3 @@ Stats = NodePath("../Stats")
 
 [node name="Movement" parent="." unique_id=1018986739 node_paths=PackedStringArray("_combatant") instance=ExtResource("7_febxk")]
 _combatant = NodePath("..")
-
-[node name="TurnStartTimer" type="Timer" parent="." unique_id=1838003376]
-wait_time = 0.75
-one_shot = true
-
-[node name="TurnEndTimer" type="Timer" parent="." unique_id=1953074026]
-wait_time = 0.75
-one_shot = true

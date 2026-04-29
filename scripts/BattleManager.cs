@@ -247,7 +247,7 @@ public partial class BattleManager : Node2D
         if (isVictory)
         {
             MessageLog.Get().Write("Victory!", true, false);
-            // HandleRewards()
+            // TODO: HandleRewards()
         }
         else
         {

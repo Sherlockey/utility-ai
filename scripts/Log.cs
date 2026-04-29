@@ -10,6 +10,8 @@ public abstract partial class Log : PanelContainer
     protected ScrollContainer _scrollContainer;
     [Export]
     protected PackedScene _logEntryScene;
+    [Export]
+    protected double _scrollDelayDuration = 0.01;
 
     protected const int MaxMessages = 100;
 
@@ -52,7 +54,12 @@ public abstract partial class Log : PanelContainer
     {
         // TODO @Error this causes an error if the scene is removed from the tree before the timer goes off.
         // Low priority
-        await ToSignal(GetTree().CreateTimer(0.01f, true, false, true), Timer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(
+            _scrollDelayDuration,
+            true,
+            false,
+            true)
+        , Timer.SignalName.Timeout);
         _scrollContainer.ScrollVertical = (int)_scrollContainer.GetVScrollBar().MaxValue + 1;
     }
 }

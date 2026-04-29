@@ -17,6 +17,11 @@ public partial class Status : Node
     public int CurrentEvasion;
     public int AbilitiesRemaining = 0; // TODO @Incomplete
 
+    [Export]
+    private double _hitDuration = 0.025;
+    [Export]
+    private double _resetDuration = 0.1;
+
     private string _evadeAudioStreamPath = "res://third-party/sfx/punch-air.mp3";
     private AudioStream _evadeAudioStream = null;
 
@@ -107,11 +112,19 @@ public partial class Status : Node
             y = Mathf.Clamp(y, -1, 1);
 
             Tween hitTween = GetTree().CreateTween();
-            hitTween.TweenProperty(combatant.Sprite2D, "offset", new Vector2(x, y), 0.025);
+            hitTween.TweenProperty(
+                combatant.Sprite2D,
+                "offset",
+                new Vector2(x, y),
+                _hitDuration);
             await ToSignal(hitTween, Tween.SignalName.Finished);
 
             Tween resetTween = GetTree().CreateTween();
-            resetTween.TweenProperty(combatant.Sprite2D, "offset", Vector2.Zero, 0.1);
+            resetTween.TweenProperty(
+                combatant.Sprite2D,
+                "offset",
+                Vector2.Zero,
+                _resetDuration);
             await ToSignal(resetTween, Tween.SignalName.Finished);
         }
     }

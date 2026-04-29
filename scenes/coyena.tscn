@@ -25,8 +25,8 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("TurnStartTimer")
-_turnEndTimer = NodePath("TurnEndTimer")
+_turnStartTimer = NodePath("")
+_turnEndTimer = NodePath("")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=466832087]
 texture = ExtResource("2_4rdcq")
@@ -87,11 +87,3 @@ Stats = NodePath("../Stats")
 
 [node name="Movement" parent="." unique_id=1018986739 node_paths=PackedStringArray("_combatant") instance=ExtResource("7_hqykf")]
 _combatant = NodePath("..")
-
-[node name="TurnStartTimer" type="Timer" parent="." unique_id=2017106281]
-wait_time = 0.75
-one_shot = true
-
-[node name="TurnEndTimer" type="Timer" parent="." unique_id=209539320]
-wait_time = 0.75
-one_shot = true

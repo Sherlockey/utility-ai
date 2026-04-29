@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_06ia3"]
 [ext_resource type="PackedScene" uid="uid://cj40e4dpbqtps" path="res://scenes/slam.tscn" id="13_8a0iq"]
 
-[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent", "_turnStartTimer", "_turnEndTimer")]
+[node name="Knight" type="Node2D" unique_id=1710756764 node_paths=PackedStringArray("Brain", "Stats", "Status", "Movement", "Sprite2D", "_abilitiesParent")]
 script = ExtResource("3_01nm4")
 DisplayName = "Knight"
 MyTeam = 1
@@ -27,8 +27,6 @@ Status = NodePath("Status")
 Movement = NodePath("Movement")
 Sprite2D = NodePath("Sprite2D")
 _abilitiesParent = NodePath("Abilities")
-_turnStartTimer = NodePath("TurnStartTimer")
-_turnEndTimer = NodePath("TurnEndTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1703691698]
 texture = ExtResource("2_qxgmm")
@@ -92,11 +90,3 @@ Stats = NodePath("../Stats")
 
 [node name="Movement" parent="." unique_id=1018986739 node_paths=PackedStringArray("_combatant") instance=ExtResource("8_mvyd6")]
 _combatant = NodePath("..")
-
-[node name="TurnStartTimer" type="Timer" parent="." unique_id=956012131]
-wait_time = 0.75
-one_shot = true
-
-[node name="TurnEndTimer" type="Timer" parent="." unique_id=292295398]
-wait_time = 0.75
-one_shot = true

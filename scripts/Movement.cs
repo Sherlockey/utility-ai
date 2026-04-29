@@ -13,7 +13,7 @@ public partial class Movement : Node
     [Export]
     private Combatant _combatant;
     [Export]
-    private Timer _walkWaitTimer;
+    private double _walkWaitDuration = 0.3;
 
     public override void _Input(InputEvent @event)
     {
@@ -108,8 +108,7 @@ public partial class Movement : Node
             _combatant.Position = position;
             Moved?.Invoke(this, _combatant);
             _combatant.Status.CurrentMovement -= 1;
-            _walkWaitTimer.Start();
-            await ToSignal(_walkWaitTimer, Timer.SignalName.Timeout);
+            await ToSignal(GetTree().CreateTimer(_walkWaitDuration), Timer.SignalName.Timeout);
         }
     }
 }

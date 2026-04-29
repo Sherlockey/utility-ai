@@ -41,9 +41,9 @@ public partial class Combatant : Node2D
     [Export]
     private Node _abilitiesParent;
     [Export]
-    private Timer _turnStartTimer;
+    private double _turnStartDuration = 0.75;
     [Export]
-    private Timer _turnEndTimer;
+    private double _turnEndDuration = 0.75;
 
     private const int NumDecisions = 5;
 
@@ -175,9 +175,7 @@ public partial class Combatant : Node2D
         Vector2I currentCoords = BattleManager.Get().TileMapLayer.LocalToMap(Position);
 
         // Delay
-        _turnStartTimer.Start();
-        // TODO can this be placed after Brain.MakeDecisionList(this)?
-        await ToSignal(_turnStartTimer, Timer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(_turnStartDuration), Timer.SignalName.Timeout);
 
         // Ask Brain for an ability and target to apply that ability on
         List<Decision> decisionList = Brain.MakeDecisionList(this);
@@ -216,8 +214,7 @@ public partial class Combatant : Node2D
         }
 
         // Delay
-        _turnEndTimer.Start();
-        await ToSignal(_turnEndTimer, Timer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(_turnEndDuration), Timer.SignalName.Timeout);
 
         EndTurn();
     }

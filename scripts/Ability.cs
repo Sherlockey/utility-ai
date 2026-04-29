@@ -17,6 +17,10 @@ public abstract partial class Ability : Node, IAbility
     protected int _damagePercentNumerator = 100;
     [Export]
     protected AudioStream[] _audioStreams;
+    [Export]
+    protected double _abilityDuration = 0.05;
+    [Export]
+    protected double _resetDuration = 0.1;
 
     protected Random _random = new();
 
@@ -111,13 +115,21 @@ public abstract partial class Ability : Node, IAbility
             x = Mathf.Clamp(x, -1, 1);
             y = Mathf.Clamp(y, -1, 1);
             Tween useTween = GetTree().CreateTween();
-            useTween.TweenProperty(user.Sprite2D, "offset", new Vector2(2.0f * x, 2.0f * y), 0.05);
+            useTween.TweenProperty(
+                user.Sprite2D,
+                "offset",
+                new Vector2(2.0f * x, 2.0f * y),
+                _abilityDuration);
             await ToSignal(useTween, Tween.SignalName.Finished);
         }
         else
         {
             Tween useTween = GetTree().CreateTween();
-            useTween.TweenProperty(user.Sprite2D, "offset", new Vector2(2.0f * x, 2.0f * y), 0.05);
+            useTween.TweenProperty(
+                user.Sprite2D,
+                "offset",
+                new Vector2(2.0f * x, 2.0f * y),
+                _abilityDuration);
             await ToSignal(useTween, Tween.SignalName.Finished);
         }
     }
@@ -125,7 +137,11 @@ public abstract partial class Ability : Node, IAbility
     protected virtual async Task AnimateReset(Combatant user)
     {
         Tween resetTween = GetTree().CreateTween();
-        resetTween.TweenProperty(user.Sprite2D, "offset", Vector2.Zero, 0.1);
+        resetTween.TweenProperty(
+            user.Sprite2D,
+            "offset",
+            Vector2.Zero,
+            _resetDuration);
         await ToSignal(resetTween, Tween.SignalName.Finished);
     }
 }
