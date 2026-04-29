@@ -6,5 +6,5 @@
 
 [node name="Game" type="Node" unique_id=1272752021]
 script = ExtResource("1_uwrxv")
+OverworldScene = ExtResource("3_lnu2h")
 _defaultParty = ExtResource("2_yqjtg")
-_overworldScene = ExtResource("3_lnu2h")

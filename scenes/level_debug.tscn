@@ -287,19 +287,18 @@ sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
 sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
-[node name="LevelDebug" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers", "_partyParent")]
+[node name="LevelDebug" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_enemySpawnParent", "_allySpawnParent", "_partyParent", "_tileMapLayer", "_debugTileMapLayer", "_camera")]
 script = ExtResource("1_pnwra")
 _enemyPositioning = 1
 _enemyComposition = 1
+_enemyCombatantScenesSets = Array[Object]([SubResource("Resource_5rf1i")])
+_enemySpawnParent = NodePath("EnemySpawnMarkers")
+_allySpawnParent = NodePath("AllySpawnMarkers")
+_partyParent = NodePath("PartyParent")
+_battleManagerScene = ExtResource("2_1p2f2")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
 _camera = NodePath("Camera2D")
-_allyCombatantSpawnMarkers = [NodePath("AllySpawnMarkers/AllyMarker2D"), NodePath("AllySpawnMarkers/AllyMarker2D2"), NodePath("AllySpawnMarkers/AllyMarker2D3"), NodePath("AllySpawnMarkers/AllyMarker2D4")]
-_enemyCombatantSpawnMarkers = [NodePath("EnemySpawnMarkers/EnemyMarker2D"), NodePath("EnemySpawnMarkers/EnemyMarker2D2"), NodePath("EnemySpawnMarkers/EnemyMarker2D3"), NodePath("EnemySpawnMarkers/EnemyMarker2D4")]
-_battleManagerScene = ExtResource("2_1p2f2")
-_partyParent = NodePath("PartyParent")
-_enemyCombatantScenesSets = Array[Object]([SubResource("Resource_5rf1i")])
-_nextLevelPaths = PackedStringArray("res://scenes/level_scavbats.tscn", "res://scenes/level_coyenas.tscn", "res://scenes/level_spitters_and_tortoises.tscn")
 metadata/_edit_lock_ = true
 
 [node name="DebugTileMapLayer" type="TileMapLayer" parent="." unique_id=311799121]
@@ -316,20 +315,6 @@ tile_set = SubResource("TileSet_0e48y")
 position = Vector2(320, 180)
 script = ExtResource("14_xxr33")
 
-[node name="AllySpawnMarkers" type="Node" parent="." unique_id=1676581002]
-
-[node name="AllyMarker2D" type="Marker2D" parent="AllySpawnMarkers" unique_id=2113117202]
-position = Vector2(296, 60)
-
-[node name="AllyMarker2D2" type="Marker2D" parent="AllySpawnMarkers" unique_id=253849304]
-position = Vector2(312, 60)
-
-[node name="AllyMarker2D3" type="Marker2D" parent="AllySpawnMarkers" unique_id=695251387]
-position = Vector2(328, 60)
-
-[node name="AllyMarker2D4" type="Marker2D" parent="AllySpawnMarkers" unique_id=1667889358]
-position = Vector2(344, 60)
-
 [node name="EnemySpawnMarkers" type="Node" parent="." unique_id=135748628]
 
 [node name="EnemyMarker2D" type="Marker2D" parent="EnemySpawnMarkers" unique_id=573259782]
@@ -343,6 +328,20 @@ position = Vector2(328, 84)
 
 [node name="EnemyMarker2D4" type="Marker2D" parent="EnemySpawnMarkers" unique_id=639554109]
 position = Vector2(344, 84)
+
+[node name="AllySpawnMarkers" type="Node" parent="." unique_id=1676581002]
+
+[node name="AllyMarker2D" type="Marker2D" parent="AllySpawnMarkers" unique_id=2113117202]
+position = Vector2(296, 60)
+
+[node name="AllyMarker2D2" type="Marker2D" parent="AllySpawnMarkers" unique_id=253849304]
+position = Vector2(312, 60)
+
+[node name="AllyMarker2D3" type="Marker2D" parent="AllySpawnMarkers" unique_id=695251387]
+position = Vector2(328, 60)
+
+[node name="AllyMarker2D4" type="Marker2D" parent="AllySpawnMarkers" unique_id=1667889358]
+position = Vector2(344, 60)
 
 [node name="PartyParent" type="Node" parent="." unique_id=2023083801]
 

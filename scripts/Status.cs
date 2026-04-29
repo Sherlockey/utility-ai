@@ -12,7 +12,7 @@ public partial class Status : Node
 
     public int CurrentMovement;
     public int AccumulatedSpeed = 0;
-    public int CurrentHealth;
+    public int CurrentHealth = 1;
     public int CurrentAccuracy;
     public int CurrentEvasion;
     public int AbilitiesRemaining = 0; // TODO @Incomplete

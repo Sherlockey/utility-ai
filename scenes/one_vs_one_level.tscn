@@ -279,16 +279,14 @@ sources/1 = SubResource("TileSetAtlasSource_dw7u0")
 sources/2 = SubResource("TileSetAtlasSource_kpk0m")
 sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
-[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_tileMapLayer", "_debugTileMapLayer", "_camera", "_allyCombatantSpawnMarkers", "_enemyCombatantSpawnMarkers", "_partyParent")]
+[node name="OneVsOneLevel" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_partyParent", "_tileMapLayer", "_debugTileMapLayer", "_camera")]
 script = ExtResource("1_ciufd")
+_enemyCombatantScenesSets = Array[Object]([SubResource("Resource_lqfbo")])
+_partyParent = NodePath("PartyParent")
+_battleManagerScene = ExtResource("10_afp1p")
 _tileMapLayer = NodePath("TileMapLayer")
 _debugTileMapLayer = NodePath("DebugTileMapLayer")
 _camera = NodePath("Camera2D")
-_allyCombatantSpawnMarkers = [NodePath("Marker2D")]
-_enemyCombatantSpawnMarkers = [NodePath("Marker2D2")]
-_battleManagerScene = ExtResource("10_afp1p")
-_partyParent = NodePath("PartyParent")
-_enemyCombatantScenesSets = Array[Object]([SubResource("Resource_lqfbo")])
 
 [node name="DebugTileMapLayer" type="TileMapLayer" parent="." unique_id=311799121]
 visible = false

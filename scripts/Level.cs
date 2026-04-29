@@ -6,38 +6,33 @@ using System.Diagnostics;
 
 public partial class Level : Node2D
 {
-    public int Difficulty = 0;
-
+    [Export]
+    private int _enemyLevel = 1;
     [Export]
     private EnemyPositioning _enemyPositioning = EnemyPositioning.Random;
     [Export]
     private EnemyComposition _enemyComposition = EnemyComposition.Random;
+
+    [Export]
+    private SceneArray[] _enemyCombatantScenesSets;
+    [Export]
+    private Node _enemySpawnParent;
+    [Export]
+    private Node _allySpawnParent;
+    [Export]
+    private Node _partyParent;
+    [Export]
+    private PackedScene _battleManagerScene;
     [Export]
     private TileMapLayer _tileMapLayer;
     [Export]
     private DebugTileMapLayer _debugTileMapLayer;
     [Export]
     private Camera _camera;
-    [Export]
-    private Marker2D[] _allyCombatantSpawnMarkers;
-    [Export]
-    private Marker2D[] _enemyCombatantSpawnMarkers; // Do not use, only for initializing List
-    [Export]
-    private PackedScene _battleManagerScene;
-    [Export]
-    private Node _partyParent;
-    [Export]
-    private SceneArray[] _enemyCombatantScenesSets;
-    [Export]
-    private string[] _nextLevelPaths;
 
-    private const float EnemyScalePercent = 0.10f;
-    private const string LevelOneScenePath = "res://scenes/level_one.tscn";
-    private const float EndOfGameDelay = 1.5f;
+    private const float EnemyScalePercent = 0.20f;
 
     private readonly Random _random = new();
-
-    private List<Marker2D> _enemySpawnMarkersList = [];
 
     private enum EnemyComposition
     {
@@ -51,28 +46,26 @@ public partial class Level : Node2D
 
     public override void _Ready()
     {
-        _enemySpawnMarkersList = [.. _enemyCombatantSpawnMarkers];
         InstantiateChildren();
     }
 
     public void InstantiateChildren()
     {
         BattleManager battleManager = _battleManagerScene.Instantiate<BattleManager>();
-        // Instantiate combatants and register them in battleManager
         AddAllyCombatants(battleManager);
         AddEnemyCombatants(battleManager);
         battleManager.TileMapLayer = _tileMapLayer;
         battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
-        if (Difficulty + 1 > 1)
+        if (_enemyLevel + 1 > 1)
         {
-            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (Difficulty + 1)
+            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (_enemyLevel + 1)
                 + "\nEnemies grow stronger...";
         }
         else
         {
-            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (Difficulty + 1);
+            battleManager.LevelInfoPopup.DifficultyLabel.Text = "Level " + (_enemyLevel + 1);
         }
         battleManager.BattleEnded += OnBattleManagerBattleEnded;
         // Only add to scene tree once necessary children are already in scene tree
@@ -82,13 +75,27 @@ public partial class Level : Node2D
     private void AddAllyCombatants(BattleManager battleManager)
     {
         List<Combatant> party = Game.Instance.Party;
+        List<Marker2D> allySpawnMarkers = [];
+        foreach (Node child in _allySpawnParent.GetChildren())
+        {
+            if (child is Marker2D marker2D)
+            {
+                allySpawnMarkers.Add(marker2D);
+            }
+        }
+        Debug.Assert(allySpawnMarkers.Count >= party.Count);
+
         for (int i = 0; i < party.Count; i++)
         {
             Combatant combatant = party[i];
-            _partyParent.AddChild(combatant);
-            // UpdateUtility(combatant); // order matters here; must be after combatant in scene tree
-            combatant.Position = _allyCombatantSpawnMarkers[i].Position;
-            battleManager.Combatants.Add(combatant);
+            if (combatant.Status.CurrentHealth > 0)
+            {
+                _partyParent.AddChild(combatant);
+                combatant.Position = allySpawnMarkers[i].Position;
+                combatant.Visible = true;
+                combatant.ProcessMode = ProcessModeEnum.Inherit;
+                battleManager.Combatants.Add(combatant);
+            }
         }
     }
 
@@ -101,6 +108,16 @@ public partial class Level : Node2D
 
         int sceneIndex = _random.Next(0, _enemyCombatantScenesSets.Length);
         PackedScene[] scenesSet = _enemyCombatantScenesSets[sceneIndex].Scenes;
+        List<Marker2D> enemySpawnMarkers = [];
+        foreach (Node child in _enemySpawnParent.GetChildren())
+        {
+            if (child is Marker2D marker2D)
+            {
+                enemySpawnMarkers.Add(marker2D);
+            }
+        }
+        Debug.Assert(enemySpawnMarkers.Count >= scenesSet.Length);
+
         for (int i = 0; i < scenesSet.Length; i++)
         {
             // Handle choosing combatant from scenesSet
@@ -115,103 +132,64 @@ public partial class Level : Node2D
             }
             Combatant combatant = scenesSet[combatantIndex].Instantiate<Combatant>();
 
-            // Handle scaling combatant based upon Level Difficulty
-            float scaling = Difficulty * EnemyScalePercent;
+            // Handle scaling enemy combatant
+            float scaling = (_enemyLevel - 1) * EnemyScalePercent;
             combatant.Stats.ApplyScaling(scaling); // Ordering matters here  w/ AddChild
 
             AddChild(combatant);
 
             // Handle positioning combatant
-            int markerIndex = i % _enemySpawnMarkersList.Count;
+            int markerIndex = i % enemySpawnMarkers.Count;
             if (_enemyPositioning == EnemyPositioning.Random)
             {
-                markerIndex = _random.Next(0, _enemySpawnMarkersList.Count);
-                combatant.Position = _enemySpawnMarkersList[markerIndex].Position;
+                markerIndex = _random.Next(0, enemySpawnMarkers.Count);
+                combatant.Position = enemySpawnMarkers[markerIndex].Position;
             }
             else if (_enemyPositioning == EnemyPositioning.Linear)
             {
-                combatant.Position = _enemySpawnMarkersList[markerIndex].Position;
+                combatant.Position = enemySpawnMarkers[markerIndex].Position;
             }
-            _enemySpawnMarkersList.RemoveAt(markerIndex);
+            enemySpawnMarkers.RemoveAt(markerIndex);
 
             battleManager.Combatants.Add(combatant);
         }
     }
 
-    // private void UpdateUtility(Combatant combatant)
-    // {
-    //     // Movement
-    //     if (MovementDict.ContainsKey(combatant.DisplayName))
-    //     {
-    //         for (int i = 0; i < combatant.Brain.MovementUtilities.Count; i++)
-    //         {
-    //             MovementUtilityFunction movementUtility = combatant.Brain.MovementUtilities[i];
-    //             if (MovementDict[combatant.DisplayName].TryGetValue(movementUtility.GetType(),
-    //                 out MovementUtilityFunction savedUtility))
-    //             {
-    //                 combatant.Brain.MovementUtilities[i] = savedUtility;
-    //             }
-    //         }
-    //     }
-
-    //     // Ability
-    //     if (AbilityDict.ContainsKey(combatant.DisplayName))
-    //     {
-    //         for (int i = 0; i < combatant.Brain.AbilityUtilities.Count; i++)
-    //         {
-    //             AbilityUtilityFunction abilityUtility = combatant.Brain.AbilityUtilities[i];
-    //             if (AbilityDict[combatant.DisplayName].TryGetValue(abilityUtility.GetType(),
-    //                 out AbilityUtilityFunction savedUtility))
-    //             {
-    //                 combatant.Brain.AbilityUtilities[i] = savedUtility;
-    //             }
-    //         }
-    //     }
-    // }
-
-    private async void OnBattleManagerBattleEnded(object sender, bool isVictory)
+    private void OnBattleManagerBattleEnded(object sender, bool isVictory)
     {
         if (isVictory)
         {
-            await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
             foreach (Node child in _partyParent.GetChildren())
             {
-                _partyParent.RemoveChild(child);
-            }
-            Debug.Assert(_nextLevelPaths.Length > 0);
-            int index = 0;
-            for (int i = 0; i < _nextLevelPaths.Length; i++)
-            {
-                if (_nextLevelPaths[i] == GetTree().CurrentScene.SceneFilePath)
+                if (child is Combatant combatant)
                 {
-                    index = (i + 1) % _nextLevelPaths.Length;
+                    _partyParent.RemoveChild(combatant);
                 }
             }
-            string path = _nextLevelPaths[index];
-            if (path != "")
-            {
-                PackedScene nextLevelScene = GD.Load<PackedScene>(path);
-                Level nextLevel = nextLevelScene.Instantiate<Level>();
-                nextLevel.Difficulty = Difficulty + 1;
-                SceneTree sceneTree = GetTree();
-                sceneTree.Root.AddChild(nextLevel);
-                sceneTree.CurrentScene = nextLevel;
-                Free();
-            }
+
+            string path = SceneFilePath;
+            PackedScene levelScene = GD.Load<PackedScene>(path);
+            Game.Instance.ChangeScene(levelScene);
         }
         else
         {
-            await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
-            foreach (Node child in _partyParent.GetChildren())
-            {
-                _partyParent.RemoveChild(child);
-            }
-            PackedScene levelOneScene = GD.Load<PackedScene>(LevelOneScenePath);
-            Level levelOne = levelOneScene.Instantiate<Level>();
-            SceneTree sceneTree = GetTree();
-            sceneTree.Root.AddChild(levelOne);
-            sceneTree.CurrentScene = levelOne;
-            Free();
+            ReturnToOverworld();
         }
+    }
+
+    private void ReturnToOverworld()
+    {
+        foreach (Node child in _partyParent.GetChildren())
+        {
+            if (child is Combatant combatant)
+            {
+                _partyParent.RemoveChild(combatant);
+            }
+        }
+        foreach (Combatant combatant in Game.Instance.Party)
+        {
+            combatant.Status.ResetForNewBattle();
+        }
+        Game.Instance.ChangeScene(Game.Instance.OverworldScene);
     }
 }

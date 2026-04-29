@@ -8,12 +8,14 @@ public partial class Game : Node
     public static Game Instance { get; private set; } = null;
 
     [Export]
-    private SceneArray _defaultParty;
+    public PackedScene OverworldScene;
+
+    public List<Combatant> Party { get; private set; } = [];
+
     [Export]
-    private PackedScene _overworldScene;
+    private SceneArray _defaultParty;
 
     private Node _currentScene;
-    public List<Combatant> Party { get; private set; } = [];
 
     public Game()
     {
@@ -36,16 +38,14 @@ public partial class Game : Node
             Party.Add(combatant);
         }
 
-        Overworld overworld = _overworldScene.Instantiate<Overworld>();
-        AddChild(overworld);
-        _currentScene = overworld;
+        ChangeScene(OverworldScene);
     }
 
-    public void ChangeSceneToLevel(PackedScene levelScene)
+    public void ChangeScene(PackedScene scene)
     {
-        Level level = levelScene.Instantiate<Level>();
-        AddChild(level);
-        _currentScene.QueueFree();
-        _currentScene = level;
+        Node node = scene.Instantiate();
+        AddChild(node);
+        _currentScene?.QueueFree();
+        _currentScene = node;
     }
 }

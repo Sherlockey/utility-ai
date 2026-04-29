@@ -43,6 +43,8 @@ public partial class BattleManager : Node2D
     [Export]
     private StartPopup _startPopup;
 
+    private const float EndOfGameDelay = 1.5f;
+
     private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
@@ -204,34 +206,37 @@ public partial class BattleManager : Node2D
 
     private void CheckBattleOver()
     {
-        List<Combatant> allyCombatants = [];
-        List<Combatant> enemyCombatants = [];
+        int enemyCount = 0;
+        int allyCount = 0;
         foreach (Combatant combatant in Combatants)
         {
-            if (combatant.MyTeam == Combatant.Team.Ally)
+            if (combatant.MyTeam == Combatant.Team.Enemy)
             {
-                allyCombatants.Add(combatant);
+                enemyCount++;
             }
-            else if (combatant.MyTeam == Combatant.Team.Enemy)
+            else if (combatant.MyTeam == Combatant.Team.Ally)
             {
-                enemyCombatants.Add(combatant);
+                allyCount++;
             }
         }
-        if (allyCombatants.Count == 0)
-        {
-            BattleEnd(false);
-        }
-        else if (enemyCombatants.Count == 0)
+        if (enemyCount == 0)
         {
             BattleEnd(true);
         }
+        else if (allyCount == 0)
+        {
+            BattleEnd(false);
+        }
     }
 
-    private void BattleEnd(bool isVictory)
+    private async void BattleEnd(bool isVictory)
     {
         _isBattleOver = true;
 
-        foreach (Combatant combatant in Combatants)
+        // Eventually add animation for showing experience points etc being added?
+        await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
+
+        foreach (Combatant combatant in Game.Instance.Party)
         {
             combatant.TurnEnded -= OnCombatantTurnEnded;
             combatant.Status.DamageTaken -= OnStatusDamageTaken;
@@ -242,6 +247,7 @@ public partial class BattleManager : Node2D
         if (isVictory)
         {
             MessageLog.Get().Write("Victory!", true, false);
+            // HandleRewards()
         }
         else
         {
