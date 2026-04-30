@@ -312,9 +312,9 @@ public partial class BattleManager : Node2D
         {
             if (c != _activeCombatant)
             {
-                _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-                    c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-                    c.Stats.Movement.ToString());
+                _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+                    c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
+                    c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
                 _targetedStatusDisplay.Visible = true;
             }
             else
@@ -336,9 +336,9 @@ public partial class BattleManager : Node2D
         _activeCombatant = c;
         Camera.Position = c.Position;
         Camera.Target = c;
-        _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-            c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-            c.Stats.Movement.ToString());
+        _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+            c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
+            c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
         c.InitializeTurn();
     }
 
@@ -422,15 +422,15 @@ public partial class BattleManager : Node2D
         _turnOrderDisplay.Update(Combatants);
         if (c == _activeCombatant)
         {
-            _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-                c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-                c.Stats.Movement.ToString());
+            _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+                c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
+                c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
         }
         if (c == _targetedCombatant)
         {
-            _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Status.CurrentHealth.ToString(),
-                c.Stats.Health.ToString(), c.Stats.Attack.ToString(), c.Stats.Speed.ToString(),
-                c.Stats.Movement.ToString());
+            _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+                c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
+                c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
         }
     }
 

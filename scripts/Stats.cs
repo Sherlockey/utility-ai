@@ -83,7 +83,6 @@ public partial class Stats : Node
 
     public void ApplyLevelUp()
     {
-        GD.Print("Before level: " + Health + " " + Attack + " " + Speed + " " + Movement + " " + Accuracy + " " + Evasion);
         Level++; // Level must come first
         Health = (int)(_baseHealth * (1 + (_healthPerLevelScalar * (Level - 1))));
         Attack = (int)(_baseAttack * (1 + (_attackPerLevelScalar * (Level - 1))));
@@ -91,7 +90,6 @@ public partial class Stats : Node
         Movement = (int)(_baseMovement * (1 + (_movementPerLevelScalar * (Level - 1))));
         Accuracy = (int)(_baseAccuracy * (1 + (_accuracyPerLevelScalar * (Level - 1))));
         Evasion = (int)(_baseEvasion * (1 + (_evasionPerLevelScalar * (Level - 1))));
-        GD.Print("After level: " + Health + " " + Attack + " " + Speed + " " + Movement + " " + Accuracy + " " + Evasion);
     }
 
     public void GainKnowledgePoints(int value)

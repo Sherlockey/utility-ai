@@ -4,65 +4,44 @@
 [ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="2_3hj6t"]
 [ext_resource type="FontFile" uid="uid://dp04sx7eyxk0s" path="res://resources/font/Lilex-Regular.woff2" id="3_5yn4t"]
 
-[node name="StatusDisplay" type="Control" unique_id=842227053 node_paths=PackedStringArray("_nameLabel", "_portrait", "_healthLabel", "_attackLabel", "_speedLabel", "_movementLabel")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+[node name="StatusDisplay" type="PanelContainer" unique_id=986239633 node_paths=PackedStringArray("_nameLabel", "_portrait", "_levelLabel", "_experienceLabel", "_healthLabel", "_attackLabel", "_speedLabel", "_movementLabel", "_accuracyLabel", "_evasionLabel")]
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_top = -70.0
+offset_right = 95.0
+grow_vertical = 0
 script = ExtResource("1_q8sxk")
-_nameLabel = NodePath("MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer/NameLabel")
-_portrait = NodePath("MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer/Portrait")
-_healthLabel = NodePath("MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2/HealthLabel")
-_attackLabel = NodePath("MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2/AttackLabel")
-_speedLabel = NodePath("MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2/SpeedLabel")
-_movementLabel = NodePath("MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2/MovementLabel")
+_nameLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer/NameLabel")
+_portrait = NodePath("MarginContainer/HBoxContainer/VBoxContainer/Portrait")
+_levelLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer/LevelLabel")
+_experienceLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ExperienceLabel")
+_healthLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/HealthLabel")
+_attackLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/AttackLabel")
+_speedLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/SpeedLabel")
+_movementLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/MovementLabel")
+_accuracyLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/AccuracyLabel")
+_evasionLabel = NodePath("MarginContainer/HBoxContainer/VBoxContainer2/EvasionLabel")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1147813063]
-layout_mode = 0
-offset_right = 104.0
-offset_bottom = 54.0
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="BorderColorRect" type="ColorRect" parent="MarginContainer" unique_id=1037066179]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=501259938]
 layout_mode = 2
-color = Color(0.9647059, 0.9372549, 0.8, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BorderColorRect" unique_id=1264750863]
-layout_mode = 0
-offset_right = 96.0
-offset_bottom = 46.0
+size_flags_vertical = 8
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="BackgroundColorRect" type="ColorRect" parent="MarginContainer/BorderColorRect/MarginContainer" unique_id=1898494193]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=530600939]
 layout_mode = 2
-color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+size_flags_vertical = 8
+theme_override_constants/separation = 6
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect" unique_id=501259938]
-layout_mode = 0
-offset_right = 82.0
-offset_bottom = 46.0
-theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 1
-theme_override_constants/margin_right = 1
-theme_override_constants/margin_bottom = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer" unique_id=530600939]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer" unique_id=1439240767]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1439240767]
 layout_mode = 2
 size_flags_vertical = 0
+theme_override_constants/separation = 0
 
-[node name="NameLabel" type="Label" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer" unique_id=4324985]
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=4324985]
 custom_minimum_size = Vector2(39, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
@@ -70,41 +49,79 @@ theme_override_font_sizes/font_size = 8
 text = "12345678"
 horizontal_alignment = 1
 
-[node name="Portrait" type="TextureRect" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1580117563]
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=530674796]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="Portrait" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1580117563]
 layout_mode = 2
 texture = ExtResource("2_3hj6t")
-stretch_mode = 3
+stretch_mode = 5
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer" unique_id=378338996]
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=464551051]
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=398144535]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "LV:99"
+horizontal_alignment = 1
+
+[node name="ExperienceLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1896928017]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "XP:99"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=378338996]
+layout_mode = 2
+size_flags_vertical = 8
 theme_override_constants/separation = 0
 alignment = 2
 
-[node name="HealthLabel" type="Label" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1952710472]
+[node name="HealthLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1952710472]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_font_sizes/font_size = 8
 text = "HP:123/456"
 horizontal_alignment = 2
 
-[node name="AttackLabel" type="Label" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=243966199]
+[node name="AttackLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=243966199]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_font_sizes/font_size = 8
-text = "ATK:4"
+text = "ATK:04"
 horizontal_alignment = 2
 
-[node name="SpeedLabel" type="Label" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1157921777]
+[node name="SpeedLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1157921777]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_font_sizes/font_size = 8
-text = "SPD:4"
+text = "SPD:04"
 horizontal_alignment = 2
 
-[node name="MovementLabel" type="Label" parent="MarginContainer/BorderColorRect/MarginContainer/BackgroundColorRect/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=2139613621]
+[node name="MovementLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=2139613621]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_fonts/font = ExtResource("3_5yn4t")
 theme_override_font_sizes/font_size = 8
-text = "MOV:4"
+text = "MOV:04"
+horizontal_alignment = 2
+
+[node name="AccuracyLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1411906209]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_fonts/font = ExtResource("3_5yn4t")
+theme_override_font_sizes/font_size = 8
+text = "ACC:10"
+horizontal_alignment = 2
+
+[node name="EvasionLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2" unique_id=107019695]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "EVA:10"
 horizontal_alignment = 2
