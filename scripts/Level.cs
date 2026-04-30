@@ -97,6 +97,7 @@ public partial class Level : Node2D
             return;
         }
 
+        // Choose random combatant scenes set, collect enemySpawnMarkers
         int sceneIndex = _random.Next(0, _enemyCombatantScenesSets.Length);
         PackedScene[] scenesSet = _enemyCombatantScenesSets[sceneIndex].Scenes;
         List<Marker2D> enemySpawnMarkers = [];
@@ -139,6 +140,8 @@ public partial class Level : Node2D
             enemySpawnMarkers.RemoveAt(markerIndex);
 
             battleManager.Combatants.Add(combatant);
+            battleManager.ExperienceReward += combatant.Stats.ExperienceReward;
+            battleManager.KnowledgeReward += combatant.Stats.KnowledgeReward;
         }
     }
 

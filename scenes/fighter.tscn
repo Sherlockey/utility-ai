@@ -83,6 +83,7 @@ script = ExtResource("3_tlqsq")
 _baseSpeed = 9
 _baseAccuracy = 10
 _baseEvasion = 15
+_speedPerLevelScalar = 0.02
 
 [node name="Status" type="Node" parent="." unique_id=163598366 node_paths=PackedStringArray("Stats")]
 script = ExtResource("6_1bj3w")

@@ -23,6 +23,8 @@ public partial class BattleManager : Node2D
     public DebugTileMapLayer DebugTileMapLayer; // Initialized by Level
     public Vector2I TileSize; // Initialized by Level
     public Camera Camera; // Initialized by Level
+    public int ExperienceReward; // Initialized by Level
+    public int KnowledgeReward; // Initialized by Level
 
     // Item1 = enemy influence, Item2 = ally influence
     public Dictionary<Vector2I, (int, int)> InfluenceMap { get; private set; } = [];
@@ -247,13 +249,22 @@ public partial class BattleManager : Node2D
         if (isVictory)
         {
             MessageLog.Get().Write("Victory!", true, false);
-            // TODO: HandleRewards()
+            HandleRewards();
         }
         else
         {
             MessageLog.Get().Write("Defeat!", true, false);
         }
         BattleEnded?.Invoke(this, isVictory);
+    }
+
+    private void HandleRewards()
+    {
+        foreach (Combatant combatant in Game.Instance.Party)
+        {
+            combatant.Stats.GainExperiencePoints(ExperienceReward);
+            combatant.Stats.GainKnowledgePoints(KnowledgeReward);
+        }
     }
 
     // Returns null if there is no Combatant at mouse position
@@ -272,7 +283,6 @@ public partial class BattleManager : Node2D
             }
         }
         return result;
-
     }
 
     // Combatant c is intentionally Optional (nullable)

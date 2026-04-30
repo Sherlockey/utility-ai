@@ -85,6 +85,8 @@ _baseHealth = 33
 _baseAttack = 5
 _baseSpeed = 8
 _baseMovement = 3
+_healthPerLevelScalar = 0.075
+_attackPerLevelScalar = 0.075
 
 [node name="Status" type="Node" parent="." unique_id=950911490 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_p0roq")

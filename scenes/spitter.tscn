@@ -74,8 +74,11 @@ script = ExtResource("11_kt2yt")
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_2s38u")
+ExperienceReward = 9
+KnowledgeReward = 9
 _baseHealth = 16
 _baseMovement = 3
+_attackPerLevelScalar = 0.075
 
 [node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_3q8e4")

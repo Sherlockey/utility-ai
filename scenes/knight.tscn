@@ -83,8 +83,9 @@ _baseHealth = 55
 _baseAttack = 3
 _baseSpeed = 7
 _baseEvasion = 20
-_healthPerLevelScalar = 0.3
-_attackPerLevelScalar = 0.15
+_healthPerLevelScalar = 0.125
+_attackPerLevelScalar = 0.04
+_speedPerLevelScalar = 0.01
 
 [node name="Status" type="Node" parent="." unique_id=1594083040 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_swm0g")

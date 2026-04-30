@@ -75,6 +75,8 @@ Weight = 0.0
 
 [node name="Stats" type="Node" parent="." unique_id=1593060130]
 script = ExtResource("4_vbcjk")
+ExperienceReward = 10
+KnowledgeReward = 10
 _baseHealth = 33
 _baseAttack = 3
 _baseAccuracy = 10

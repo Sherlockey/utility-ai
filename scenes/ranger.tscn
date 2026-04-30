@@ -83,6 +83,7 @@ script = ExtResource("3_1sbo7")
 _baseSpeed = 8
 _baseMovement = 3
 _baseAccuracy = 5
+_speedPerLevelScalar = 0.018
 
 [node name="Status" type="Node" parent="." unique_id=114128546 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_8rvsd")
