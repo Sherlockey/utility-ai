@@ -56,7 +56,7 @@ public partial class EmbarkDisplay : PanelContainer
 
     private static void ChangeSceneToLevel(PackedScene levelScene)
     {
-        Game.Instance.ChangeScene(levelScene);
+        Game.Instance.ChangeSceneToPacked(levelScene);
     }
 
     private void OnBackButtonPressed()

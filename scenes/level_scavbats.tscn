@@ -281,6 +281,7 @@ sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
 [node name="LevelScavbats" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_enemySpawnParent", "_allySpawnParent", "_partyParent", "_tileMapLayer", "_debugTileMapLayer", "_camera")]
 script = ExtResource("1_6gm3b")
+_displayName = "Level 2"
 _enemyLevel = 2
 _enemyCombatantScenesSets = Array[Object]([ExtResource("7_rgegp"), ExtResource("8_6gm3b")])
 _enemySpawnParent = NodePath("EnemySpawnMarkers")

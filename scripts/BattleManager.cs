@@ -25,6 +25,9 @@ public partial class BattleManager : Node2D
     public Camera Camera; // Initialized by Level
     public int ExperienceReward; // Initialized by Level
     public int KnowledgeReward; // Initialized by Level
+    public string LevelName; // Initialized by Level
+    public int Attempt; // Initialized by Level
+    public int EnemyLevel; // Initialized by Level
 
     // Item1 = enemy influence, Item2 = ally influence
     public Dictionary<Vector2I, (int, int)> InfluenceMap { get; private set; } = [];
@@ -50,6 +53,7 @@ public partial class BattleManager : Node2D
     private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
+    private float _attemptBonusScalar = 0.0f;
 
     public enum TeamControl
     {
@@ -70,6 +74,18 @@ public partial class BattleManager : Node2D
     {
         _timeDisplay.XButtonPressed += _startPopup.OnTimeDisplayXButtonPressed;
         _startPopup.TimeDisplay = _timeDisplay;
+
+        // Attempt bonus calculation
+        string attemptBonusText = "";
+        _attemptBonusScalar = 0.1f * (Attempt - 1);
+        if (Attempt > 1)
+        {
+            attemptBonusText = "\n(Reward Bonus: " + (_attemptBonusScalar * 100).ToString("F0") + "%)";
+        }
+
+        // Set LevelInfoPopup text
+        LevelInfoPopup.LevelAttemptsLabel.Text =
+            LevelName + '\n' + "Attempt: " + Attempt + attemptBonusText;
 
         DebugTileMapLayer.Initialize(TileMapLayer);
         InitializeInfluenceMap();
@@ -262,8 +278,8 @@ public partial class BattleManager : Node2D
     {
         foreach (Combatant combatant in Game.Instance.Party)
         {
-            combatant.Stats.GainExperiencePoints(ExperienceReward);
-            combatant.Stats.GainKnowledgePoints(KnowledgeReward);
+            combatant.Stats.GainExperiencePoints((int)(ExperienceReward * (_attemptBonusScalar + 1)));
+            combatant.Stats.GainKnowledgePoints((int)(KnowledgeReward * (_attemptBonusScalar + 1)));
         }
     }
 

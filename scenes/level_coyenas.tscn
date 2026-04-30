@@ -281,6 +281,7 @@ sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
 [node name="LevelCoyenas" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_enemySpawnParent", "_allySpawnParent", "_partyParent", "_tileMapLayer", "_debugTileMapLayer", "_camera")]
 script = ExtResource("1_q1r6d")
+_displayName = "Level 3"
 _enemyLevel = 3
 _enemyCombatantScenesSets = Array[Object]([ExtResource("7_1uupq"), ExtResource("8_bf86d")])
 _enemySpawnParent = NodePath("EnemySpawnMarkers")

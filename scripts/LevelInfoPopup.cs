@@ -5,5 +5,5 @@ using System;
 public partial class LevelInfoPopup : PanelContainer
 {
     [Export]
-    public Label DifficultyLabel;
+    public Label LevelAttemptsLabel;
 }

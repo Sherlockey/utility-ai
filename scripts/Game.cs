@@ -38,12 +38,19 @@ public partial class Game : Node
             Party.Add(combatant);
         }
 
-        ChangeScene(OverworldScene);
+        ChangeSceneToPacked(OverworldScene);
     }
 
-    public void ChangeScene(PackedScene scene)
+    public void ChangeSceneToPacked(PackedScene scene)
     {
         Node node = scene.Instantiate();
+        AddChild(node);
+        _currentScene?.QueueFree();
+        _currentScene = node;
+    }
+
+    public void ChangeSceneToNode(Node node)
+    {
         AddChild(node);
         _currentScene?.QueueFree();
         _currentScene = node;

@@ -6,6 +6,10 @@ using System.Diagnostics;
 
 public partial class Level : Node2D
 {
+    public int Attempt = 1;
+
+    [Export]
+    private string _displayName = "Missing Level Name";
     [Export]
     private int _enemyLevel = 1;
     [Export]
@@ -29,8 +33,6 @@ public partial class Level : Node2D
     private DebugTileMapLayer _debugTileMapLayer;
     [Export]
     private Camera _camera;
-
-    private const float EnemyScalePercent = 0.20f;
 
     private readonly Random _random = new();
 
@@ -58,6 +60,9 @@ public partial class Level : Node2D
         battleManager.DebugTileMapLayer = _debugTileMapLayer;
         battleManager.TileSize = _tileMapLayer.TileSet.TileSize;
         battleManager.Camera = _camera;
+        battleManager.LevelName = _displayName;
+        battleManager.Attempt = Attempt;
+        battleManager.EnemyLevel = _enemyLevel;
         battleManager.BattleEnded += OnBattleManagerBattleEnded;
         // Only add to scene tree once necessary children are already in scene tree
         AddChild(battleManager);
@@ -110,6 +115,17 @@ public partial class Level : Node2D
         }
         Debug.Assert(enemySpawnMarkers.Count >= scenesSet.Length);
 
+        // Calculate average level of player party for potential experience reward penalty
+        int partyLevel = 0;
+        foreach (Combatant combatant in Game.Instance.Party)
+        {
+            partyLevel += combatant.Stats.Level;
+        }
+        if (Game.Instance.Party.Count != 0)
+        {
+            partyLevel /= Game.Instance.Party.Count;
+        }
+
         for (int i = 0; i < scenesSet.Length; i++)
         {
             // Handle choosing combatant from scenesSet
@@ -125,6 +141,7 @@ public partial class Level : Node2D
             Combatant combatant = scenesSet[combatantIndex].Instantiate<Combatant>();
             combatant.Stats.BaseLevel = _enemyLevel;
             AddChild(combatant);
+            battleManager.Combatants.Add(combatant);
 
             // Handle positioning combatant
             int markerIndex = i % enemySpawnMarkers.Count;
@@ -139,9 +156,26 @@ public partial class Level : Node2D
             }
             enemySpawnMarkers.RemoveAt(markerIndex);
 
-            battleManager.Combatants.Add(combatant);
-            battleManager.ExperienceReward += combatant.Stats.ExperienceReward;
-            battleManager.KnowledgeReward += combatant.Stats.KnowledgeReward;
+            // Calculate experience and knowledge rewards
+            int enemyLevelDeficit = 0;
+            if (combatant.Stats.Level < partyLevel)
+            {
+                enemyLevelDeficit = partyLevel - combatant.Stats.Level;
+            }
+
+            float scalar = 1.0f;
+            float overleveledPenalty = -0.1f;
+            scalar += enemyLevelDeficit * overleveledPenalty;
+            if (scalar < 0.1f)
+            {
+                scalar = 0.1f;
+            }
+
+            int experienceReward = (int)(combatant.Stats.ExperienceReward * scalar);
+            int knowledgeReward = (int)(combatant.Stats.KnowledgeReward * scalar);
+
+            battleManager.ExperienceReward += experienceReward;
+            battleManager.KnowledgeReward += knowledgeReward;
         }
     }
 
@@ -159,7 +193,9 @@ public partial class Level : Node2D
 
             string path = SceneFilePath;
             PackedScene levelScene = GD.Load<PackedScene>(path);
-            Game.Instance.ChangeScene(levelScene);
+            Level nextLevel = levelScene.Instantiate<Level>();
+            nextLevel.Attempt = Attempt + 1;
+            Game.Instance.ChangeSceneToNode(nextLevel);
         }
         else
         {
@@ -180,6 +216,6 @@ public partial class Level : Node2D
         {
             combatant.Status.ResetForNewBattle();
         }
-        Game.Instance.ChangeScene(Game.Instance.OverworldScene);
+        Game.Instance.ChangeSceneToPacked(Game.Instance.OverworldScene);
     }
 }
