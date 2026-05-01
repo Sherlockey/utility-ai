@@ -179,9 +179,9 @@ public partial class Level : Node2D
         }
     }
 
-    private void OnBattleManagerBattleEnded(object sender, bool isVictory)
+    private void OnBattleManagerBattleEnded(object sender, BattleManager.BattleEndType battleEndType)
     {
-        if (isVictory)
+        if (battleEndType == BattleManager.BattleEndType.Victory)
         {
             foreach (Node child in _partyParent.GetChildren())
             {
@@ -197,7 +197,8 @@ public partial class Level : Node2D
             nextLevel.Attempt = Attempt + 1;
             Game.Instance.ChangeSceneToNode(nextLevel);
         }
-        else
+        else if (battleEndType == BattleManager.BattleEndType.Loss
+            || battleEndType == BattleManager.BattleEndType.RanAway)
         {
             ReturnToOverworld();
         }

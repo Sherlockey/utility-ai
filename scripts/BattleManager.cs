@@ -2,11 +2,12 @@ using Godot;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 public partial class BattleManager : Node2D
 {
-    public event EventHandler<bool> BattleEnded;
+    public event EventHandler<BattleEndType> BattleEnded;
     public event EventHandler<TeamControl> TeamControlChanged;
 
     public const int TurnThreshold = 100;
@@ -29,6 +30,7 @@ public partial class BattleManager : Node2D
     public int Attempt; // Initialized by Level
     public int EnemyLevel; // Initialized by Level
 
+    public bool IsBattleOver { get; private set; } = false;
     // Item1 = enemy influence, Item2 = ally influence
     public Dictionary<Vector2I, (int, int)> InfluenceMap { get; private set; } = [];
     public Dictionary<Vector2I, float> ScoreMap { get; private set; } = [];
@@ -42,15 +44,14 @@ public partial class BattleManager : Node2D
     [Export]
     private StatusDisplay _targetedStatusDisplay;
     [Export]
-    private UtilityDisplay _utilityDisplay;
-    [Export]
     private TimeDisplay _timeDisplay;
     [Export]
     private StartPopup _startPopup;
+    [Export]
+    private BattleMenuDisplay _battleMenuDisplay;
 
     private const float EndOfGameDelay = 1.5f;
 
-    private bool _isBattleOver = false;
     private Combatant _activeCombatant = null;
     private Combatant _targetedCombatant = null;
     private float _attemptBonusScalar = 0.0f;
@@ -58,6 +59,11 @@ public partial class BattleManager : Node2D
     public enum TeamControl
     {
         None, Ally, Enemy, All,
+    }
+
+    public enum BattleEndType
+    {
+        Victory, Loss, RanAway,
     }
 
     public BattleManager()
@@ -81,6 +87,7 @@ public partial class BattleManager : Node2D
             _timeDisplay.XButtonPressed += _startPopup.OnTimeDisplayXButtonPressed;
             _startPopup.TimeDisplay = _timeDisplay;
         }
+        _battleMenuDisplay.RanAway += OnBattleMenuDisplayRanAway;
 
         // Attempt bonus calculation
         string attemptBonusText = "";
@@ -114,13 +121,7 @@ public partial class BattleManager : Node2D
             {
                 enemyCount++;
             }
-            else
-            {
-                _utilityDisplay.Combatants.Add(combatant);
-            }
         }
-
-        _utilityDisplay.RefreshDisplay();
 
         string enemyString = enemyCount == 1 ? "enemy" : "enemies";
         MessageLog.Get().Write(enemyCount + " " + enemyString + " encountered!", true, false);
@@ -246,20 +247,17 @@ public partial class BattleManager : Node2D
         }
         if (enemyCount == 0)
         {
-            BattleEnd(true);
+            BattleEnd(BattleEndType.Victory);
         }
         else if (allyCount == 0)
         {
-            BattleEnd(false);
+            BattleEnd(BattleEndType.Loss);
         }
     }
 
-    private async void BattleEnd(bool isVictory)
+    private async void BattleEnd(BattleEndType battleEndType)
     {
-        _isBattleOver = true;
-
-        // Eventually add animation for showing experience points etc being added?
-        await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
+        IsBattleOver = true;
 
         foreach (Combatant combatant in Game.Instance.Party)
         {
@@ -269,16 +267,31 @@ public partial class BattleManager : Node2D
             combatant.Movement.Moved -= Camera.OnCombatantMoved;
         }
 
-        if (isVictory)
+        if (battleEndType == BattleEndType.Victory)
         {
             MessageLog.Get().Write("Victory!", true, false);
             HandleRewards();
         }
-        else
+        else if (battleEndType == BattleEndType.Loss)
         {
             MessageLog.Get().Write("Defeat!", true, false);
         }
-        BattleEnded?.Invoke(this, isVictory);
+        else if (battleEndType == BattleEndType.RanAway)
+        {
+            MessageLog.Get().Write("Ran Away!", true, false);
+        }
+        else
+        {
+            Debug.Fail("BattleEnd not implemented for BattleEndType: " + battleEndType);
+        }
+
+        double previousTimeScale = Engine.TimeScale;
+        Engine.TimeScale = 0.0;
+        // Eventually add animation for showing experience points etc being added?
+        await ToSignal(GetTree().CreateTimer(EndOfGameDelay, true, false, true), Timer.SignalName.Timeout);
+        Engine.TimeScale = 1.0;
+
+        BattleEnded?.Invoke(this, battleEndType);
     }
 
     private void HandleRewards()
@@ -319,7 +332,8 @@ public partial class BattleManager : Node2D
         {
             if (c != _activeCombatant)
             {
-                _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+                _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(),
+                    c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
                     c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
                     c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
                 _targetedStatusDisplay.Visible = true;
@@ -343,7 +357,8 @@ public partial class BattleManager : Node2D
         _activeCombatant = c;
         Camera.Position = c.Position;
         Camera.Target = c;
-        _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+        _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(),
+            c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
             c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
             c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
         c.InitializeTurn();
@@ -413,7 +428,7 @@ public partial class BattleManager : Node2D
 
     private void OnCombatantTurnEnded(object sender, EventArgs e)
     {
-        if (!_isBattleOver)
+        if (!IsBattleOver)
         {
             Combatants.Sort(new Combatant.SortIterationsUntilTurn());
             if (CheckIfACombatantHasTurn() == false)
@@ -429,13 +444,15 @@ public partial class BattleManager : Node2D
         _turnOrderDisplay.Update(Combatants);
         if (c == _activeCombatant)
         {
-            _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+            _activeStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(),
+                c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
                 c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
                 c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
         }
         if (c == _targetedCombatant)
         {
-            _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(), c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
+            _targetedStatusDisplay.Update(c.DisplayName, c.Sprite2D.Texture, c.Stats.Level.ToString(),
+                c.Stats.ExperiencePoints.ToString(), c.Status.CurrentHealth.ToString(), c.Stats.Health.ToString(),
                 c.Stats.Attack.ToString(), c.Stats.Speed.ToString(), c.Stats.Movement.ToString(),
                 c.Stats.Accuracy.ToString(), c.Stats.Evasion.ToString());
         }
@@ -447,6 +464,10 @@ public partial class BattleManager : Node2D
         Combatants.Remove(combatant);
         CheckBattleOver();
         _turnOrderDisplay.Update(Combatants);
-        _utilityDisplay.Combatants.Remove(combatant);
+    }
+
+    private void OnBattleMenuDisplayRanAway(object sender, EventArgs e)
+    {
+        BattleEnd(BattleEndType.RanAway);
     }
 }

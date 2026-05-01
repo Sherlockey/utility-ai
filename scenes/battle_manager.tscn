@@ -5,22 +5,22 @@
 [ext_resource type="PackedScene" uid="uid://5f0b60lrw5b3" path="res://scenes/message_log.tscn" id="4_4wxy3"]
 [ext_resource type="PackedScene" uid="uid://bk3oexwkotyu" path="res://scenes/status_display.tscn" id="4_7wf3v"]
 [ext_resource type="PackedScene" uid="uid://8ghr7fn38td3" path="res://scenes/time_display.tscn" id="5_4wxy3"]
-[ext_resource type="PackedScene" uid="uid://b7p0n5bqdeygc" path="res://scenes/utility_display.tscn" id="6_lhjl6"]
 [ext_resource type="PackedScene" uid="uid://btyibevo6oji3" path="res://scenes/level_info_popup.tscn" id="7_h4tux"]
 [ext_resource type="PackedScene" uid="uid://b4qxouqiasl5y" path="res://scenes/start_popup.tscn" id="8_wmbtu"]
 [ext_resource type="PackedScene" uid="uid://o31nsemxvr6g" path="res://scenes/coords_display.tscn" id="9_mc2mu"]
 [ext_resource type="PackedScene" uid="uid://bg03pt4noq0bk" path="res://scenes/decision_log.tscn" id="10_aqm64"]
+[ext_resource type="PackedScene" uid="uid://13fxt1q37hgm" path="res://scenes/battle_menu_display.tscn" id="10_j4k0a"]
 
-[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("AbilitySFXPlayer", "LevelInfoPopup", "_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay", "_utilityDisplay", "_timeDisplay", "_startPopup")]
+[node name="BattleManager" type="Node2D" unique_id=1138370481 node_paths=PackedStringArray("AbilitySFXPlayer", "LevelInfoPopup", "_turnOrderDisplay", "_activeStatusDisplay", "_targetedStatusDisplay", "_timeDisplay", "_startPopup", "_battleMenuDisplay")]
 script = ExtResource("1_3jpuh")
 AbilitySFXPlayer = NodePath("AbilitySFXPlayer")
 LevelInfoPopup = NodePath("HUD/LevelInfoPopup")
 _turnOrderDisplay = NodePath("HUD/TurnOrderDisplay")
 _activeStatusDisplay = NodePath("HUD/ActiveStatusDisplay")
 _targetedStatusDisplay = NodePath("HUD/TargetedStatusDisplay")
-_utilityDisplay = NodePath("HUD/UtilityDisplay")
 _timeDisplay = NodePath("HUD/TimeDisplay")
 _startPopup = NodePath("HUD/StartPopup")
+_battleMenuDisplay = NodePath("HUD/BattleMenuDisplay")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1364119465]
 
@@ -52,13 +52,14 @@ metadata/_edit_lock_ = true
 
 [node name="TimeDisplay" parent="HUD" unique_id=316205934 instance=ExtResource("5_4wxy3")]
 
-[node name="UtilityDisplay" parent="HUD" unique_id=1614214764 instance=ExtResource("6_lhjl6")]
-
 [node name="LevelInfoPopup" parent="HUD" unique_id=1363666264 instance=ExtResource("7_h4tux")]
 
 [node name="StartPopup" parent="HUD" unique_id=1572340957 instance=ExtResource("8_wmbtu")]
 
 [node name="CoordsDisplay" parent="HUD" unique_id=1839045996 instance=ExtResource("9_mc2mu")]
+
+[node name="BattleMenuDisplay" parent="HUD" unique_id=1033515010 instance=ExtResource("10_j4k0a")]
+visible = false
 
 [node name="DecisionLog" parent="HUD" unique_id=1071658618 instance=ExtResource("10_aqm64")]
 visible = false

@@ -222,6 +222,11 @@ public partial class Combatant : Node2D
     public void EndTurn()
     {
         BattleManager battleManager = BattleManager.Get();
+        if (battleManager.IsBattleOver == true)
+        {
+            return;
+        }
+
         // Reset walkable background cells to regular background cells
         foreach (KeyValuePair<Vector2I, int> kvp in DistPrevMaps.Item1)
         {
