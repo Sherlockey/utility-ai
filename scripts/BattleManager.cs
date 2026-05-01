@@ -72,8 +72,15 @@ public partial class BattleManager : Node2D
 
     public override void _Ready()
     {
-        _timeDisplay.XButtonPressed += _startPopup.OnTimeDisplayXButtonPressed;
-        _startPopup.TimeDisplay = _timeDisplay;
+        if (Settings.TheBattleSpeed != Settings.BattleSpeed.Pause)
+        {
+            _startPopup.Free();
+        }
+        else
+        {
+            _timeDisplay.XButtonPressed += _startPopup.OnTimeDisplayXButtonPressed;
+            _startPopup.TimeDisplay = _timeDisplay;
+        }
 
         // Attempt bonus calculation
         string attemptBonusText = "";
