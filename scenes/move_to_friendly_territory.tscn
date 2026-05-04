@@ -5,6 +5,6 @@
 
 [node name="MoveToFriendlyTerritory" type="Node" unique_id=575651052]
 script = ExtResource("1_24n6c")
+DisplayName = "Friendly Territory"
 Weight = 0.0
-_displayName = "Friendly Territory"
 _setUtilityControlScene = ExtResource("2_1ljjq")

@@ -31,10 +31,10 @@ _abilitiesParent = NodePath("Abilities")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1858591547]
 texture = ExtResource("2_ip8om")
 
-[node name="Brain" type="Node" parent="." unique_id=1060683676 node_paths=PackedStringArray("_movementUtilityParent", "_abilityUtilityParent")]
+[node name="Brain" type="Node" parent="." unique_id=1060683676 node_paths=PackedStringArray("MovementUtilityParent", "AbilityUtilityParent")]
 script = ExtResource("3_66amf")
-_movementUtilityParent = NodePath("MovementUtilityParent")
-_abilityUtilityParent = NodePath("AbilityUtilityParent")
+MovementUtilityParent = NodePath("MovementUtilityParent")
+AbilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=848439449]
 

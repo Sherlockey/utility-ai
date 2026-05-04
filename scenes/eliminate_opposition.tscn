@@ -5,5 +5,5 @@
 
 [node name="EliminateOpposition" type="Node" unique_id=1428864018]
 script = ExtResource("1_k5lwk")
-_displayName = "Eliminate Opposition"
+DisplayName = "Eliminate Opposition"
 _setUtilityControlScene = ExtResource("2_ndlq6")

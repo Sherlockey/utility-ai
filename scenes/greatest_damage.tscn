@@ -5,6 +5,6 @@
 
 [node name="GreatestDamage" type="Node" unique_id=678804586]
 script = ExtResource("1_lfkgp")
+DisplayName = "Greatest Damage"
 Weight = 1.0
-_displayName = "Greatest Damage"
 _setUtilityControlScene = ExtResource("2_g8naf")

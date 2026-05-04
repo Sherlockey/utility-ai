@@ -7,6 +7,11 @@ using System.Diagnostics;
 
 public partial class Brain : Node
 {
+    [Export]
+    public Node MovementUtilityParent { get; private set; }
+    [Export]
+    public Node AbilityUtilityParent { get; private set; }
+
     public List<MovementUtilityFunction> MovementUtilities { get; private set; } = [];
     public List<AbilityUtilityFunction> AbilityUtilities { get; private set; } = [];
 
@@ -17,27 +22,33 @@ public partial class Brain : Node
     [Export(PropertyHint.Range, "0.0, 1.0")]
     private float _abilityUtilityWeight = 0.8f;
 
-    [Export]
-    private Node _movementUtilityParent;
-    [Export]
-    private Node _abilityUtilityParent;
-
     public override void _Ready()
     {
-        foreach (Node node in _movementUtilityParent.GetChildren())
+        foreach (Node node in MovementUtilityParent.GetChildren())
         {
             if (node is MovementUtilityFunction movementUtility)
             {
                 MovementUtilities.Add(movementUtility);
             }
         }
-        foreach (Node node in _abilityUtilityParent.GetChildren())
+        foreach (Node node in AbilityUtilityParent.GetChildren())
         {
             if (node is AbilityUtilityFunction abilityUtility)
             {
                 AbilityUtilities.Add(abilityUtility);
             }
         }
+    }
+
+    // TODO clean up clear duplication here (once there is a super class for utility functions)
+    public void AddMovementUtility(MovementUtilityFunction muf)
+    {
+        MovementUtilities.Add(muf);
+    }
+
+    public void AddAbilityUtility(AbilityUtilityFunction auf)
+    {
+        AbilityUtilities.Add(auf);
     }
 
     // Returns a list of decisions that have been sorted by highest utility

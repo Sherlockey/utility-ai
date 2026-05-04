@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public abstract partial class MovementUtilityFunction : Node
 {
+    [Export]
+    public string DisplayName { get; private set; } = "Missing Display Name";
     [Export(PropertyHint.Range, "0.0, 1.0")]
     public float Weight = 0.5f;
-
     [Export]
-    protected string _displayName = "Missing Display Name";
+    public int Cost { get; private set; } = 100;
+
     [Export]
     protected PackedScene _setUtilityControlScene;
 
@@ -20,7 +22,7 @@ public abstract partial class MovementUtilityFunction : Node
     public virtual Control InstantiateSetUtilityControl()
     {
         WeightSetUtilityControl setUtilityControl = _setUtilityControlScene.Instantiate<WeightSetUtilityControl>();
-        setUtilityControl.DisplayNameLabel.Text = _displayName;
+        setUtilityControl.DisplayNameLabel.Text = DisplayName;
         setUtilityControl.Slider.Value = Weight;
         setUtilityControl.Slider.ValueChanged += OnSetUtilityControlSliderValueChanged;
 

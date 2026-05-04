@@ -53,7 +53,7 @@ public partial class Stats : Node
 
     public int Level { get; private set; }
     public int ExperiencePoints { get; private set; }
-    public int KnowledgePoints { get; private set; }
+    public int KnowledgePoints { get; set; }
 
     private const int ExperienceToLevel = 100;
 

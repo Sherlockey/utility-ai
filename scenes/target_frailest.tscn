@@ -5,6 +5,6 @@
 
 [node name="TargetFrailest" type="Node" unique_id=1063138908]
 script = ExtResource("1_7y2ut")
+DisplayName = "Target Frailest"
 Weight = 0.1
-_displayName = "Target Frailest"
 _setUtilityControlScene = ExtResource("2_fgah0")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneArray" format=3 uid="uid://d0tn128ntdt4g"]
+
+[ext_resource type="Script" uid="uid://bdi8er7wt0nim" path="res://scripts/SceneArray.cs" id="1_3hiqs"]
+[ext_resource type="PackedScene" uid="uid://c4iuvpy4qfha8" path="res://scenes/move_to_friendly_territory.tscn" id="1_gjc4w"]
+[ext_resource type="PackedScene" uid="uid://deojhth0te73" path="res://scenes/move_to_opposition_territory.tscn" id="2_cej81"]
+[ext_resource type="PackedScene" uid="uid://bqre4ucetwhyi" path="res://scenes/move_to_contested_territory.tscn" id="3_6jlk1"]
+[ext_resource type="PackedScene" uid="uid://cfwi3mulo4rbm" path="res://scenes/range_from_opposition.tscn" id="4_u6gbp"]
+
+[resource]
+script = ExtResource("1_3hiqs")
+Scenes = [ExtResource("1_gjc4w"), ExtResource("2_cej81"), ExtResource("3_6jlk1"), ExtResource("4_u6gbp")]

@@ -5,6 +5,6 @@
 
 [node name="RangeFromOpposition" type="Node" unique_id=1765767514]
 script = ExtResource("1_rj2qy")
+DisplayName = "Maintain Range"
 Weight = 1.0
-_displayName = "Maintain Range"
 _setUtilityControlScene = ExtResource("2_dyb0m")

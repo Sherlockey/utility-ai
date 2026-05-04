@@ -90,7 +90,7 @@ public partial class RangeFromOpposition : MovementUtilityFunction
     {
         WeightRangeSetUtilityControl setUtilityControl =
             _setUtilityControlScene.Instantiate<WeightRangeSetUtilityControl>();
-        setUtilityControl.DisplayNameLabel.Text = _displayName;
+        setUtilityControl.DisplayNameLabel.Text = DisplayName;
         setUtilityControl.Slider.Value = Weight;
         setUtilityControl.RangeLabel.Text = Range.ToString();
         setUtilityControl.Slider.ValueChanged += OnSetUtilityControlSliderValueChanged;

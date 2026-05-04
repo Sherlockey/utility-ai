@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bigxke0bwj1ni" path="res://scripts/PartyDisplay.cs" id="1_ub44s"]
 [ext_resource type="PackedScene" uid="uid://bycxb6enom1gr" path="res://scenes/set_utility_menu.tscn" id="2_28vki"]
+[ext_resource type="PackedScene" uid="uid://bnyi5v08vwef0" path="res://scenes/buy_utility_menu.tscn" id="3_bg5dy"]
 
 [node name="PartyDisplay" type="Control" unique_id=1765503223 node_paths=PackedStringArray("_utilityFunctionsMenu", "_setUtilityMenu", "_buyButton", "_setButton", "_closeButton")]
 layout_mode = 3
@@ -77,3 +78,10 @@ text = "Set"
 layout_mode = 1
 offset_left = -289.0
 offset_right = -110.0
+
+[node name="BuyUtilityMenu" parent="." unique_id=2102439855 instance=ExtResource("3_bg5dy")]
+layout_mode = 1
+offset_left = 113.0
+offset_top = -36.0
+offset_right = 259.0
+offset_bottom = 36.0
