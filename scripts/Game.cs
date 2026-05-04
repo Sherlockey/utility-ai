@@ -36,6 +36,8 @@ public partial class Game : Node
         {
             Combatant combatant = combatantScene.Instantiate<Combatant>();
             Party.Add(combatant);
+            AddChild(combatant);
+            combatant.Visible = false;
         }
 
         ChangeSceneToPacked(OverworldScene);

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://by8espmkfi7gm"]
+
+[ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="1_otm2u"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_6lhf4"]
+
+[node name="TargetDeadliest" type="Node" unique_id=303066188]
+script = ExtResource("1_otm2u")
+Weight = 0.75
+_displayName = "Target Deadliest"
+_setUtilityControlScene = ExtResource("2_6lhf4")

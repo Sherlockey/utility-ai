@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://bycxb6enom1gr"]
+
+[ext_resource type="Script" uid="uid://bmnku61b6nqac" path="res://scripts/SetUtilityMenu.cs" id="1_os2jl"]
+[ext_resource type="Texture2D" uid="uid://skoh0owk1s4k" path="res://assets/knight.png" id="2_0rua0"]
+[ext_resource type="Texture2D" uid="uid://v1cacn2luiet" path="res://assets/left-button.png" id="3_4q28b"]
+[ext_resource type="Texture2D" uid="uid://cyuxxb3eqfotk" path="res://assets/time-button-one.png" id="4_8bibj"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="5_wphd4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wxy3"]
+bg_color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9647059, 0.9372549, 0.8, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc2mu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqm64"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[node name="SetUtilityMenu" type="PanelContainer" unique_id=1614214764 node_paths=PackedStringArray("_nameLabel", "_portrait", "_combatantLeftButton", "_combatantRightButton", "_movementUtilitiesParent", "_abilityUtilitiesParent")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -89.5
+offset_top = -30.5
+offset_right = 89.5
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4wxy3")
+script = ExtResource("1_os2jl")
+_nameLabel = NodePath("MarginContainer/HBoxContainer/CombatantVBox/NameLabel")
+_portrait = NodePath("MarginContainer/HBoxContainer/CombatantVBox/PortraitTextureRect")
+_combatantLeftButton = NodePath("MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantLeftButton")
+_combatantRightButton = NodePath("MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantRightButton")
+_movementUtilitiesParent = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent")
+_abilityUtilitiesParent = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/AbilityUtilitiesParent")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=573368582]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=9169027]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CombatantVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1818906965]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=304214309]
+custom_minimum_size = Vector2(39, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "12345678"
+horizontal_alignment = 1
+
+[node name="PortraitTextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=52579198]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_0rua0")
+stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=637117239]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CombatantLeftButton" type="Button" parent="MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=1446929287]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("3_4q28b")
+flat = true
+icon_alignment = 1
+
+[node name="CombatantRightButton" type="Button" parent="MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=469467775]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("4_8bibj")
+flat = true
+icon_alignment = 1
+
+[node name="UtilityFunctionVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1670661095]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MovementFunctionsLabel" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1917333947]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "Movement Function Weights"
+
+[node name="MovementUtilitiesParent" type="VBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1896768790]
+layout_mode = 2
+
+[node name="WeightSetUtilityControl" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent" unique_id=644061497 instance=ExtResource("5_wphd4")]
+layout_mode = 2
+
+[node name="AbilityFunctionsLabel" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1538105164]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
+theme_override_font_sizes/font_size = 8
+text = "Ability Function Weights"
+
+[node name="AbilityUtilitiesParent" type="VBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1424611473]
+layout_mode = 2
+
+[node name="WeightSetUtilityControl" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/AbilityUtilitiesParent" unique_id=981716976 instance=ExtResource("5_wphd4")]
+layout_mode = 2

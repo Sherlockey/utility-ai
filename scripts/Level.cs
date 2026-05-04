@@ -86,6 +86,8 @@ public partial class Level : Node2D
             Combatant combatant = party[i];
             if (combatant.Status.CurrentHealth > 0)
             {
+                Node combatantParent = combatant.GetParent();
+                combatantParent?.RemoveChild(combatant);
                 _partyParent.AddChild(combatant);
                 combatant.Position = allySpawnMarkers[i].Position;
                 combatant.Visible = true;

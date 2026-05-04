@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bqre4ucetwhyi"]
+
+[ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="1_tcj2s"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_m8hlj"]
+
+[node name="MoveToContestedTerritory" type="Node" unique_id=1162695439]
+script = ExtResource("1_tcj2s")
+Weight = 0.3
+_displayName = "Contested Territory"
+_setUtilityControlScene = ExtResource("2_m8hlj")

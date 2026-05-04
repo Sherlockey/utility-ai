@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://c5tacv6t48p3"]
+
+[ext_resource type="Script" uid="uid://oylsjr517euo" path="res://scripts/WeightRangeSetUtilityControl.cs" id="1_kjr1g"]
+[ext_resource type="Texture2D" uid="uid://v1cacn2luiet" path="res://assets/left-button.png" id="1_pra83"]
+[ext_resource type="Texture2D" uid="uid://cyuxxb3eqfotk" path="res://assets/time-button-one.png" id="2_kjr1g"]
+[ext_resource type="Theme" uid="uid://dkcr404nlgkw1" path="res://resources/default_theme.tres" id="3_trkw5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc2mu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqm64"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[node name="WeightRangeSetUtilityControl" type="HBoxContainer" unique_id=870408633 node_paths=PackedStringArray("DisplayNameLabel", "Slider", "RangeLabel", "LeftButton", "RightButton")]
+script = ExtResource("1_kjr1g")
+DisplayNameLabel = NodePath("DisplayNameLabel")
+Slider = NodePath("HSlider")
+RangeLabel = NodePath("RangeLabel")
+LeftButton = NodePath("RangeLeftButton")
+RightButton = NodePath("RangeRightButton")
+
+[node name="DisplayNameLabel" type="Label" parent="." unique_id=1613024123]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Maintain Range"
+
+[node name="RangeLeftButton" type="Button" parent="." unique_id=790315395]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("1_pra83")
+flat = true
+icon_alignment = 1
+
+[node name="RangeLabel" type="Label" parent="." unique_id=608678810]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "6"
+
+[node name="RangeRightButton" type="Button" parent="." unique_id=409537596]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+icon = ExtResource("2_kjr1g")
+flat = true
+icon_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="." unique_id=1116269457]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme = ExtResource("3_trkw5")
+max_value = 1.0
+step = 0.01
+value = 0.39

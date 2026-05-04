@@ -7,10 +7,12 @@
 [ext_resource type="Theme" uid="uid://dkcr404nlgkw1" path="res://resources/default_theme.tres" id="4_mapks"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wxy3"]
-bg_color = Color(0.9647059, 0.9372549, 0.8, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhjl6"]
 bg_color = Color(0.1882353, 0.039215688, 0.14117648, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.9647059, 0.9372549, 0.8, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc2mu"]
 content_margin_left = 0.0
@@ -23,6 +25,27 @@ shadow_color = Color(0, 0, 0, 0)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqm64"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_color = Color(1, 1, 1, 1)
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6fl1"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+shadow_color = Color(0, 0, 0, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1epou"]
 content_margin_left = 0.0
 content_margin_top = 0.0
 content_margin_right = 0.0
@@ -47,49 +70,38 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4wxy3")
 script = ExtResource("1_o6fl1")
-_name = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/NameLabel")
-_rangeValue = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/RangeValueLabel")
-_portrait = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/PortraitTextureRect")
-_combatantLeftButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantLeftButton")
-_combatantRightButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantRightButton")
-_rangeLeftButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/RangeLeftButton")
-_rangeRightButton = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/RangeRightButton")
-_friendlyTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory/HSlider")
-_oppositionTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory/HSlider")
-_contestedTerritorySlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory/HSlider")
-_maintainRangeSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange/HSlider")
-_greatestDamageSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage/HSlider")
-_eliminateOppositionSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition/HSlider")
-_targetFrailestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest/HSlider")
-_targetDeadliestSlider = NodePath("MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest/HSlider")
+_name = NodePath("MarginContainer/HBoxContainer/CombatantVBox/NameLabel")
+_rangeValue = NodePath("")
+_portrait = NodePath("MarginContainer/HBoxContainer/CombatantVBox/PortraitTextureRect")
+_combatantLeftButton = NodePath("MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantLeftButton")
+_combatantRightButton = NodePath("MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantRightButton")
+_rangeLeftButton = NodePath("")
+_rangeRightButton = NodePath("")
+_friendlyTerritorySlider = NodePath("")
+_oppositionTerritorySlider = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory/HSlider")
+_contestedTerritorySlider = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory/HSlider")
+_maintainRangeSlider = NodePath("")
+_greatestDamageSlider = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage/HSlider")
+_eliminateOppositionSlider = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition/HSlider")
+_targetFrailestSlider = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest/HSlider")
+_targetDeadliestSlider = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest/HSlider")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=701959541]
-layout_mode = 2
-theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 1
-theme_override_constants/margin_right = 1
-theme_override_constants/margin_bottom = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1031163917]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_lhjl6")
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=573368582]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=573368582]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=9169027]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=9169027]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="CombatantVBox" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1818906965]
+[node name="CombatantVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1818906965]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="NameLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox" unique_id=304214309]
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=304214309]
 custom_minimum_size = Vector2(39, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
@@ -97,17 +109,17 @@ theme_override_font_sizes/font_size = 8
 text = "12345678"
 horizontal_alignment = 1
 
-[node name="PortraitTextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox" unique_id=52579198]
+[node name="PortraitTextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=52579198]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("1_3bwvw")
 stretch_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox" unique_id=637117239]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=637117239]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="CombatantLeftButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=1446929287]
+[node name="CombatantLeftButton" type="Button" parent="MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=1446929287]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 8
@@ -117,7 +129,7 @@ icon = ExtResource("2_o6fl1")
 flat = true
 icon_alignment = 1
 
-[node name="CombatantRightButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=469467775]
+[node name="CombatantRightButton" type="Button" parent="MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer" unique_id=469467775]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 8
@@ -127,25 +139,25 @@ icon = ExtResource("3_1epou")
 flat = true
 icon_alignment = 1
 
-[node name="UtilityFunctionVBox" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1670661095]
+[node name="UtilityFunctionVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1670661095]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="MovementFunctionsLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1917333947]
+[node name="MovementFunctionsLabel" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1917333947]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_font_sizes/font_size = 8
 text = "Movement Function Weights"
 
-[node name="FriendlyTerritory" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1164730715]
+[node name="FriendlyTerritory" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=644061497]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory" unique_id=1553549011]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory" unique_id=643055447]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Friendly Territory"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory" unique_id=892007358]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/FriendlyTerritory" unique_id=1721285152]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -154,15 +166,15 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="OppositionTerritory" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1522081245]
+[node name="OppositionTerritory" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1522081245]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory" unique_id=1783404640]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory" unique_id=1783404640]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Opposition Territory"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory" unique_id=65973130]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/OppositionTerritory" unique_id=65973130]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -171,15 +183,15 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="ContestedTerritory" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=456841780]
+[node name="ContestedTerritory" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=456841780]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory" unique_id=1828867324]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory" unique_id=1828867324]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Contested Territory"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory" unique_id=322674116]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/ContestedTerritory" unique_id=322674116]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -188,40 +200,40 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="MaintainRange" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=7819883]
+[node name="MaintainRange" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=870408633]
 layout_mode = 2
 
-[node name="RangeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=810073632]
+[node name="RangeLabel" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=1613024123]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Maintain Range"
 
-[node name="RangeLeftButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=1914446290]
+[node name="RangeLeftButton" type="Button" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=790315395]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+theme_override_styles/normal = SubResource("StyleBoxFlat_o6fl1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1epou")
 icon = ExtResource("2_o6fl1")
 flat = true
 icon_alignment = 1
 
-[node name="RangeValueLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=24114560]
+[node name="RangeValueLabel" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=608678810]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "6"
 
-[node name="RangeRightButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=1456566646]
+[node name="RangeRightButton" type="Button" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=409537596]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxFlat_mc2mu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_aqm64")
+theme_override_styles/normal = SubResource("StyleBoxFlat_o6fl1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1epou")
 icon = ExtResource("3_1epou")
 flat = true
 icon_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=2004296864]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MaintainRange" unique_id=1116269457]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -230,22 +242,22 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="AbilityFunctionsLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1538105164]
+[node name="AbilityFunctionsLabel" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1538105164]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9647059, 0.9372549, 0.8, 1)
 theme_override_font_sizes/font_size = 8
 text = "Ability Function Weights"
 
-[node name="GreatestDamage" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=778547483]
+[node name="GreatestDamage" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=778547483]
 custom_minimum_size = Vector2(135.945, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage" unique_id=1226148256]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage" unique_id=1226148256]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Greatest Damage"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage" unique_id=2007825068]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/GreatestDamage" unique_id=2007825068]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -254,16 +266,16 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="EliminateOpposition" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=811639401]
+[node name="EliminateOpposition" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=811639401]
 custom_minimum_size = Vector2(135.945, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition" unique_id=299372563]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition" unique_id=299372563]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Eliminate Opposition"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition" unique_id=1045138000]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/EliminateOpposition" unique_id=1045138000]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -272,16 +284,16 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="TargetFrailest" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1429255997]
+[node name="TargetFrailest" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1429255997]
 custom_minimum_size = Vector2(135.945, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest" unique_id=1320365102]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest" unique_id=1320365102]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Target Frailest"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest" unique_id=2018612049]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetFrailest" unique_id=2018612049]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -290,16 +302,16 @@ max_value = 1.0
 step = 0.01
 value = 0.39
 
-[node name="TargetDeadliest" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1356444415]
+[node name="TargetDeadliest" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1356444415]
 custom_minimum_size = Vector2(135.945, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest" unique_id=1070039405]
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest" unique_id=1070039405]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Target Deadliest"
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest" unique_id=965361940]
+[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/TargetDeadliest" unique_id=965361940]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 10

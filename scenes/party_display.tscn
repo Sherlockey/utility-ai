@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://bxtg7b26f2to4"]
 
 [ext_resource type="Script" uid="uid://bigxke0bwj1ni" path="res://scripts/PartyDisplay.cs" id="1_ub44s"]
+[ext_resource type="PackedScene" uid="uid://bycxb6enom1gr" path="res://scenes/set_utility_menu.tscn" id="2_28vki"]
 
-[node name="PartyDisplay" type="Control" unique_id=1765503223 node_paths=PackedStringArray("_closeButton")]
+[node name="PartyDisplay" type="Control" unique_id=1765503223 node_paths=PackedStringArray("_utilityFunctionsMenu", "_setUtilityMenu", "_buyButton", "_setButton", "_closeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,9 +11,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ub44s")
-_closeButton = NodePath("PanelContainer/CloseButton")
+_utilityFunctionsMenu = NodePath("UtilityFunctionsMenu")
+_setUtilityMenu = NodePath("SetUtilityMenu")
+_buyButton = NodePath("UtilityFunctionsMenu/MarginContainer/VBoxContainer/BuyButton")
+_setButton = NodePath("UtilityFunctionsMenu/MarginContainer/VBoxContainer/SetButton")
+_closeButton = NodePath("ClosePanel/MarginContainer/CloseButton")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1147904715]
+[node name="ClosePanel" type="PanelContainer" parent="." unique_id=1147904715]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -21,6 +26,54 @@ offset_left = -53.0
 offset_bottom = 40.0
 grow_horizontal = 0
 
-[node name="CloseButton" type="Button" parent="PanelContainer" unique_id=648192801]
+[node name="MarginContainer" type="MarginContainer" parent="ClosePanel" unique_id=421527245]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="CloseButton" type="Button" parent="ClosePanel/MarginContainer" unique_id=648192801]
 layout_mode = 2
 text = "Close"
+
+[node name="UtilityFunctionsMenu" type="PanelContainer" parent="." unique_id=1339832702]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -20.0
+offset_right = 26.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UtilityFunctionsMenu" unique_id=254387469]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UtilityFunctionsMenu/MarginContainer" unique_id=1162089140]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UtilityFunctionsMenu/MarginContainer/VBoxContainer" unique_id=499939262]
+layout_mode = 2
+text = "Utilty Functions"
+
+[node name="BuyButton" type="Button" parent="UtilityFunctionsMenu/MarginContainer/VBoxContainer" unique_id=1328277691]
+layout_mode = 2
+text = "Buy"
+
+[node name="SetButton" type="Button" parent="UtilityFunctionsMenu/MarginContainer/VBoxContainer" unique_id=246283739]
+layout_mode = 2
+text = "Set"
+
+[node name="SetUtilityMenu" parent="." unique_id=1614214764 instance=ExtResource("2_28vki")]
+layout_mode = 1
+offset_left = -289.0
+offset_right = -110.0

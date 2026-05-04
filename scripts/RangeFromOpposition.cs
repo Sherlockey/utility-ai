@@ -85,4 +85,34 @@ public partial class RangeFromOpposition : MovementUtilityFunction
         Debug.Assert(utility >= 0.0f && utility <= 1.0f);
         return utility;
     }
+
+    public override Control InstantiateSetUtilityControl()
+    {
+        WeightRangeSetUtilityControl setUtilityControl =
+            _setUtilityControlScene.Instantiate<WeightRangeSetUtilityControl>();
+        setUtilityControl.DisplayNameLabel.Text = _displayName;
+        setUtilityControl.Slider.Value = Weight;
+        setUtilityControl.RangeLabel.Text = Range.ToString();
+        setUtilityControl.Slider.ValueChanged += OnSetUtilityControlSliderValueChanged;
+        setUtilityControl.LeftButton.Pressed += OnSetUtilityControlLeftButtonPressed;
+        setUtilityControl.RightButton.Pressed += OnSetUtilityControlRightButtonPressed;
+
+        return setUtilityControl;
+    }
+
+    private void OnSetUtilityControlLeftButtonPressed()
+    {
+        if (Range > 0)
+        {
+            Range--;
+        }
+    }
+
+    private void OnSetUtilityControlRightButtonPressed()
+    {
+        if (Range < int.MaxValue)
+        {
+            Range++;
+        }
+    }
 }

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://q86mp86bpx7x"]
+
+[ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="1_k5lwk"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_ndlq6"]
+
+[node name="EliminateOpposition" type="Node" unique_id=1428864018]
+script = ExtResource("1_k5lwk")
+_displayName = "Eliminate Opposition"
+_setUtilityControlScene = ExtResource("2_ndlq6")

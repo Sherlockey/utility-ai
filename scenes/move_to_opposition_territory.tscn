@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://deojhth0te73"]
+
+[ext_resource type="Script" uid="uid://dx1lhy7fvxh1v" path="res://scripts/MoveToOppositionTerritory.cs" id="1_cun51"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_5hbeg"]
+
+[node name="MoveToOppositionTerritory" type="Node" unique_id=1966046680]
+script = ExtResource("1_cun51")
+Weight = 0.25
+_displayName = "Opposition Territory"
+_setUtilityControlScene = ExtResource("2_5hbeg")

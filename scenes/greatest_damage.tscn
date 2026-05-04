@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://1ysuybo88edf"]
+
+[ext_resource type="Script" uid="uid://d0ycr2wjeh3o" path="res://scripts/GreatestDamage.cs" id="1_lfkgp"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_g8naf"]
+
+[node name="GreatestDamage" type="Node" unique_id=678804586]
+script = ExtResource("1_lfkgp")
+Weight = 1.0
+_displayName = "Greatest Damage"
+_setUtilityControlScene = ExtResource("2_g8naf")

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cfwi3mulo4rbm"]
+
+[ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="1_rj2qy"]
+[ext_resource type="PackedScene" uid="uid://c5tacv6t48p3" path="res://scenes/weight_range_set_utility_control.tscn" id="2_dyb0m"]
+
+[node name="RangeFromOpposition" type="Node" unique_id=1765767514]
+script = ExtResource("1_rj2qy")
+Weight = 1.0
+_displayName = "Maintain Range"
+_setUtilityControlScene = ExtResource("2_dyb0m")

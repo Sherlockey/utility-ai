@@ -4,16 +4,16 @@
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_01nm4"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_mvyd6"]
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="4_0dyjn"]
+[ext_resource type="PackedScene" uid="uid://c4iuvpy4qfha8" path="res://scenes/move_to_friendly_territory.tscn" id="4_06ia3"]
+[ext_resource type="PackedScene" uid="uid://deojhth0te73" path="res://scenes/move_to_opposition_territory.tscn" id="5_8a0iq"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_swm0g"]
-[ext_resource type="Script" uid="uid://848asre7gtn3" path="res://scripts/RangeFromOpposition.cs" id="6_4ok4f"]
-[ext_resource type="Script" uid="uid://dx1lhy7fvxh1v" path="res://scripts/MoveToOppositionTerritory.cs" id="7_4ok4f"]
-[ext_resource type="Script" uid="uid://d0ycr2wjeh3o" path="res://scripts/GreatestDamage.cs" id="8_4ok4f"]
-[ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="8_c7bgd"]
+[ext_resource type="PackedScene" uid="uid://bqre4ucetwhyi" path="res://scenes/move_to_contested_territory.tscn" id="6_8ko4r"]
+[ext_resource type="PackedScene" uid="uid://cfwi3mulo4rbm" path="res://scenes/range_from_opposition.tscn" id="7_tpjby"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_mvyd6"]
-[ext_resource type="Script" uid="uid://suy74hy1ntyv" path="res://scripts/MoveToContestedTerritory.cs" id="8_oi1vv"]
-[ext_resource type="Script" uid="uid://4hx53tywma4d" path="res://scripts/EliminateOpposition.cs" id="9_06ia3"]
-[ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="10_06ia3"]
-[ext_resource type="Script" uid="uid://dabdk44vk3dx1" path="res://scripts/TargetDeadliest.cs" id="11_8ko4r"]
+[ext_resource type="PackedScene" uid="uid://1ysuybo88edf" path="res://scenes/greatest_damage.tscn" id="8_ouiji"]
+[ext_resource type="PackedScene" uid="uid://q86mp86bpx7x" path="res://scenes/eliminate_opposition.tscn" id="9_o7g6j"]
+[ext_resource type="PackedScene" uid="uid://bknvxeqrxuuv2" path="res://scenes/target_frailest.tscn" id="10_rlkoa"]
+[ext_resource type="PackedScene" uid="uid://by8espmkfi7gm" path="res://scenes/target_deadliest.tscn" id="11_4yp3h"]
 [ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_06ia3"]
 [ext_resource type="PackedScene" uid="uid://cj40e4dpbqtps" path="res://scenes/slam.tscn" id="13_8a0iq"]
 
@@ -38,38 +38,23 @@ _abilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=555454667]
 
-[node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=49103158]
-script = ExtResource("8_c7bgd")
-Weight = 0.0
+[node name="MoveToFriendlyTerritory" parent="Brain/MovementUtilityParent" unique_id=575651052 instance=ExtResource("4_06ia3")]
 
-[node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1033525186]
-script = ExtResource("7_4ok4f")
-Weight = 0.25
+[node name="MoveToOppositionTerritory" parent="Brain/MovementUtilityParent" unique_id=1966046680 instance=ExtResource("5_8a0iq")]
 
-[node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1373303307]
-script = ExtResource("8_oi1vv")
-Weight = 0.3
+[node name="MoveToContestedTerritory" parent="Brain/MovementUtilityParent" unique_id=1162695439 instance=ExtResource("6_8ko4r")]
 
-[node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=1975310503]
-script = ExtResource("6_4ok4f")
-Weight = 1.0
+[node name="RangeFromOpposition" parent="Brain/MovementUtilityParent" unique_id=1765767514 instance=ExtResource("7_tpjby")]
 
 [node name="AbilityUtilityParent" type="Node" parent="Brain" unique_id=1568626479]
 
-[node name="GreatestDamage" type="Node" parent="Brain/AbilityUtilityParent" unique_id=422129458]
-script = ExtResource("8_4ok4f")
-Weight = 1.0
+[node name="GreatestDamage" parent="Brain/AbilityUtilityParent" unique_id=678804586 instance=ExtResource("8_ouiji")]
 
-[node name="EliminateOpposition" type="Node" parent="Brain/AbilityUtilityParent" unique_id=696988775]
-script = ExtResource("9_06ia3")
+[node name="EliminateOpposition" parent="Brain/AbilityUtilityParent" unique_id=1428864018 instance=ExtResource("9_o7g6j")]
 
-[node name="TargetFrailest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1683054818]
-script = ExtResource("10_06ia3")
-Weight = 0.1
+[node name="TargetFrailest" parent="Brain/AbilityUtilityParent" unique_id=1063138908 instance=ExtResource("10_rlkoa")]
 
-[node name="TargetDeadliest" type="Node" parent="Brain/AbilityUtilityParent" unique_id=1626490887]
-script = ExtResource("11_8ko4r")
-Weight = 0.75
+[node name="TargetDeadliest" parent="Brain/AbilityUtilityParent" unique_id=303066188 instance=ExtResource("11_4yp3h")]
 
 [node name="Abilities" type="Node" parent="." unique_id=1014024241]
 

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c4iuvpy4qfha8"]
+
+[ext_resource type="Script" uid="uid://cb582sbmhjgak" path="res://scripts/MoveToFriendlyTerritory.cs" id="1_24n6c"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_1ljjq"]
+
+[node name="MoveToFriendlyTerritory" type="Node" unique_id=575651052]
+script = ExtResource("1_24n6c")
+Weight = 0.0
+_displayName = "Friendly Territory"
+_setUtilityControlScene = ExtResource("2_1ljjq")

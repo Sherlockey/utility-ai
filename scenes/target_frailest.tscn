@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bknvxeqrxuuv2"]
+
+[ext_resource type="Script" uid="uid://bv7p1hoe3h6h1" path="res://scripts/TargetFrailest.cs" id="1_7y2ut"]
+[ext_resource type="PackedScene" uid="uid://finynbmhln8b" path="res://scenes/weight_set_utility_control.tscn" id="2_fgah0"]
+
+[node name="TargetFrailest" type="Node" unique_id=1063138908]
+script = ExtResource("1_7y2ut")
+Weight = 0.1
+_displayName = "Target Frailest"
+_setUtilityControlScene = ExtResource("2_fgah0")
