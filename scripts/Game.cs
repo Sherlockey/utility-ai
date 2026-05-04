@@ -29,7 +29,7 @@ public partial class Game : Node
         }
     }
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
         // TODO: if SaveGame has a party, use that, otherwise use default
         foreach (PackedScene combatantScene in _defaultParty.Scenes)
@@ -39,7 +39,10 @@ public partial class Game : Node
             AddChild(combatant);
             combatant.Visible = false;
         }
+    }
 
+    public override void _Ready()
+    {
         ChangeSceneToPacked(OverworldScene);
     }
 

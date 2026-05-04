@@ -26,14 +26,16 @@ public partial class SetUtilityMenu : PanelContainer
             return;
         }
 
+        RefreshDisplay();
+
         _combatantLeftButton.Pressed += OnCombatantLeftButtonPressed;
         _combatantRightButton.Pressed += OnCombatantRightButtonPressed;
     }
 
-    // zzz refresh display pretty much working need to test it further and need to remove old children from display
-    // whenever refresh display is called before adding new children
     public void RefreshDisplay()
     {
+        FreeSetUtilityControls();
+
         if (_partyIndex > Game.Instance.Party.Count - 1)
         {
             return;
@@ -52,6 +54,18 @@ public partial class SetUtilityMenu : PanelContainer
         {
             Control control = auf.InstantiateSetUtilityControl();
             _abilityUtilitiesParent.AddChild(control);
+        }
+    }
+
+    private void FreeSetUtilityControls()
+    {
+        foreach (Node child in _movementUtilitiesParent.GetChildren())
+        {
+            child.Free();
+        }
+        foreach (Node child in _abilityUtilitiesParent.GetChildren())
+        {
+            child.Free();
         }
     }
 
