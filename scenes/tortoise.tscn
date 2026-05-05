@@ -38,14 +38,15 @@ AbilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MoveToFriendlyTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=774731779]
 script = ExtResource("6_1pr7s")
-Weight = 0.2
+Weight = 0.1
 
 [node name="MoveToOppositionTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=1999583832]
 script = ExtResource("7_au625")
-Weight = 0.25
+Weight = 0.2
 
 [node name="MoveToContestedTerritory" type="Node" parent="Brain/MovementUtilityParent" unique_id=567719591]
 script = ExtResource("8_77hok")
+Weight = 0.3
 
 [node name="RangeFromOpposition" type="Node" parent="Brain/MovementUtilityParent" unique_id=13783717]
 script = ExtResource("6_au625")
@@ -75,16 +76,15 @@ Weight = 0.1
 
 [node name="Stats" type="Node" parent="." unique_id=1771981559]
 script = ExtResource("4_uljw3")
-ExperienceReward = 12
-KnowledgeReward = 12
+ExperienceReward = 30
+KnowledgeReward = 30
 _baseHealth = 66
-_baseAttack = 3
 _baseSpeed = 4
 _baseMovement = 2
 _baseEvasion = 20
-_healthPerLevelScalar = 0.125
-_attackPerLevelScalar = 0.04
-_speedPerLevelScalar = 0.01
+_healthPerLevelScalar = 0.25
+_attackPerLevelScalar = 0.08
+_speedPerLevelScalar = 0.02
 
 [node name="Status" type="Node" parent="." unique_id=373198262 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_ysj3k")

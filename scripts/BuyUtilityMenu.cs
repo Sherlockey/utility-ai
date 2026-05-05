@@ -11,6 +11,10 @@ public partial class BuyUtilityMenu : PanelContainer
     [Export]
     private TextureRect _portrait;
     [Export]
+    private Label _levelLabel;
+    [Export]
+    private Label _knowledgePointsLabel;
+    [Export]
     private Button _combatantLeftButton;
     [Export]
     private Button _combatantRightButton;
@@ -40,7 +44,7 @@ public partial class BuyUtilityMenu : PanelContainer
 
     public void RefreshDisplay()
     {
-        FreeSetUtilityControls();
+        FreeBuyUtilityControls();
 
         if (_partyIndex > Game.Instance.Party.Count - 1)
         {
@@ -49,28 +53,51 @@ public partial class BuyUtilityMenu : PanelContainer
         Combatant combatant = Game.Instance.Party[_partyIndex];
         _nameLabel.Text = combatant.DisplayName;
         _portrait.Texture = combatant.Sprite2D.Texture;
+        _levelLabel.Text = "LV: " + combatant.Stats.Level;
+        _knowledgePointsLabel.Text = "KP: " + combatant.Stats.KnowledgePoints.ToString();
 
         // Refresh Movement Utility Functions
         foreach (PackedScene packedScene in _movementUtilities.Scenes)
         {
             MovementUtilityFunction tempMuf = packedScene.Instantiate<MovementUtilityFunction>();
-            // make a button with the kvp.key string
-            Button button = new();
-            button.Text = tempMuf.DisplayName;
-            button.AddThemeFontSizeOverride("font_size", 6);
-            _movementUtilitiesParent.AddChild(button);
-
+            bool learned = false;
             // TODO this is very inefficient. Clean up later
             foreach (MovementUtilityFunction muf in combatant.Brain.MovementUtilities)
             {
                 if (tempMuf.DisplayName == muf.DisplayName)
                 {
-                    button.Disabled = true;
+                    learned = true;
                     break;
                 }
             }
 
-            if (!button.Disabled)
+            // make a hboxcontainer with the button and the cost label
+            HBoxContainer hboxContainer = new();
+            _movementUtilitiesParent.AddChild(hboxContainer);
+
+            Label label = new();
+            if (learned)
+            {
+                label.Text = "Learned  ";
+            }
+            else
+            {
+                label.Text = "Cost: " + tempMuf.Cost.ToString();
+            }
+            label.AddThemeFontSizeOverride("font_size", 6);
+
+            Button button = new();
+            button.Text = tempMuf.DisplayName;
+            button.AddThemeFontSizeOverride("font_size", 6);
+
+            hboxContainer.AddChild(label);
+            hboxContainer.AddChild(button);
+
+            if (learned)
+            {
+                button.Disabled = true;
+            }
+            else
             {
                 button.Pressed += () => OnMovementUtilityPressed(packedScene, combatant, tempMuf.Cost, button);
             }
@@ -81,23 +108,43 @@ public partial class BuyUtilityMenu : PanelContainer
         foreach (PackedScene packedScene in _abilityUtilities.Scenes)
         {
             AbilityUtilityFunction tempAuf = packedScene.Instantiate<AbilityUtilityFunction>();
-            // make a button with the kvp.key string
-            Button button = new();
-            button.Text = tempAuf.DisplayName;
-            button.AddThemeFontSizeOverride("font_size", 6);
-            _abilityUtilitiesParent.AddChild(button);
-
+            bool learned = false;
             // TODO this is very inefficient. Clean up later
             foreach (AbilityUtilityFunction auf in combatant.Brain.AbilityUtilities)
             {
                 if (tempAuf.DisplayName == auf.DisplayName)
                 {
-                    button.Disabled = true;
+                    learned = true;
                     break;
                 }
             }
+            // make a hboxcontainer with the button and the cost label
+            HBoxContainer hboxContainer = new();
+            _abilityUtilitiesParent.AddChild(hboxContainer);
 
-            if (!button.Disabled)
+            Label label = new();
+            if (learned)
+            {
+                label.Text = "Learned  ";
+            }
+            else
+            {
+                label.Text = "Cost: " + tempAuf.Cost.ToString();
+            }
+            label.AddThemeFontSizeOverride("font_size", 6);
+
+            Button button = new();
+            button.Text = tempAuf.DisplayName;
+            button.AddThemeFontSizeOverride("font_size", 6);
+
+            hboxContainer.AddChild(label);
+            hboxContainer.AddChild(button);
+
+            if (learned)
+            {
+                button.Disabled = true;
+            }
+            else
             {
                 button.Pressed += () => OnAbilityUtilityPressed(packedScene, combatant, tempAuf.Cost, button);
             }
@@ -105,7 +152,7 @@ public partial class BuyUtilityMenu : PanelContainer
         }
     }
 
-    private void FreeSetUtilityControls()
+    private void FreeBuyUtilityControls()
     {
         foreach (Node child in _movementUtilitiesParent.GetChildren())
         {
@@ -146,7 +193,7 @@ public partial class BuyUtilityMenu : PanelContainer
     }
 
     // TODO clean up clear duplication here (once there is a super class for utility functions)
-    private static void OnMovementUtilityPressed(PackedScene packedScene, Combatant combatant, int cost, Button button)
+    private void OnMovementUtilityPressed(PackedScene packedScene, Combatant combatant, int cost, Button button)
     {
         // check if combatant has enough knowledge points to buy the utility function
 
@@ -154,6 +201,7 @@ public partial class BuyUtilityMenu : PanelContainer
         {
             button.Disabled = true;
             combatant.Stats.KnowledgePoints -= cost;
+            _knowledgePointsLabel.Text = "KP: " + combatant.Stats.KnowledgePoints.ToString();
             MovementUtilityFunction muf = packedScene.Instantiate<MovementUtilityFunction>();
             combatant.Brain.MovementUtilityParent.AddChild(muf);
             combatant.Brain.AddMovementUtility(muf);
@@ -164,7 +212,7 @@ public partial class BuyUtilityMenu : PanelContainer
         }
     }
 
-    private static void OnAbilityUtilityPressed(PackedScene packedScene, Combatant combatant, int cost, Button button)
+    private void OnAbilityUtilityPressed(PackedScene packedScene, Combatant combatant, int cost, Button button)
     {
         // check if combatant has enough knowledge points to buy the utility function
 
@@ -172,6 +220,7 @@ public partial class BuyUtilityMenu : PanelContainer
         {
             button.Disabled = true;
             combatant.Stats.KnowledgePoints -= cost;
+            _knowledgePointsLabel.Text = "KP: " + combatant.Stats.KnowledgePoints.ToString();
             AbilityUtilityFunction auf = packedScene.Instantiate<AbilityUtilityFunction>();
             combatant.Brain.MovementUtilityParent.AddChild(auf);
             combatant.Brain.AddAbilityUtility(auf);

@@ -6,5 +6,4 @@
 [node name="MoveToOppositionTerritory" type="Node" unique_id=1966046680]
 script = ExtResource("1_cun51")
 DisplayName = "Opposition Territory"
-Weight = 0.25
 _setUtilityControlScene = ExtResource("2_5hbeg")

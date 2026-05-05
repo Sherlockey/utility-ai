@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bycxb6enom1gr" path="res://scenes/set_utility_menu.tscn" id="2_28vki"]
 [ext_resource type="PackedScene" uid="uid://bnyi5v08vwef0" path="res://scenes/buy_utility_menu.tscn" id="3_bg5dy"]
 
-[node name="PartyDisplay" type="Control" unique_id=1765503223 node_paths=PackedStringArray("_utilityFunctionsMenu", "_setUtilityMenu", "_buyButton", "_setButton", "_closeButton")]
+[node name="PartyDisplay" type="Control" unique_id=1765503223 node_paths=PackedStringArray("_utilityFunctionsMenu", "_setUtilityMenu", "_buyUtilityMenu", "_buyButton", "_setButton", "_closeButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_ub44s")
 _utilityFunctionsMenu = NodePath("UtilityFunctionsMenu")
 _setUtilityMenu = NodePath("SetUtilityMenu")
+_buyUtilityMenu = NodePath("BuyUtilityMenu")
 _buyButton = NodePath("UtilityFunctionsMenu/MarginContainer/VBoxContainer/BuyButton")
 _setButton = NodePath("UtilityFunctionsMenu/MarginContainer/VBoxContainer/SetButton")
 _closeButton = NodePath("ClosePanel/MarginContainer/CloseButton")
@@ -45,10 +46,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -26.5
-offset_top = -20.0
-offset_right = 26.5
-offset_bottom = 20.0
+offset_left = -72.5
+offset_top = -45.5
+offset_right = 72.5
+offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -66,22 +67,22 @@ layout_mode = 2
 layout_mode = 2
 text = "Utilty Functions"
 
-[node name="BuyButton" type="Button" parent="UtilityFunctionsMenu/MarginContainer/VBoxContainer" unique_id=1328277691]
-layout_mode = 2
-text = "Buy"
-
 [node name="SetButton" type="Button" parent="UtilityFunctionsMenu/MarginContainer/VBoxContainer" unique_id=246283739]
 layout_mode = 2
 text = "Set"
 
+[node name="BuyButton" type="Button" parent="UtilityFunctionsMenu/MarginContainer/VBoxContainer" unique_id=1328277691]
+layout_mode = 2
+text = "Buy"
+
 [node name="SetUtilityMenu" parent="." unique_id=1614214764 instance=ExtResource("2_28vki")]
+visible = false
 layout_mode = 1
-offset_left = -289.0
-offset_right = -110.0
 
 [node name="BuyUtilityMenu" parent="." unique_id=2102439855 instance=ExtResource("3_bg5dy")]
+visible = false
 layout_mode = 1
-offset_left = 113.0
-offset_top = -36.0
-offset_right = 259.0
-offset_bottom = 36.0
+offset_left = -90.0
+offset_top = -36.5
+offset_right = 90.0
+offset_bottom = 36.5

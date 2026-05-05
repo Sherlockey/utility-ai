@@ -8,4 +8,4 @@
 
 [resource]
 script = ExtResource("1_3hiqs")
-Scenes = [ExtResource("1_gjc4w"), ExtResource("2_cej81"), ExtResource("3_6jlk1"), ExtResource("4_u6gbp")]
+Scenes = [ExtResource("4_u6gbp"), ExtResource("1_gjc4w"), ExtResource("2_cej81"), ExtResource("3_6jlk1")]

@@ -91,7 +91,7 @@ public partial class BattleManager : Node2D
 
         // Attempt bonus calculation
         string attemptBonusText = "";
-        _attemptBonusScalar = 0.1f * (Attempt - 1);
+        _attemptBonusScalar = 0.05f * (Attempt - 1);
         if (Attempt > 1)
         {
             attemptBonusText = "\n(Reward Bonus: " + (_attemptBonusScalar * 100).ToString("F0") + "%)";
@@ -285,10 +285,12 @@ public partial class BattleManager : Node2D
             Debug.Fail("BattleEnd not implemented for BattleEndType: " + battleEndType);
         }
 
-        double previousTimeScale = Engine.TimeScale;
-        Engine.TimeScale = 0.0;
         // Eventually add animation for showing experience points etc being added?
-        await ToSignal(GetTree().CreateTimer(EndOfGameDelay, true, false, true), Timer.SignalName.Timeout);
+        if (Engine.TimeScale < 1.0)
+        {
+            Engine.TimeScale = 1.0;
+        }
+        await ToSignal(GetTree().CreateTimer(EndOfGameDelay), Timer.SignalName.Timeout);
         Engine.TimeScale = 1.0;
 
         BattleEnded?.Invoke(this, battleEndType);

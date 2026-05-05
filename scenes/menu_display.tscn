@@ -52,6 +52,7 @@ layout_mode = 2
 text = "Embark"
 
 [node name="EmbarkDisplay" parent="." unique_id=1492275132 instance=ExtResource("2_xcnwh")]
+visible = false
 layout_mode = 1
 
 [node name="PartyDisplay" parent="." unique_id=1765503223 instance=ExtResource("2_p7rxc")]

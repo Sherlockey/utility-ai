@@ -6,5 +6,4 @@
 [node name="TargetDeadliest" type="Node" unique_id=303066188]
 script = ExtResource("1_otm2u")
 DisplayName = "Target Deadliest"
-Weight = 0.75
 _setUtilityControlScene = ExtResource("2_6lhf4")

@@ -280,7 +280,7 @@ sources/4 = SubResource("TileSetAtlasSource_fptmo")
 
 [node name="LevelOne" type="Node2D" unique_id=155677888 node_paths=PackedStringArray("_enemySpawnParent", "_allySpawnParent", "_partyParent", "_tileMapLayer", "_debugTileMapLayer", "_camera")]
 script = ExtResource("1_4i3tx")
-_displayName = "Level 1"
+_displayName = "Dungeon"
 _enemyCombatantScenesSets = Array[Object]([ExtResource("7_xrbqg")])
 _enemySpawnParent = NodePath("EnemySpawnMarkers")
 _allySpawnParent = NodePath("AllySpawnMarkers")
@@ -317,6 +317,30 @@ position = Vector2(328, 300)
 
 [node name="EnemyMarker2D4" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1348065202]
 position = Vector2(344, 300)
+
+[node name="EnemyMarker2D5" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1062543191]
+position = Vector2(168, 228)
+
+[node name="EnemyMarker2D6" type="Marker2D" parent="EnemySpawnMarkers" unique_id=698354968]
+position = Vector2(184, 228)
+
+[node name="EnemyMarker2D7" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1124925870]
+position = Vector2(200, 228)
+
+[node name="EnemyMarker2D8" type="Marker2D" parent="EnemySpawnMarkers" unique_id=461268648]
+position = Vector2(216, 228)
+
+[node name="EnemyMarker2D9" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1548376524]
+position = Vector2(504, 204)
+
+[node name="EnemyMarker2D10" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1568921483]
+position = Vector2(520, 204)
+
+[node name="EnemyMarker2D11" type="Marker2D" parent="EnemySpawnMarkers" unique_id=1739142117]
+position = Vector2(536, 204)
+
+[node name="EnemyMarker2D12" type="Marker2D" parent="EnemySpawnMarkers" unique_id=202302951]
+position = Vector2(552, 204)
 
 [node name="AllySpawnMarkers" type="Node" parent="." unique_id=1676581002]
 

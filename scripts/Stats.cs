@@ -31,11 +31,11 @@ public partial class Stats : Node
     private int _baseKnowledgePoints = 0;
 
     [Export]
-    private float _healthPerLevelScalar = 0.1f;
+    private float _healthPerLevelScalar = 0.2f;
     [Export]
-    private float _attackPerLevelScalar = 0.05f;
+    private float _attackPerLevelScalar = 0.1f;
     [Export]
-    private float _speedPerLevelScalar = 0.015f;
+    private float _speedPerLevelScalar = 0.03f;
     [Export]
     private float _movementPerLevelScalar = 0.0f;
     [Export]

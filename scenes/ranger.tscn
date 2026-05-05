@@ -4,16 +4,10 @@
 [ext_resource type="Script" uid="uid://c5sa2p0ebi1be" path="res://scripts/Stats.cs" id="3_1sbo7"]
 [ext_resource type="Script" uid="uid://litpybprmc8g" path="res://scripts/Combatant.cs" id="3_8k012"]
 [ext_resource type="Script" uid="uid://dko1eutyly1og" path="res://scripts/Brain.cs" id="3_qmbqj"]
-[ext_resource type="PackedScene" uid="uid://c4iuvpy4qfha8" path="res://scenes/move_to_friendly_territory.tscn" id="4_hm2h7"]
 [ext_resource type="Script" uid="uid://ydkcj03v2bqa" path="res://scripts/Status.cs" id="5_8rvsd"]
-[ext_resource type="PackedScene" uid="uid://deojhth0te73" path="res://scenes/move_to_opposition_territory.tscn" id="5_k5x5t"]
-[ext_resource type="PackedScene" uid="uid://bqre4ucetwhyi" path="res://scenes/move_to_contested_territory.tscn" id="6_yut2o"]
 [ext_resource type="PackedScene" uid="uid://cfwi3mulo4rbm" path="res://scenes/range_from_opposition.tscn" id="7_n14b0"]
 [ext_resource type="PackedScene" uid="uid://1ysuybo88edf" path="res://scenes/greatest_damage.tscn" id="8_hm2h7"]
 [ext_resource type="PackedScene" uid="uid://1hpbkhf1afc0" path="res://scenes/movement.tscn" id="8_qmbqj"]
-[ext_resource type="PackedScene" uid="uid://q86mp86bpx7x" path="res://scenes/eliminate_opposition.tscn" id="9_k5x5t"]
-[ext_resource type="PackedScene" uid="uid://bknvxeqrxuuv2" path="res://scenes/target_frailest.tscn" id="10_yut2o"]
-[ext_resource type="PackedScene" uid="uid://by8espmkfi7gm" path="res://scenes/target_deadliest.tscn" id="11_n14b0"]
 [ext_resource type="PackedScene" uid="uid://clk4bumlb2a47" path="res://scenes/attack.tscn" id="12_hm2h7"]
 [ext_resource type="PackedScene" uid="uid://nhgqb10tsdkw" path="res://scenes/shoot.tscn" id="13_hm2h7"]
 
@@ -38,23 +32,12 @@ AbilityUtilityParent = NodePath("AbilityUtilityParent")
 
 [node name="MovementUtilityParent" type="Node" parent="Brain" unique_id=874001107]
 
-[node name="MoveToFriendlyTerritory" parent="Brain/MovementUtilityParent" unique_id=575651052 instance=ExtResource("4_hm2h7")]
-
-[node name="MoveToOppositionTerritory" parent="Brain/MovementUtilityParent" unique_id=1966046680 instance=ExtResource("5_k5x5t")]
-
-[node name="MoveToContestedTerritory" parent="Brain/MovementUtilityParent" unique_id=1162695439 instance=ExtResource("6_yut2o")]
-
 [node name="RangeFromOpposition" parent="Brain/MovementUtilityParent" unique_id=1765767514 instance=ExtResource("7_n14b0")]
+Range = 5
 
 [node name="AbilityUtilityParent" type="Node" parent="Brain" unique_id=1900630105]
 
 [node name="GreatestDamage" parent="Brain/AbilityUtilityParent" unique_id=678804586 instance=ExtResource("8_hm2h7")]
-
-[node name="EliminateOpposition" parent="Brain/AbilityUtilityParent" unique_id=1428864018 instance=ExtResource("9_k5x5t")]
-
-[node name="TargetFrailest" parent="Brain/AbilityUtilityParent" unique_id=1063138908 instance=ExtResource("10_yut2o")]
-
-[node name="TargetDeadliest" parent="Brain/AbilityUtilityParent" unique_id=303066188 instance=ExtResource("11_n14b0")]
 
 [node name="Abilities" type="Node" parent="." unique_id=1935953768]
 
@@ -68,7 +51,9 @@ script = ExtResource("3_1sbo7")
 _baseSpeed = 8
 _baseMovement = 3
 _baseAccuracy = 5
-_speedPerLevelScalar = 0.018
+_healthPerLevelScalar = 0.2
+_attackPerLevelScalar = 0.1
+_speedPerLevelScalar = 0.035
 
 [node name="Status" type="Node" parent="." unique_id=114128546 node_paths=PackedStringArray("Stats")]
 script = ExtResource("5_8rvsd")

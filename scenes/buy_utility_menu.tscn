@@ -36,7 +36,7 @@ border_color = Color(1, 1, 1, 1)
 shadow_color = Color(0, 0, 0, 0)
 anti_aliasing = false
 
-[node name="BuyUtilityMenu" type="PanelContainer" unique_id=1614214764 node_paths=PackedStringArray("_nameLabel", "_portrait", "_combatantLeftButton", "_combatantRightButton", "_movementUtilitiesParent", "_abilityUtilitiesParent")]
+[node name="BuyUtilityMenu" type="PanelContainer" unique_id=1614214764 node_paths=PackedStringArray("_nameLabel", "_portrait", "_levelLabel", "_knowledgePointsLabel", "_combatantLeftButton", "_combatantRightButton", "_movementUtilitiesParent", "_abilityUtilitiesParent")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -52,6 +52,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_4wxy3")
 script = ExtResource("1_qcw6a")
 _nameLabel = NodePath("MarginContainer/HBoxContainer/CombatantVBox/NameLabel")
 _portrait = NodePath("MarginContainer/HBoxContainer/CombatantVBox/PortraitTextureRect")
+_levelLabel = NodePath("MarginContainer/HBoxContainer/CombatantVBox/LevelLabel")
+_knowledgePointsLabel = NodePath("MarginContainer/HBoxContainer/CombatantVBox/KnowlegePointsLabel")
 _combatantLeftButton = NodePath("MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantLeftButton")
 _combatantRightButton = NodePath("MarginContainer/HBoxContainer/CombatantVBox/HBoxContainer/CombatantRightButton")
 _movementUtilitiesParent = NodePath("MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent")
@@ -112,6 +114,18 @@ icon = ExtResource("4_5u3ig")
 flat = true
 icon_alignment = 1
 
+[node name="LevelLabel" type="Label" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=1700749946]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "LV: 99"
+horizontal_alignment = 1
+
+[node name="KnowlegePointsLabel" type="Label" parent="MarginContainer/HBoxContainer/CombatantVBox" unique_id=769225920]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "KP: 9999"
+horizontal_alignment = 1
+
 [node name="UtilityFunctionVBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1670661095]
 layout_mode = 2
 theme_override_constants/separation = 4
@@ -125,7 +139,16 @@ text = "Movement Functions"
 [node name="MovementUtilitiesParent" type="VBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1896768790]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent" unique_id=775199466]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent" unique_id=1861975540]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent/HBoxContainer" unique_id=1793500493]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Cost: 100"
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/MovementUtilitiesParent/HBoxContainer" unique_id=775199466]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Friendly Territory"
@@ -139,7 +162,16 @@ text = "Ability Functions"
 [node name="AbilityUtilitiesParent" type="VBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox" unique_id=1424611473]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/AbilityUtilitiesParent" unique_id=1995689839]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/AbilityUtilitiesParent" unique_id=1744701537]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/AbilityUtilitiesParent/HBoxContainer" unique_id=135287248]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Cost: 100"
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/UtilityFunctionVBox/AbilityUtilitiesParent/HBoxContainer" unique_id=1847611185]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
-text = "Greatest Damage"
+text = "Friendly Territory"

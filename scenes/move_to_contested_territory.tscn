@@ -6,5 +6,4 @@
 [node name="MoveToContestedTerritory" type="Node" unique_id=1162695439]
 script = ExtResource("1_tcj2s")
 DisplayName = "Contested Territory"
-Weight = 0.3
 _setUtilityControlScene = ExtResource("2_m8hlj")

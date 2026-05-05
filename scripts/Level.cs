@@ -197,6 +197,13 @@ public partial class Level : Node2D
             PackedScene levelScene = GD.Load<PackedScene>(path);
             Level nextLevel = levelScene.Instantiate<Level>();
             nextLevel.Attempt = Attempt + 1;
+
+            BattleManager bm = BattleManager.Get();
+            if (bm != null)
+            {
+                bm.Free();
+            }
+
             Game.Instance.ChangeSceneToNode(nextLevel);
         }
         else if (battleEndType == BattleManager.BattleEndType.Loss

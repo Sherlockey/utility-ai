@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://ci8bv4ay7qh1w" path="res://scenes/level_spitters_and_tortoises.tscn" id="5_wjggh"]
 
 [node name="EmbarkDisplay" type="PanelContainer" unique_id=1492275132 node_paths=PackedStringArray("_levelOneButton", "_levelTwoButton", "_levelThreeButton", "_levelFourButton", "_backButton")]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -43,24 +42,33 @@ layout_mode = 2
 [node name="LevelButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=95742277]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-text = "Level 1"
+theme_override_font_sizes/font_size = 8
+text = "Dungeon
+(Level 1)"
 
 [node name="LevelButton2" type="Button" parent="MarginContainer/VBoxContainer" unique_id=994715760]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-text = "Level 2"
+theme_override_font_sizes/font_size = 8
+text = "Cave
+(Level 5)"
 
 [node name="LevelButton3" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1967466617]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-text = "Level 3"
+theme_override_font_sizes/font_size = 8
+text = "Canyon
+(Level 10)"
 
 [node name="LevelButton4" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1459862215]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-text = "Level 4"
+theme_override_font_sizes/font_size = 8
+text = "Swamp
+(Level 15)"
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1381305986]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "Back"
